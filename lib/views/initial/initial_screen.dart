@@ -1,6 +1,8 @@
 import 'package:budge_up/presentation/button_styles.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
+import 'package:budge_up/views/auth/login/login_screen.dart';
+import 'package:budge_up/views/auth/register/register_screen.dart';
 import 'package:flutter/material.dart';
 
 class InitialScreen extends StatelessWidget {
@@ -23,13 +25,21 @@ class InitialScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 style: kElevatedButtonStyle1,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                },
                 child: Text('Вход'),
               ),
               SizedBox(height: 24),
               ElevatedButton(
                 style: kElevatedButtonStyle2,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegisterScreen()));
+                },
                 child: Text('Регистрация'),
               ),
             ],
