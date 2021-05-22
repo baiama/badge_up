@@ -1,3 +1,4 @@
+import 'package:budge_up/presentation/custom_themes.dart';
 import 'package:budge_up/views/initial/initial_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: kAppBarTheme,
+      ),
       home: InitialScreen(),
     );
   }
