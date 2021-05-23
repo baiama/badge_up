@@ -44,7 +44,10 @@ class ResetPasswordScreen extends StatelessWidget {
                 ),
                 Expanded(child: Container()),
                 ElevatedButton(
-                    onPressed: () {}, child: Text('Восстановить пароль')),
+                    onPressed: () {
+                      Navigator.pop(context, 'yes');
+                    },
+                    child: Text('Восстановить пароль')),
                 SizedBox(height: 70),
               ],
             ),

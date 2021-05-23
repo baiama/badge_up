@@ -53,11 +53,12 @@ class LoginScreen extends StatelessWidget {
                 ElevatedButton(onPressed: () {}, child: Text('Войти')),
                 SizedBox(height: 10),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
+                  onTap: () async {
+                    final result = await Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => ResetPasswordScreen()));
+                    print(result);
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 14),
