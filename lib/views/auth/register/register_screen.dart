@@ -28,15 +28,10 @@ class RegisterScreen extends StatelessWidget {
             color: Colors.white,
             padding: EdgeInsets.all(24),
             child: Form(
+              autovalidateMode: AutovalidateMode.always,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: 'Имя *',
-                    ),
-                  ),
-                  SizedBox(height: 24),
                   TextFormField(
                     decoration: InputDecoration(
                       hintText: 'Имя *',
@@ -73,7 +68,7 @@ class RegisterScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
-                    height: 90,
+                    height: 130,
                   ),
                   ElevatedButton(
                       onPressed: () {}, child: Text('Зарегистрироваться')),
@@ -82,7 +77,8 @@ class RegisterScreen extends StatelessWidget {
                     'Нажав на «Зарегистрироваться», вы соглашаетесь с условиями пользования',
                     style: kInterReg14Color2980B9,
                     textAlign: TextAlign.center,
-                  )
+                  ),
+                  SizedBox(height: 24),
                 ],
               ),
             ),
