@@ -4,7 +4,17 @@ import 'package:budge_up/views/auth/register/register_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
+  @override
+  _RegisterScreenState createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,11 +89,12 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 24),
-                    Text(
-                      'Некорректное заполнение: Телефон',
-                      style: kInterReg16ColorCC6666,
-                      textAlign: TextAlign.center,
-                    ),
+                    if (provider.error.length > 0)
+                      Text(
+                        provider.error,
+                        style: kInterReg16ColorCC6666,
+                        textAlign: TextAlign.center,
+                      ),
                     SizedBox(
                       height: 130,
                     ),
