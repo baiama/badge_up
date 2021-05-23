@@ -1,16 +1,15 @@
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
-import 'package:budge_up/views/auth/reset_password/reset_password.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class ResetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: CustomBackButton(),
-        title: Text('Авторизация'),
+        title: Text('Я забыл пароль'),
       ),
       body: GestureDetector(
         onTap: () {
@@ -34,41 +33,19 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(height: 25),
                 TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Телефон или Email *',
+                    hintText: 'Email *',
                   ),
                 ),
-                SizedBox(height: 24),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: 'Пароль *',
-                  ),
-                ),
-                SizedBox(height: 24),
+                SizedBox(height: 26),
                 Text(
-                  'Некорректное заполнение: Телефон',
+                  'Некорректное заполнение: Email',
                   style: kInterReg16ColorCC6666,
                   textAlign: TextAlign.center,
                 ),
                 Expanded(child: Container()),
-                ElevatedButton(onPressed: () {}, child: Text('Войти')),
-                SizedBox(height: 10),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResetPasswordScreen()));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 14),
-                    child: Text(
-                      'Я забыл пароль',
-                      style: kInterReg14Color2980B9,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
+                ElevatedButton(
+                    onPressed: () {}, child: Text('Восстановить пароль')),
+                SizedBox(height: 70),
               ],
             ),
           ),
