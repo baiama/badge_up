@@ -13,6 +13,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: kAppBarTheme,
+        inputDecorationTheme: kInputDecorationTheme,
+        elevatedButtonTheme: kElevationButtonTheme,
       ),
       home: InitialScreen(),
     );

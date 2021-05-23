@@ -3,7 +3,7 @@ import 'package:budge_up/presentation/text_styles.dart';
 import 'package:flutter/material.dart';
 
 var kElevatedButtonStyle1 = ButtonStyle(
-  elevation: MaterialStateProperty.all(0.0),
+  elevation: MaterialStateProperty.all(1.0),
   minimumSize: MaterialStateProperty.all(Size(120, 48)),
   textStyle: MaterialStateProperty.all(kInterSemiBold16ColorWhite),
   foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -18,7 +18,7 @@ var kElevatedButtonStyle1 = ButtonStyle(
 );
 
 var kElevatedButtonStyle2 = ButtonStyle(
-  elevation: MaterialStateProperty.all(0.0),
+  elevation: MaterialStateProperty.all(1.0),
   minimumSize: MaterialStateProperty.all(Size(120, 48)),
   textStyle: MaterialStateProperty.all(kInterSemiBold16ColorWhite),
   foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -28,6 +28,21 @@ var kElevatedButtonStyle2 = ButtonStyle(
       side: BorderSide(
         color: Colors.white,
       ),
+      borderRadius: BorderRadius.all(
+        Radius.circular(100.0),
+      ),
+    ),
+  ),
+);
+
+var kElevatedButtonStyle3 = ButtonStyle(
+  elevation: MaterialStateProperty.all(1.0),
+  minimumSize: MaterialStateProperty.all(Size(120, 48)),
+  textStyle: MaterialStateProperty.all(kInterSemiBold16ColorWhite),
+  foregroundColor: MaterialStateProperty.all(Colors.white),
+  backgroundColor: MaterialStateProperty.all(kColor2980B9),
+  shape: MaterialStateProperty.all(
+    RoundedRectangleBorder(
       borderRadius: BorderRadius.all(
         Radius.circular(100.0),
       ),
