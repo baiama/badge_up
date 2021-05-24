@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _index = 0;
   final _screens = [
     ParkingAuto(),
     ParkScreen(),
@@ -21,6 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: _screens[_index],
+      bottomNavigationBar: BottomAppBar(),
+    );
   }
 }
