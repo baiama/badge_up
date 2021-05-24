@@ -13,6 +13,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     super.initState();
+    Provider.of<RegisterProvider>(context, listen: false).setUp();
   }
 
   @override
