@@ -25,7 +25,47 @@ class AuthApi {
     } on DioError catch (e) {
       print(e);
       if (e.response != null) {
-        if (e.response!.statusCode == 400 || e.response!.statusCode == 401) {
+        if (e.response!.statusCode == 400 ||
+            e.response!.statusCode == 401 ||
+            e.response!.statusCode == 404) {
+          String err = e.response!.data['error'];
+          onFailure(err);
+        } else {
+          onFailure(Strings.errorEmpty3);
+        }
+      } else {
+        onFailure(Strings.errorEmpty3);
+      }
+      print(e.response);
+      print(e.response!.realUri);
+      print(e.response!.statusCode);
+      print(e.response!.data);
+    }
+  }
+
+  void resetPassword(
+      {required email,
+      required Function onSuccess,
+      required Function(String) onFailure}) async {
+    FormData formData = FormData.fromMap({
+      "email": email,
+    });
+    print(formData.fields);
+    Dio dio = await BaseApi().dio;
+    try {
+      Response response = await dio.post('restore/email/', data: formData);
+      print(response.data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        onSuccess();
+      } else {
+        onFailure(Strings.errorEmpty3);
+      }
+    } on DioError catch (e) {
+      print(e);
+      if (e.response != null) {
+        if (e.response!.statusCode == 400 ||
+            e.response!.statusCode == 401 ||
+            e.response!.statusCode == 404) {
           String err = e.response!.data['error'];
           onFailure(err);
         } else {
@@ -67,7 +107,9 @@ class AuthApi {
     } on DioError catch (e) {
       print(e);
       if (e.response != null) {
-        if (e.response!.statusCode == 400) {
+        if (e.response!.statusCode == 400 ||
+            e.response!.statusCode == 401 ||
+            e.response!.statusCode == 404) {
           String err = e.response!.data['error'];
           onFailure(err);
         } else {

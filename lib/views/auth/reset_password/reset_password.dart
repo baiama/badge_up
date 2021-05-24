@@ -1,8 +1,21 @@
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
+import 'package:budge_up/views/auth/reset_password/reset_password_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ResetPasswordScreen extends StatelessWidget {
+class ResetPasswordScreen extends StatefulWidget {
+  @override
+  _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
+}
+
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ResetPasswordProvider>(context, listen: false).setUp();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,36 +35,42 @@ class ResetPasswordScreen extends StatelessWidget {
             }
           }
         },
-        child: Container(
-          color: Colors.white,
-          padding: EdgeInsets.all(24),
-          child: Form(
-            autovalidateMode: AutovalidateMode.always,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(height: 25),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: 'Email *',
-                  ),
-                ),
-                SizedBox(height: 26),
-                Text(
-                  'Некорректное заполнение: Email',
-                  style: kInterReg16ColorCC6666,
-                  textAlign: TextAlign.center,
-                ),
-                Expanded(child: Container()),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context, 'yes');
+        child: Consumer<ResetPasswordProvider>(
+          builder: (BuildContext context, provider, Widget? child) {
+            return Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: 25),
+                  TextFormField(
+                    onChanged: (value) {
+                      provider.email = value;
                     },
-                    child: Text('Восстановить пароль')),
-                SizedBox(height: 70),
-              ],
-            ),
-          ),
+                    decoration: InputDecoration(
+                      hintText: 'Email *',
+                    ),
+                  ),
+                  SizedBox(height: 26),
+                  Text(
+                    provider.error,
+                    style: kInterReg16ColorCC6666,
+                    textAlign: TextAlign.center,
+                  ),
+                  Expanded(child: Container()),
+                  ElevatedButton(
+                      onPressed: () {
+                        provider.resetPassword(onSuccess: () {});
+                      },
+                      child: provider.isRequestSend
+                          ? CircularLoader()
+                          : Text('Восстановить пароль')),
+                  SizedBox(height: 70),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
