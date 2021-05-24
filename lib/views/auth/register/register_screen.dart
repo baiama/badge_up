@@ -18,7 +18,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _open() async {
-    var url = '“https://budgeup.ru/privacy_policy.html';
+    var url = 'https://budgeup.ru/privacy_policy.html';
     if (await canLaunch(url)) {
       launch(url);
     }
