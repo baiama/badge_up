@@ -30,6 +30,16 @@ class AuthApi {
       }
     } on DioError catch (e) {
       print(e);
+      if (e.response != null) {
+        if (e.response!.statusCode == 400) {
+          String err = e.response!.data['error'];
+          onFailure(err);
+        } else {
+          onFailure(Strings.errorEmpty3);
+        }
+      } else {
+        onFailure(Strings.errorEmpty3);
+      }
       print(e.response);
       print(e.response!.realUri);
       print(e.response!.statusCode);
