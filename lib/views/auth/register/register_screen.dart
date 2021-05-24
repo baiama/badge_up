@@ -16,6 +16,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     Provider.of<RegisterProvider>(context, listen: false).setUp();
   }
 
+  void _open() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,13 +107,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: provider.isRequestSend
                             ? CircularLoader()
                             : Text('Зарегистрироваться')),
-                    SizedBox(height: 24),
-                    Text(
-                      'Нажав на «Зарегистрироваться», вы соглашаетесь с условиями пользования',
-                      style: kInterReg14Color2980B9,
-                      textAlign: TextAlign.center,
+                    SizedBox(height: 10),
+                    GestureDetector(
+                      onTap: () {
+                        _open();
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(14),
+                        color: Colors.white,
+                        child: Text(
+                          'Нажав на «Зарегистрироваться», вы соглашаетесь с условиями пользования',
+                          style: kInterReg14Color2980B9,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     ),
-                    SizedBox(height: 24),
+                    SizedBox(height: 10),
                   ],
                 );
               },
