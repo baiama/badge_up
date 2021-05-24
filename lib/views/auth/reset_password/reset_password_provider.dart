@@ -20,7 +20,6 @@ class ResetPasswordProvider extends AuthProvider {
           },
           email: email!,
           onFailure: (value) {
-            // onSuccess();
             setError = value;
             setIsRequestSend = false;
           });
