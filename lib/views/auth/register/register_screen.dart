@@ -3,6 +3,7 @@ import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/views/auth/register/register_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -16,7 +17,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     Provider.of<RegisterProvider>(context, listen: false).setUp();
   }
 
-  void _open() {}
+  void _open() async {
+    var url = '“https://budgeup.ru/privacy_policy.html';
+    if (await canLaunch(url)) {
+      launch(url);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
