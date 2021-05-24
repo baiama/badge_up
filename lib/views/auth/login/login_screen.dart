@@ -78,12 +78,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           : Text('Войти')),
                   SizedBox(height: 10),
                   GestureDetector(
-                    onTap: () async {
-                      final result = await Navigator.push(
+                    onTap: () {
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => ResetPasswordScreen()));
-                      print(result);
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 14),

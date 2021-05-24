@@ -61,7 +61,22 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   Expanded(child: Container()),
                   ElevatedButton(
                       onPressed: () {
-                        provider.resetPassword(onSuccess: () {});
+                        provider.resetPassword(onSuccess: () {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: Colors.white,
+                              duration: Duration(seconds: 3),
+                              content: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                child: Text(
+                                  'Новый пароль отправлен на почту',
+                                  style: kInterReg16ColorCC6666.copyWith(
+                                      color: Colors.green),
+                                ),
+                              )));
+                          Future.delayed(Duration(seconds: 3)).then((value) {
+                            Navigator.pop(context, 'yes');
+                          });
+                        });
                       },
                       child: provider.isRequestSend
                           ? CircularLoader()
