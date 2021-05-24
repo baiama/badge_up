@@ -101,7 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     ElevatedButton(
                         onPressed: () {
-                          provider.register();
+                          provider.register(onSuccess: () {});
                         },
                         child: Text('Зарегистрироваться')),
                     SizedBox(height: 24),
