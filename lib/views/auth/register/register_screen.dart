@@ -90,12 +90,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     SizedBox(height: 24),
-                    if (provider.error.length > 0)
-                      Text(
-                        provider.error,
-                        style: kInterReg16ColorCC6666,
-                        textAlign: TextAlign.center,
-                      ),
+                    Text(
+                      provider.error,
+                      style: kInterReg16ColorCC6666,
+                      textAlign: TextAlign.center,
+                    ),
                     SizedBox(
                       height: 130,
                     ),
@@ -103,7 +102,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onPressed: () {
                           provider.register(onSuccess: () {});
                         },
-                        child: Text('Зарегистрироваться')),
+                        child: provider.isRequestSend
+                            ? CircularLoader()
+                            : Text('Зарегистрироваться')),
                     SizedBox(height: 24),
                     Text(
                       'Нажав на «Зарегистрироваться», вы соглашаетесь с условиями пользования',

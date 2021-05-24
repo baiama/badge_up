@@ -44,7 +44,7 @@ class RegisterProvider extends AuthProvider {
       return;
     }
 
-    if (password!.length < 5) {
+    if (password!.length < 6) {
       setError = 'Пароль должен быть, не менее 5 символов';
       notifyListeners();
       return;
@@ -63,15 +63,21 @@ class RegisterProvider extends AuthProvider {
     }
 
     setError = '';
+    if (!isRequestSend) {
+      setIsRequestSend = true;
 
-    api.register(
-        onSuccess: () {},
-        email: email!,
-        name: name!,
-        password: password!,
-        phone: phone!,
-        onFailure: (value) {
-          setError = value;
-        });
+      api.register(
+          onSuccess: () {
+            setIsRequestSend = false;
+          },
+          email: email!,
+          name: name!,
+          password: password!,
+          phone: phone!,
+          onFailure: (value) {
+            setError = value;
+            setIsRequestSend = false;
+          });
+    }
   }
 }
