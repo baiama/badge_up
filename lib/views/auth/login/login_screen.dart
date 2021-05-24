@@ -69,7 +69,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     textAlign: TextAlign.center,
                   ),
                   Expanded(child: Container()),
-                  ElevatedButton(onPressed: () {}, child: Text('Войти')),
+                  ElevatedButton(
+                      onPressed: () {
+                        provider.login(onSuccess: () {});
+                      },
+                      child: provider.isRequestSend
+                          ? CircularLoader()
+                          : Text('Войти')),
                   SizedBox(height: 10),
                   GestureDetector(
                     onTap: () async {
