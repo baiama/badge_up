@@ -1,4 +1,5 @@
 import 'package:budge_up/base/base_api.dart';
+import 'package:budge_up/utils/preference_helper.dart';
 import 'package:budge_up/utils/strings.dart';
 import 'package:dio/dio.dart';
 
@@ -18,7 +19,9 @@ class AuthApi {
       Response response = await dio.post('token/', data: formData);
       print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        onSuccess();
+        String token = response.data['access_token'];
+        PreferenceHelper()
+            .setToken(token: token, refresh: '', onSuccess: onSuccess);
       } else {
         onFailure(Strings.errorEmpty3);
       }
@@ -94,13 +97,13 @@ class AuthApi {
       "email": email,
       'password': password,
     });
-    print(formData.fields);
     Dio dio = await BaseApi().dio;
     try {
       Response response = await dio.post('registration/', data: formData);
-      print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        onSuccess();
+        String token = response.data['access_token'];
+        PreferenceHelper()
+            .setToken(token: token, refresh: '', onSuccess: onSuccess);
       } else {
         onFailure(Strings.errorEmpty3);
       }

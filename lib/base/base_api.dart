@@ -1,3 +1,4 @@
+import 'package:budge_up/utils/preference_helper.dart';
 import 'package:dio/dio.dart';
 
 class BaseApi {
@@ -10,15 +11,12 @@ class BaseApi {
         "accept": 'application/json',
       },
     );
-    // options.headers["content-language"] = "ru";
-    // options.headers["Accept-Language"] = "ru";
-    // if (_token == null) {
-    //   _token = await _preferenceHelper.token;
-    //   print(_token);
-    // }
-    // if (_token != null && _token.length > 0) {
-    //   options.headers['Authorization'] = 'Bearer $_token';
-    // }
+
+    var _token = await PreferenceHelper().token;
+
+    if (_token.length > 0) {
+      options.headers['Authorization'] = 'Bearer $_token';
+    }
 
     Dio d = Dio(options);
     return d;
