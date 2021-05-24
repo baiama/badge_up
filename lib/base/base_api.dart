@@ -5,7 +5,7 @@ class BaseApi {
     BaseOptions options = new BaseOptions(
       connectTimeout: 5000,
       receiveTimeout: 3000,
-      baseUrl: 'https://budgeup.ru/api/',
+      baseUrl: 'https://budgeup.ru/api/v1/',
       headers: {
         "accept": 'application/json',
       },

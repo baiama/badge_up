@@ -8,7 +8,7 @@ class AuthProvider extends BaseProvider {
   String? email;
   String? password;
   String? passwordRepeat;
-  String _error = 'Некорректное заполнение: ';
+  String _error = '';
 
   void setUp() {
     name = null;
@@ -16,7 +16,7 @@ class AuthProvider extends BaseProvider {
     email = null;
     password = null;
     passwordRepeat = null;
-    _error = 'Некорректное заполнение: ';
+    _error = '';
   }
 
   String get error => _error;
