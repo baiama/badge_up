@@ -3,7 +3,6 @@ import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/views/auth/login/login_screen.dart';
 import 'package:budge_up/views/auth/register/register_screen.dart';
-import 'package:budge_up/views/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class InitialScreen extends StatelessWidget {
@@ -28,7 +27,7 @@ class InitialScreen extends StatelessWidget {
                 style: kElevatedButtonStyle1,
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
                 },
                 child: Text('Вход'),
               ),
