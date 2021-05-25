@@ -25,13 +25,13 @@ class _InitialScreenState extends State<InitialScreen> {
     String token = await PreferenceHelper().token;
     Future.delayed(Duration(seconds: 4)).then((value) {
       if (token.length > 0) {
-        // Navigator.pushAndRemoveUntil(
-        //     context,
-        //     MaterialPageRoute(builder: (context) => HomeScreen()),
-        //     (route) => false);
-        setState(() {
-          isAuthorized = false;
-        });
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+            (route) => false);
+        // setState(() {
+        //   isAuthorized = false;
+        // });
       } else {
         setState(() {
           isAuthorized = false;
