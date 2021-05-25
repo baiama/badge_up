@@ -24,7 +24,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_index],
-      bottomNavigationBar: BottomAppBar(),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [],
+        onTap: (value) {
+          setState(() {
+            _index = value;
+          });
+        },
+      ),
     );
   }
 }
