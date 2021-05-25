@@ -9,6 +9,14 @@ class LoginProvider extends AuthProvider {
       return;
     }
 
+    int? number = int.tryParse(email!);
+
+    if (number != null) {
+      if (!email!.startsWith('+')) {
+        email = '+' + email!;
+      }
+    }
+
     if (password == null || password!.length == 0) {
       setError = Strings.errorEmpty + 'Пароль';
       notifyListeners();
@@ -18,10 +26,10 @@ class LoginProvider extends AuthProvider {
     setError = '';
     if (!isRequestSend) {
       setIsRequestSend = true;
-
       api.login(
           onSuccess: () {
             setIsRequestSend = false;
+            onSuccess();
           },
           email: email!,
           password: password!,

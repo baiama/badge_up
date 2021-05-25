@@ -20,7 +20,6 @@ class AuthApi {
       print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
         String token = response.data['access_token'];
-        DateTi
         PreferenceHelper()
             .setToken(token: token, refresh: '', onSuccess: onSuccess);
       } else {
