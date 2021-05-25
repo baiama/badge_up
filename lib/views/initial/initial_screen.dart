@@ -29,9 +29,6 @@ class _InitialScreenState extends State<InitialScreen> {
             context,
             MaterialPageRoute(builder: (context) => HomeScreen()),
             (route) => false);
-        // setState(() {
-        //   isAuthorized = false;
-        // });
       } else {
         setState(() {
           isAuthorized = false;
