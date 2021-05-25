@@ -46,6 +46,24 @@ class AuthApi {
     }
   }
 
+  void refreshToken(
+      {required Function onSuccess, required Function onFailure}) async {
+    Dio dio = await BaseApi().dio;
+    try {
+      Response response = await dio.post('token/refresh/');
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        String token = response.data['access_token'];
+        PreferenceHelper()
+            .setToken(token: token, refresh: '', onSuccess: onSuccess);
+      } else {
+        onFailure();
+      }
+    } on DioError catch (e) {
+      print(e);
+      onFailure();
+    }
+  }
+
   void resetPassword(
       {required email,
       required Function onSuccess,

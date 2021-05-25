@@ -1,3 +1,4 @@
+import 'package:budge_up/api/auth_api.dart';
 import 'package:budge_up/presentation/button_styles.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
@@ -6,6 +7,7 @@ import 'package:budge_up/views/auth/login/login_screen.dart';
 import 'package:budge_up/views/auth/register/register_screen.dart';
 import 'package:budge_up/views/home/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class InitialScreen extends StatefulWidget {
   @override
@@ -23,12 +25,26 @@ class _InitialScreenState extends State<InitialScreen> {
 
   void checkToken() async {
     String token = await PreferenceHelper().token;
-    Future.delayed(Duration(seconds: 4)).then((value) {
+    Future.delayed(Duration(seconds: 2)).then((value) {
       if (token.length > 0) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-            (route) => false);
+        Duration tokenTime = JwtDecoder.getRemainingTime(token);
+        if (tokenTime.inDays < 2) {
+          AuthApi().refreshToken(onSuccess: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+                (route) => false);
+          }, onFailure: () {
+            setState(() {
+              isAuthorized = false;
+            });
+          });
+        } else {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+              (route) => false);
+        }
       } else {
         setState(() {
           isAuthorized = false;
