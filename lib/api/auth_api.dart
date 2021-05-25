@@ -89,6 +89,7 @@ class AuthApi {
       required String phone,
       required email,
       required String password,
+      required String passwordConfirm,
       required Function onSuccess,
       required Function(String) onFailure}) async {
     FormData formData = FormData.fromMap({
@@ -96,6 +97,7 @@ class AuthApi {
       'name': name,
       "email": email,
       'password': password,
+      'password_confirmation': passwordConfirm,
     });
     Dio dio = await BaseApi().dio;
     try {

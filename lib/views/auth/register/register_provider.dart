@@ -66,18 +66,20 @@ class RegisterProvider extends AuthProvider {
     if (!isRequestSend) {
       setIsRequestSend = true;
       api.register(
-          onSuccess: () {
-            setIsRequestSend = false;
-            onSuccess();
-          },
-          email: email!,
-          name: name!,
-          password: password!,
-          phone: phone!,
-          onFailure: (value) {
-            setError = value;
-            setIsRequestSend = false;
-          });
+        onSuccess: () {
+          setIsRequestSend = false;
+          onSuccess();
+        },
+        email: email!,
+        name: name!,
+        password: password!,
+        phone: phone!,
+        passwordConfirm: passwordRepeat!,
+        onFailure: (value) {
+          setError = value;
+          setIsRequestSend = false;
+        },
+      );
     }
   }
 }
