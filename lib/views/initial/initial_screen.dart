@@ -51,7 +51,9 @@ class _InitialScreenState extends State<InitialScreen> {
                 child: Container(
                   padding: EdgeInsets.only(bottom: 150),
                   alignment: Alignment.center,
-                  child: kLogoIcon,
+                  child: CustomIcon(
+                    customIcon: CustomIcons.logo,
+                  ),
                 ),
               ),
               if (!isAuthorized)

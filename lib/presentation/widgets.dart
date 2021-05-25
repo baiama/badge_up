@@ -9,7 +9,7 @@ class CustomBackButton extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).pop();
         },
-        icon: kBackIcon);
+        icon: CustomIcon(customIcon: CustomIcons.backIcon));
   }
 }
 
