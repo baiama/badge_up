@@ -1,3 +1,6 @@
+import 'package:budge_up/presentation/color_scheme.dart';
+import 'package:budge_up/presentation/custom_icons.dart';
+import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/views/garage/garage_screen.dart';
 import 'package:budge_up/views/park/park_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto.dart';
@@ -20,12 +23,43 @@ class _HomeScreenState extends State<HomeScreen> {
     SettingsScreen(),
   ];
 
+  BottomNavigationBarItem getNavItem(String item, String label) {
+    return BottomNavigationBarItem(
+        icon: Container(
+          padding: EdgeInsets.only(top: 8, bottom: 3),
+          child: CustomIcon(
+            customIcon: item,
+          ),
+        ),
+        activeIcon: Container(
+            padding: EdgeInsets.only(top: 8, bottom: 3),
+            child: CustomIcon(
+              customIcon: item,
+              color: kColor666666,
+            )),
+        label: label);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_index],
       bottomNavigationBar: BottomNavigationBar(
-        items: [],
+        backgroundColor: kColorFAFAFA,
+        selectedItemColor: kColor666666,
+        unselectedItemColor: kColorCCCCCC,
+        selectedFontSize: 10,
+        unselectedFontSize: 10,
+        unselectedLabelStyle: kInterReg10.copyWith(color: kColorCCCCCC),
+        selectedLabelStyle: kInterReg10.copyWith(color: kColor666666),
+        items: [
+          getNavItem(CustomIcons.parking, 'Парковаться'),
+          getNavItem(CustomIcons.park, 'Парковки'),
+          getNavItem(CustomIcons.taxi, 'Гараж'),
+          getNavItem(CustomIcons.settings, 'Настройки'),
+        ],
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _index,
         onTap: (value) {
           setState(() {
             _index = value;

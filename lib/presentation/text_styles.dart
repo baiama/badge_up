@@ -9,6 +9,12 @@ const kInterReg14Color2980B9 = TextStyle(
   color: kColor2980B9,
 );
 
+const kInterReg10 = TextStyle(
+  fontFamily: 'Inter-Regular',
+  fontSize: 10,
+  height: 12.1 / 10,
+);
+
 const kInterReg16ColorBDBDBD = TextStyle(
   fontFamily: 'Inter-Regular',
   fontSize: 16,
