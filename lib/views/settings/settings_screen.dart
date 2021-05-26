@@ -1,4 +1,8 @@
+import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
+import 'package:budge_up/presentation/text_styles.dart';
+import 'package:budge_up/presentation/widgets.dart';
+import 'package:budge_up/utils/strings.dart';
 import 'package:budge_up/views/initial/initial_screen.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +44,137 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
         ],
+      ),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        onVerticalDragUpdate: (details) {
+          if (details.primaryDelta != null) {
+            if (details.primaryDelta! > 15 || details.primaryDelta! < 15) {
+              FocusScope.of(context).unfocus();
+            }
+          }
+        },
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            padding: EdgeInsets.all(24),
+            child: Consumer<SettingsProvider>(
+              builder: (context, provider, Widget? child) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(height: 50),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Container(
+                        height: 120,
+                        width: 120,
+                        alignment: Alignment.center,
+                        child: CustomIcon(
+                          customIcon: CustomIcons.addPhoto,
+                        ),
+                        decoration: BoxDecoration(
+                          color: kColorF6F6F6,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: kColor26656565,
+                              spreadRadius: 4,
+                              blurRadius: 20,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 4,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        provider.user.name,
+                        style: kInterSemiBold18.copyWith(color: Colors.black),
+                      ),
+                    ),
+                    SizedBox(height: 50),
+                    TextFormField(
+                      onChanged: (value) {
+                        provider.name = value;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Имя *',
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    TextFormField(
+                      onChanged: (value) {
+                        provider.phone = value;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Телефон *',
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    TextFormField(
+                      onChanged: (value) {
+                        provider.email = value;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Email *',
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    TextFormField(
+                      onChanged: (value) {
+                        provider.password = value;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Пароль *',
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    TextFormField(
+                      onChanged: (value) {
+                        provider.passwordRepeat = value;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Пароль еще раз *',
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    Text(
+                      provider.error,
+                      style: kInterReg16ColorCC6666,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 130,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          // provider.register(onSuccess: () {
+                          //   Navigator.pushAndRemoveUntil(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //           builder: (context) => HomeScreen()),
+                          //           (route) => false);
+                          // });
+                        },
+                        child: provider.isRequestSend
+                            ? CircularLoader()
+                            : Text(Strings.save)),
+                    SizedBox(height: 10),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
       ),
     );
   }
