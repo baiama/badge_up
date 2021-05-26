@@ -66,48 +66,105 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SizedBox(height: 50),
-                    Container(
-                      alignment: Alignment.center,
-                      child: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return ImageAlert(
-                                  onImageSelected: (image) {
-                                    provider.image = image;
-                                    provider.updateView();
-                                  },
-                                );
-                              });
-                        },
-                        child: Container(
-                          height: 120,
-                          width: 120,
-                          alignment: Alignment.center,
-                          child: CustomIcon(
-                            customIcon: CustomIcons.addPhoto,
-                          ),
-                          decoration: BoxDecoration(
-                            color: kColorF6F6F6,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: kColor26656565,
-                                spreadRadius: 4,
-                                blurRadius: 20,
-                                offset: Offset(0, 4),
+                    SizedBox(height: 26),
+                    if (provider.image == null &&
+                        provider.user.photo.length == 0)
+                      Container(
+                        alignment: Alignment.center,
+                        child: GestureDetector(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return ImageAlert(
+                                    onImageSelected: (image) {
+                                      provider.image = image;
+                                      provider.updateView();
+                                    },
+                                  );
+                                });
+                          },
+                          child: Container(
+                            height: 120,
+                            width: 120,
+                            alignment: Alignment.center,
+                            child: CustomIcon(
+                              customIcon: CustomIcons.addPhoto,
+                            ),
+                            decoration: BoxDecoration(
+                              color: kColorF6F6F6,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: kColor26656565,
+                                  spreadRadius: 4,
+                                  blurRadius: 20,
+                                  offset: Offset(0, 4),
+                                ),
+                              ],
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 4,
                               ),
-                            ],
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 4,
                             ),
                           ),
                         ),
                       ),
-                    ),
+                    if (provider.image != null ||
+                        provider.user.photo.length > 0)
+                      Container(
+                        alignment: Alignment.center,
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 120,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                color: kColorF6F6F6,
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: provider.currentImage,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: kColor26656565,
+                                    spreadRadius: 20,
+                                    blurRadius: 20,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 5,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: IconButton(
+                                icon: CustomIcon(
+                                  color: Colors.grey,
+                                  customIcon: CustomIcons.addPhoto,
+                                ),
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return ImageAlert(
+                                          onImageSelected: (image) {
+                                            provider.image = image;
+                                            provider.updateView();
+                                          },
+                                        );
+                                      });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     SizedBox(height: 24),
                     Container(
                       alignment: Alignment.center,
