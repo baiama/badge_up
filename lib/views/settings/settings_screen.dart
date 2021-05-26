@@ -76,8 +76,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               builder: (context) {
                                 return ImageAlert(
                                   onImageSelected: (image) {
-                                    // provider.image = image;
-                                    // provider.updateView();
+                                    provider.image = image;
+                                    provider.updateView();
                                   },
                                 );
                               });
