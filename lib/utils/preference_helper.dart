@@ -11,28 +11,7 @@ class PreferenceHelper {
     }
   }
 
-  Future<String> get refreshToken async {
-    var prefs = await SharedPreferences.getInstance();
-    String? value = prefs.getString('refresh');
-    if (value != null && value.length > 0) {
-      return value;
-    } else {
-      return '';
-    }
-  }
-
-  void setToken(
-      {required String token,
-      required String refresh,
-      required Function onSuccess}) async {
-    var prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', token);
-    await prefs.setString('refresh', refresh);
-    onSuccess();
-  }
-
-  void setAccessToken(
-      {required String token, required Function onSuccess}) async {
+  void setToken({required String token, required Function onSuccess}) async {
     var prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
     onSuccess();
@@ -41,7 +20,6 @@ class PreferenceHelper {
   void clear({required Function onSuccess}) async {
     var prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
-    await prefs.remove('refresh');
     onSuccess();
   }
 }

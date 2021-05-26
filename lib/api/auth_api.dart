@@ -20,8 +20,7 @@ class AuthApi {
       print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
         String token = response.data['access_token'];
-        PreferenceHelper()
-            .setToken(token: token, refresh: '', onSuccess: onSuccess);
+        PreferenceHelper().setToken(token: token, onSuccess: onSuccess);
       } else {
         onFailure(Strings.errorEmpty3);
       }
@@ -53,8 +52,7 @@ class AuthApi {
       Response response = await dio.post('token/refresh/');
       if (response.statusCode == 201 || response.statusCode == 200) {
         String token = response.data['access_token'];
-        PreferenceHelper()
-            .setToken(token: token, refresh: '', onSuccess: onSuccess);
+        PreferenceHelper().setToken(token: token, onSuccess: onSuccess);
       } else {
         onFailure();
       }
@@ -122,8 +120,7 @@ class AuthApi {
       Response response = await dio.post('registration/', data: formData);
       if (response.statusCode == 201 || response.statusCode == 200) {
         String token = response.data['access_token'];
-        PreferenceHelper()
-            .setToken(token: token, refresh: '', onSuccess: onSuccess);
+        PreferenceHelper().setToken(token: token, onSuccess: onSuccess);
       } else {
         onFailure(Strings.errorEmpty3);
       }
