@@ -1,5 +1,3 @@
-import 'dart:html';
-
 class UserModel {
   late int id;
   late String name;
