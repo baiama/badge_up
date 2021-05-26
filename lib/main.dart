@@ -3,6 +3,7 @@ import 'package:budge_up/views/auth/login/login_provider.dart';
 import 'package:budge_up/views/auth/register/register_provider.dart';
 import 'package:budge_up/views/auth/reset_password/reset_password_provider.dart';
 import 'package:budge_up/views/initial/initial_screen.dart';
+import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => RegisterProvider()),
         ChangeNotifierProvider(create: (_) => LoginProvider()),
+        ChangeNotifierProvider(create: (_) => SettingsProvider()),
         ChangeNotifierProvider(create: (_) => ResetPasswordProvider()),
       ],
       child: MaterialApp(
