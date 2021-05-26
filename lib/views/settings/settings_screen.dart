@@ -1,3 +1,4 @@
+import 'package:budge_up/components/alerts.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/text_styles.dart';
@@ -68,27 +69,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     SizedBox(height: 50),
                     Container(
                       alignment: Alignment.center,
-                      child: Container(
-                        height: 120,
-                        width: 120,
-                        alignment: Alignment.center,
-                        child: CustomIcon(
-                          customIcon: CustomIcons.addPhoto,
-                        ),
-                        decoration: BoxDecoration(
-                          color: kColorF6F6F6,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: kColor26656565,
-                              spreadRadius: 4,
-                              blurRadius: 20,
-                              offset: Offset(0, 4),
+                      child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return ImageAlert(
+                                  onImageSelected: (image) {
+                                    // provider.image = image;
+                                    // provider.updateView();
+                                  },
+                                );
+                              });
+                        },
+                        child: Container(
+                          height: 120,
+                          width: 120,
+                          alignment: Alignment.center,
+                          child: CustomIcon(
+                            customIcon: CustomIcons.addPhoto,
+                          ),
+                          decoration: BoxDecoration(
+                            color: kColorF6F6F6,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: kColor26656565,
+                                spreadRadius: 4,
+                                blurRadius: 20,
+                                offset: Offset(0, 4),
+                              ),
+                            ],
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 4,
                             ),
-                          ],
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 4,
                           ),
                         ),
                       ),
