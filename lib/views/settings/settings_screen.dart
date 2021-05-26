@@ -1,4 +1,5 @@
 import 'package:budge_up/presentation/custom_icons.dart';
+import 'package:budge_up/views/initial/initial_screen.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text('Настройки'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Provider.of<SettingsProvider>(context, listen: false).logout(() {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => InitialScreen()),
+                    (route) => false);
+              });
+            },
             icon: CustomIcon(
               customIcon: CustomIcons.logout,
             ),
