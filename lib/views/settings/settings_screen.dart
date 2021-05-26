@@ -3,6 +3,7 @@ import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
+import 'package:budge_up/utils/full_screen.dart';
 import 'package:budge_up/utils/strings.dart';
 import 'package:budge_up/views/initial/initial_screen.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
@@ -116,27 +117,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         alignment: Alignment.center,
                         child: Stack(
                           children: [
-                            Container(
-                              height: 120,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                color: kColorF6F6F6,
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: provider.currentImage,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: kColor26656565,
-                                    spreadRadius: 20,
-                                    blurRadius: 20,
-                                    offset: Offset(0, 4),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FullScreenImage(
+                                            provider.user.photo,
+                                            provider.image)));
+                              },
+                              child: Container(
+                                height: 120,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                  color: kColorF6F6F6,
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: provider.currentImage,
                                   ),
-                                ],
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 5,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: kColor26656565,
+                                      spreadRadius: 20,
+                                      blurRadius: 20,
+                                      offset: Offset(0, 4),
+                                    ),
+                                  ],
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 5,
+                                  ),
                                 ),
                               ),
                             ),
