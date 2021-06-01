@@ -37,7 +37,13 @@ class _SearchResultState extends State<SearchResult> {
             );
           }
 
-          return Container();
+          return Container(
+            padding: EdgeInsets.only(top: 50),
+            alignment: Alignment.center,
+            child: EmptyData(
+                title:
+                    'К сожалению, пользователь\nне оставил данные о парковке'),
+          );
         },
       ),
     );
