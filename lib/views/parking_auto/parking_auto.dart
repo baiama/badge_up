@@ -226,19 +226,33 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         SizedBox(width: 8),
                         Expanded(
                           flex: 4,
-                          child: Container(
-                            padding: EdgeInsets.only(top: 14, bottom: 14),
-                            decoration: BoxDecoration(
-                              color: kColorF6F6F6,
-                              borderRadius: BorderRadius.circular(51),
-                              border: Border.all(
-                                color: kColorE8E8E8,
+                          child: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return MonthListView(
+                                      onSelected: (value) {
+                                        provider.month = value;
+                                        provider.updateView();
+                                      },
+                                    );
+                                  });
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(top: 14, bottom: 14),
+                              decoration: BoxDecoration(
+                                color: kColorF6F6F6,
+                                borderRadius: BorderRadius.circular(51),
+                                border: Border.all(
+                                  color: kColorE8E8E8,
+                                ),
                               ),
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              MonthModel.monthShort[provider.month],
-                              style: kInterReg16ColorBDBDBD,
+                              alignment: Alignment.center,
+                              child: Text(
+                                MonthModel.monthShort[provider.month],
+                                style: kInterReg16ColorBDBDBD,
+                              ),
                             ),
                           ),
                         ),

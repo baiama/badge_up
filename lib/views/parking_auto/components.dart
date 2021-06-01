@@ -1,4 +1,5 @@
 import 'package:budge_up/models/auto_model.dart';
+import 'package:budge_up/models/month_model.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/utils/strings.dart';
@@ -180,6 +181,70 @@ class _AutoListViewState extends State<AutoListView> {
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 22, vertical: 26),
+                  child: Text(
+                    'Отменить',
+                    style: kInterReg16ColorCC6666.copyWith(
+                      color: kColor2980B9,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MonthListView extends StatelessWidget {
+  final Function(int) onSelected;
+  const MonthListView({Key? key, required this.onSelected}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: SizedBox(
+        height: 500,
+        width: MediaQuery.of(context).size.width - 48,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Выберите месяц',
+                style: kInterSemiBold18,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 25),
+              ListView.builder(
+                  itemCount: MonthModel.month.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                        onSelected(index);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(bottom: 21),
+                        decoration: BoxDecoration(color: Colors.white),
+                        child: Text(
+                          MonthModel.month[index],
+                          style: kInterReg16ColorBlack,
+                        ),
+                      ),
+                    );
+                  }),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
                   child: Text(
                     'Отменить',
                     style: kInterReg16ColorCC6666.copyWith(
