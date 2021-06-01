@@ -214,6 +214,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                               onFailure: (value) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
+                                    backgroundColor: Colors.white,
                                     content: Text(
                                       value,
                                       style: kInterReg16ColorBlack,
