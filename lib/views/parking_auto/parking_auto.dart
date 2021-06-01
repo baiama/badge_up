@@ -209,7 +209,18 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             padding:
                                 MaterialStateProperty.all(EdgeInsets.zero)),
                         onPressed: () {
-                          provider.create();
+                          provider.create(
+                              onSuccess: () {},
+                              onFailure: (value) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      value,
+                                      style: kInterReg16ColorBlack,
+                                    ),
+                                  ),
+                                );
+                              });
                         },
                         child: provider.isCreating
                             ? CircularLoader()

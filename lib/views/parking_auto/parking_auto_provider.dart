@@ -73,7 +73,8 @@ class ParkingAutoProvider extends BaseProvider {
     notifyListeners();
   }
 
-  void create() {
+  void create(
+      {required Function onSuccess, required Function(String) onFailure}) {
     if (!isCreating) {
       setIsCreating = true;
       _parkApi.create(
@@ -84,9 +85,11 @@ class ParkingAutoProvider extends BaseProvider {
         closeGarageId: null,
         closeNumber: null,
         onSuccess: () {
+          onSuccess();
           setIsCreating = false;
         },
-        onFailure: () {
+        onFailure: (value) {
+          onFailure(value);
           setIsCreating = false;
         },
       );
