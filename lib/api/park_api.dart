@@ -25,31 +25,30 @@ class ParkApi {
   }
 
   void create({
-    required String markAuto,
-    required String modelAuto,
-    required String numberAuto,
+    required int garageId,
+    required String datetime,
+    required String phone,
+    required int? closeId,
+    required int? closeGarageId,
+    required String? closeNumber,
     required Function onSuccess,
     required Function onFailure,
-    required int id,
   }) async {
     Dio dio = await BaseApi().dio;
     FormData formData = FormData.fromMap({
-      "number": numberAuto,
-      'model': modelAuto,
-      'brand': markAuto,
+      "garage_id": garageId,
+      'datetime': datetime,
+      'phone': phone,
+      'close_id': closeId,
+      'close_garage_id': closeId,
+      'close_number': closeId,
     });
     print(formData.fields);
-    print(id);
     try {
-      Response response = id == 0
-          ? await dio.post(
-              'profile/garage/',
-              data: formData,
-            )
-          : await dio.put(
-              'profile/garage/$id/',
-              data: formData,
-            );
+      Response response = await dio.post(
+        '/parking/',
+        data: formData,
+      );
       print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
         onSuccess();

@@ -73,5 +73,9 @@ class ParkingAutoProvider extends BaseProvider {
     notifyListeners();
   }
 
-  void create() {}
+  void create() {
+    if (!isCreating) {
+      setIsCreating = true;
+    }
+  }
 }
