@@ -1,3 +1,4 @@
+import 'package:budge_up/models/auto_model.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/views/garage/garage_provider.dart';
@@ -5,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GarageAddScreen extends StatefulWidget {
-  const GarageAddScreen({Key? key}) : super(key: key);
+  final AutoModel? auto;
+  const GarageAddScreen({Key? key, this.auto}) : super(key: key);
 
   @override
   _GarageAddScreenState createState() => _GarageAddScreenState();
@@ -46,6 +48,8 @@ class _GarageAddScreenState extends State<GarageAddScreen> {
                 children: [
                   SizedBox(height: 25),
                   TextFormField(
+                    initialValue:
+                        widget.auto != null ? widget.auto!.brand : null,
                     onChanged: (value) {
                       provider.markAuto = value;
                     },
@@ -55,6 +59,8 @@ class _GarageAddScreenState extends State<GarageAddScreen> {
                   ),
                   SizedBox(height: 24),
                   TextFormField(
+                    initialValue:
+                        widget.auto != null ? widget.auto!.model : null,
                     onChanged: (value) {
                       provider.modelAuto = value;
                     },
@@ -64,6 +70,8 @@ class _GarageAddScreenState extends State<GarageAddScreen> {
                   ),
                   SizedBox(height: 24),
                   TextFormField(
+                    initialValue:
+                        widget.auto != null ? widget.auto!.number : null,
                     onChanged: (value) {
                       provider.numberAuto = value;
                     },
@@ -80,9 +88,11 @@ class _GarageAddScreenState extends State<GarageAddScreen> {
                   Expanded(child: Container()),
                   ElevatedButton(
                       onPressed: () {
-                        provider.create(onSuccess: () {
-                          Navigator.pop(context);
-                        });
+                        provider.create(
+                            id: widget.auto != null ? widget.auto!.id : 0,
+                            onSuccess: () {
+                              Navigator.pop(context);
+                            });
                       },
                       child: provider.isRequestSend
                           ? CircularLoader()

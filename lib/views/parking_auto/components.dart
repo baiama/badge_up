@@ -153,7 +153,10 @@ class _AutoListViewState extends State<AutoListView> {
                   Navigator.pop(context);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => GarageAddScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => GarageAddScreen(
+                              auto: null,
+                            )),
                   ).then((value) {
                     Provider.of<ParkingAutoProvider>(context, listen: false)
                         .getItems();

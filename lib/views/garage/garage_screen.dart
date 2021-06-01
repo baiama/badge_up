@@ -71,13 +71,24 @@ class _GarageScreenState extends State<GarageScreen> {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.only(top: 20),
-                      child: AutoItem(
-                          auto: provider.items[index],
-                          onDelete: (value) {
-                            provider.delete(value);
-                          },
-                          isLoading: provider.isLoading &&
-                              provider.items[index].id == provider.id),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => GarageAddScreen(
+                                      auto: provider.items[index],
+                                    )),
+                          );
+                        },
+                        child: AutoItem(
+                            auto: provider.items[index],
+                            onDelete: (value) {
+                              provider.delete(value);
+                            },
+                            isLoading: provider.isLoading &&
+                                provider.items[index].id == provider.id),
+                      ),
                     );
                   }),
             );

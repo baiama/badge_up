@@ -12,6 +12,7 @@ class GarageProvider extends BaseProvider {
   List<AutoModel>? _items;
   int id = 0;
   String get error => _error;
+
   void setUp() {
     _error = '';
     modelAuto = null;
@@ -66,7 +67,7 @@ class GarageProvider extends BaseProvider {
     }
   }
 
-  void create({required Function onSuccess}) {
+  Future<void> create({required int id, required Function onSuccess}) async {
     if (modelAuto == null || modelAuto!.length == 0) {
       setError = Strings.errorEmpty + 'Марка авто';
       notifyListeners();
@@ -88,6 +89,7 @@ class GarageProvider extends BaseProvider {
     if (!isRequestSend) {
       setIsRequestSend = true;
       _api.create(
+        id: id,
         onSuccess: () {
           setIsRequestSend = false;
           onSuccess();

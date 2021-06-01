@@ -9,6 +9,7 @@ class GarageApi {
     required String numberAuto,
     required Function onSuccess,
     required Function onFailure,
+    required int id,
   }) async {
     Dio dio = await BaseApi().dio;
     FormData formData = FormData.fromMap({
@@ -16,11 +17,18 @@ class GarageApi {
       'model': modelAuto,
       'brand': markAuto,
     });
+    print(formData.fields);
+    print(id);
     try {
-      Response response = await dio.post(
-        'profile/garage/',
-        data: formData,
-      );
+      Response response = id == 0
+          ? await dio.post(
+              'profile/garage/',
+              data: formData,
+            )
+          : await dio.put(
+              'profile/garage/$id/',
+              data: formData,
+            );
       print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
         onSuccess();
@@ -29,6 +37,8 @@ class GarageApi {
       }
     } on DioError catch (e) {
       print(e);
+      print(e.response);
+      print(e.response!.realUri);
       onFailure();
     }
   }
@@ -42,7 +52,6 @@ class GarageApi {
       Response response = await dio.get(
         'profile/garage/',
       );
-      print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
         Iterable itemsJson = response.data['items'];
         List<AutoModel> items =
@@ -67,7 +76,6 @@ class GarageApi {
       Response response = await dio.delete(
         'profile/garage/$id/',
       );
-      print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
         onSuccess();
       } else {
