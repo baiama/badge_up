@@ -171,8 +171,8 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             ),
                           ),
                         ),
-                        if (provider.number.length > 5) SizedBox(width: 18),
-                        if (provider.number.length > 5)
+                        if (provider.number.length > 3) SizedBox(width: 18),
+                        if (provider.number.length > 3)
                           ElevatedButton(
                               style: ButtonStyle(
                                   padding: MaterialStateProperty.all(
