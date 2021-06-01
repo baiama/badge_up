@@ -11,13 +11,24 @@ class ParkingAutoProvider extends BaseProvider {
   AutoModel? _selectedAuto;
   String _phone = '';
   String number = '';
-
-  void getItems() {
+  String day = '';
+  String month = '9';
+  String year = '';
+  String time = '';
+  void _setUp() {
     _items = [];
     isViewSetup = false;
     _phone = '';
     number = '';
+    day = '';
+    month = '9';
+    year = '';
+    time = '';
     setIsRequestSend = false;
+  }
+
+  void getItems() {
+    _setUp();
     if (!isRequestSend) {
       setIsRequestSend = true;
       _api.getItems(
@@ -85,6 +96,7 @@ class ParkingAutoProvider extends BaseProvider {
         closeGarageId: null,
         closeNumber: null,
         onSuccess: () {
+          _setUp();
           onSuccess();
           setIsCreating = false;
         },

@@ -197,7 +197,71 @@ class _ParkingAutoState extends State<ParkingAuto> {
                       style: kInterBold16,
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 50),
+                    SizedBox(height: 27),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: TextField(
+                            onChanged: (value) {
+                              provider.day = value;
+                            },
+                            decoration: InputDecoration(
+                              hintText: '24',
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 12),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Expanded(
+                          flex: 4,
+                          child: Container(
+                            padding: EdgeInsets.only(top: 14, bottom: 14),
+                            decoration: BoxDecoration(
+                              color: kColorF6F6F6,
+                              borderRadius: BorderRadius.circular(51),
+                              border: Border.all(
+                                color: kColorE8E8E8,
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'сен',
+                              style: kInterReg16ColorBDBDBD,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Expanded(
+                          flex: 5,
+                          child: TextField(
+                            onChanged: (value) {
+                              provider.year = value;
+                            },
+                            decoration: InputDecoration(
+                              hintText: '2021',
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 12),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Expanded(
+                            flex: 5,
+                            child: TextField(
+                              onChanged: (value) {
+                                provider.time = value;
+                              },
+                              decoration: InputDecoration(
+                                hintText: '18:00',
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 12),
+                              ),
+                            )),
+                      ],
+                    ),
+                    SizedBox(height: 27),
                     Text(
                       'Местное время',
                       style:
