@@ -10,7 +10,7 @@ class GarageProvider extends BaseProvider {
   String? numberAuto;
   GarageApi _api = GarageApi();
   List<AutoModel>? _items;
-
+  int id = 0;
   String get error => _error;
 
   void setUp() {
@@ -28,6 +28,8 @@ class GarageProvider extends BaseProvider {
   }
 
   void getItems() {
+    _items = [];
+    setIsRequestSend = false;
     if (!isRequestSend) {
       setIsRequestSend = true;
       _api.getItems(

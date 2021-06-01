@@ -1,6 +1,7 @@
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/text_styles.dart';
+import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,10 @@ class _GarageScreenState extends State<GarageScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => GarageAddScreen()),
-                  );
+                  ).then((value) {
+                    Provider.of<GarageProvider>(context, listen: false)
+                        .getItems();
+                  });
                 },
                 icon: CustomIcon(
                   customIcon: CustomIcons.addNew,
@@ -69,9 +73,12 @@ class _GarageScreenState extends State<GarageScreen> {
                               ),
                               IconButton(
                                 onPressed: () {},
-                                icon: CustomIcon(
-                                  customIcon: CustomIcons.remove,
-                                ),
+                                icon: provider.isRequestSend &&
+                                        provider.items[index].id == provider.id
+                                    ? CircularLoader()
+                                    : CustomIcon(
+                                        customIcon: CustomIcons.remove,
+                                      ),
                               ),
                             ],
                           ),
