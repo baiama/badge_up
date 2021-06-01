@@ -1,3 +1,4 @@
+import 'package:budge_up/models/month_model.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/custom_themes.dart';
@@ -236,7 +237,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             ),
                             alignment: Alignment.center,
                             child: Text(
-                              'сен',
+                              MonthModel.monthShort[provider.month],
                               style: kInterReg16ColorBDBDBD,
                             ),
                           ),

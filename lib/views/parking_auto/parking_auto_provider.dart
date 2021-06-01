@@ -12,7 +12,7 @@ class ParkingAutoProvider extends BaseProvider {
   String _phone = '';
   String number = '';
   String day = '';
-  int month = 9;
+  int month = 8;
   String year = '';
   String time = '';
   void _setUp() {
@@ -21,7 +21,7 @@ class ParkingAutoProvider extends BaseProvider {
     _phone = '';
     number = '';
     day = '';
-    month = 9;
+    month = 8;
     year = '';
     time = '';
     setIsRequestSend = false;
