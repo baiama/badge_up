@@ -11,6 +11,7 @@ import 'package:budge_up/views/parking_auto/scanner_screen.dart';
 import 'package:budge_up/views/parking_auto/search_result.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 import 'components.dart';
@@ -34,6 +35,13 @@ class _ParkingAutoState extends State<ParkingAuto> {
   }
 
   final datePadding = EdgeInsets.symmetric(horizontal: 12);
+  var dayMaskFormatter =
+      new MaskTextInputFormatter(mask: '##', filter: {"#": RegExp(r'[0-9]')});
+  var yearMaskFormatter =
+      new MaskTextInputFormatter(mask: '####', filter: {"#": RegExp(r'[0-9]')});
+  var timeMaskFormatter = new MaskTextInputFormatter(
+      mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -207,6 +215,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             onChanged: (value) {
                               provider.day = value;
                             },
+                            inputFormatters: [dayMaskFormatter],
                             decoration: InputDecoration(
                               hintText: '24',
                               contentPadding: datePadding,
@@ -239,6 +248,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             onChanged: (value) {
                               provider.year = value;
                             },
+                            inputFormatters: [yearMaskFormatter],
                             decoration: InputDecoration(
                               hintText: '2021',
                               contentPadding: datePadding,
@@ -251,7 +261,9 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             child: TextField(
                               onChanged: (value) {
                                 provider.time = value;
+                                print(value);
                               },
+                              inputFormatters: [timeMaskFormatter],
                               decoration: InputDecoration(
                                 hintText: '18:00',
                                 contentPadding: datePadding,
