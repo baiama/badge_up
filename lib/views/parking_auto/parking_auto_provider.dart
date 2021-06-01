@@ -13,6 +13,8 @@ class ParkingAutoProvider extends BaseProvider {
   void getItems() {
     _items = [];
     isViewSetup = false;
+    _phone = '';
+    number = '';
     setIsRequestSend = false;
     if (!isRequestSend) {
       setIsRequestSend = true;
