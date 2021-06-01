@@ -148,37 +148,38 @@ class _AutoListViewState extends State<AutoListView> {
                     Navigator.pop(context);
                   },
                   child: Text('Готово')),
+              if (widget.items.length < 5)
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GarageAddScreen(
+                                auto: null,
+                              )),
+                    ).then((value) {
+                      Provider.of<ParkingAutoProvider>(context, listen: false)
+                          .getItems();
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(left: 22, right: 22, top: 26),
+                    child: Text(
+                      'Добавить новый авто',
+                      style: kInterReg16ColorCC6666.copyWith(
+                        color: kColor2980B9,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
               GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => GarageAddScreen(
-                              auto: null,
-                            )),
-                  ).then((value) {
-                    Provider.of<ParkingAutoProvider>(context, listen: false)
-                        .getItems();
-                  });
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 22, vertical: 26),
-                  child: Text(
-                    'Добавить новый авто',
-                    style: kInterReg16ColorCC6666.copyWith(
-                      color: kColor2980B9,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  padding: EdgeInsets.only(left: 22, right: 22, bottom: 26),
                   child: Text(
                     'Отменить',
                     style: kInterReg16ColorCC6666.copyWith(
