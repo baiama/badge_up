@@ -18,8 +18,10 @@ class SettingsProvider extends AuthProvider {
       _api.getProfile(onSuccess: (value) {
         _user = value;
         setIsRequestSend = false;
+        onSuccess();
       }, onFailure: () {
         setIsRequestSend = false;
+        onSuccess();
       });
     }
   }
