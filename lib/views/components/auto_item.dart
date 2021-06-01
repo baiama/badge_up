@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class AutoItem extends StatelessWidget {
   final AutoModel auto;
-  final Function(int) onDelete;
+  final Function(int)? onDelete;
   final bool isLoading;
   const AutoItem(
       {Key? key,
@@ -33,16 +33,17 @@ class AutoItem extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  onDelete(auto.id);
-                },
-                icon: isLoading
-                    ? CircularLoader()
-                    : CustomIcon(
-                        customIcon: CustomIcons.remove,
-                      ),
-              ),
+              if (onDelete != null)
+                IconButton(
+                  onPressed: () {
+                    onDelete!(auto.id);
+                  },
+                  icon: isLoading
+                      ? CircularLoader()
+                      : CustomIcon(
+                          customIcon: CustomIcons.remove,
+                        ),
+                ),
             ],
           ),
           Container(

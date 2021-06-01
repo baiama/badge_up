@@ -1,3 +1,4 @@
+import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,9 +28,27 @@ class _ParkingAutoState extends State<ParkingAuto> {
       body: Container(
         child: Consumer<ParkingAutoProvider>(
           builder: (context, provider, Widget? child) {
+            if (provider.isRequestSend) {
+              return Container(
+                padding: EdgeInsets.only(top: 100),
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (!provider.isViewSetup) {
+              return Container();
+            }
+
             return SingleChildScrollView(
               child: Column(
-                children: [],
+                children: [
+                  SizedBox(height: 30),
+                  if (provider.items.length > 0)
+                    AutoItem(
+                        auto: provider.items[0],
+                        onDelete: null,
+                        isLoading: false),
+                ],
               ),
             );
           },
