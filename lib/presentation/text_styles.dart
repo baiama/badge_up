@@ -67,3 +67,10 @@ const kInterBold18 = TextStyle(
   color: Colors.black,
   height: 21.78 / 18,
 );
+
+const kInterBold16 = TextStyle(
+  fontFamily: 'Inter-Bold',
+  fontSize: 16,
+  color: Colors.black,
+  height: 19.36 / 16,
+);

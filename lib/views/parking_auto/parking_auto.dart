@@ -180,6 +180,26 @@ class _ParkingAutoState extends State<ParkingAuto> {
                               child: Text('Найти')),
                       ],
                     ),
+                    SizedBox(height: 50),
+                    Text(
+                      'Когда вы планируете уехать?',
+                      style: kInterBold16,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 50),
+                    Text(
+                      'Местное время',
+                      style:
+                          kInterReg16ColorBDBDBD.copyWith(color: kColor999999),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 50),
+                    ElevatedButton(
+                        style: ButtonStyle(
+                            padding:
+                                MaterialStateProperty.all(EdgeInsets.zero)),
+                        onPressed: () {},
+                        child: Text('Парковаться')),
                   ],
                 ),
               ),
