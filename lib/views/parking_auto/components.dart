@@ -191,3 +191,80 @@ class _AutoListViewState extends State<AutoListView> {
     );
   }
 }
+
+class PhoneEditView extends StatefulWidget {
+  final Function(String) onTap;
+  const PhoneEditView({Key? key, required this.onTap}) : super(key: key);
+
+  @override
+  _PhoneEditViewState createState() => _PhoneEditViewState();
+}
+
+class _PhoneEditViewState extends State<PhoneEditView> {
+  String phone = '';
+  String error = '';
+  @override
+  void initState() {
+    super.initState();
+    phone = '';
+    error = '';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: SizedBox(
+        width: MediaQuery.of(context).size.width - 24,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Изменить номер телефона',
+              style: kInterSemiBold18,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 26),
+            TextFormField(
+              onChanged: (value) {
+                phone = value;
+              },
+              decoration: InputDecoration(
+                hintText: '+79268105001',
+              ),
+            ),
+            if (error.length > 0) SizedBox(height: 24),
+            if (error.length > 0)
+              Text(
+                error,
+                style: kInterReg16ColorCC6666,
+                textAlign: TextAlign.center,
+              ),
+            SizedBox(height: 26),
+            ElevatedButton(
+                onPressed: () {
+                  widget.onTap(phone);
+                  Navigator.pop(context);
+                },
+                child: Text('Готово')),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 22, vertical: 26),
+                child: Text(
+                  'Отменить',
+                  style: kInterReg16ColorCC6666.copyWith(
+                    color: kColor2980B9,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -101,7 +101,17 @@ class _ParkingAutoState extends State<ParkingAuto> {
                   SizedBox(height: 25),
                   PhoneView(
                     phone: provider.phone,
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return PhoneEditView(
+                              onTap: (value) {
+                                provider.setPhone = value;
+                              },
+                            );
+                          });
+                    },
                   ),
                 ],
               ),
