@@ -2,7 +2,8 @@ import 'package:budge_up/presentation/widgets.dart';
 import 'package:flutter/material.dart';
 
 class SearchResult extends StatefulWidget {
-  const SearchResult({Key? key}) : super(key: key);
+  final String query;
+  const SearchResult({Key? key, required this.query}) : super(key: key);
 
   @override
   _SearchResultState createState() => _SearchResultState();

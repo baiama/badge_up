@@ -179,9 +179,12 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                       EdgeInsets.zero)),
                               onPressed: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SearchResult()));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        SearchResult(query: provider.number),
+                                  ),
+                                );
                               },
                               child: Text('Найти')),
                       ],
