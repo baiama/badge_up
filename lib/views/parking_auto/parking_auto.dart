@@ -1,4 +1,4 @@
-import 'package:budge_up/views/park/park_provider.dart';
+import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +14,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      Provider.of<ParkProvider>(context, listen: false).getItems();
+      Provider.of<ParkingAutoProvider>(context, listen: false).getItems();
     });
   }
 
@@ -25,7 +25,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
         title: Text('Парковать авто'),
       ),
       body: Container(
-        child: Consumer<ParkProvider>(
+        child: Consumer<ParkingAutoProvider>(
           builder: (context, provider, Widget? child) {
             return SingleChildScrollView(
               child: Column(
