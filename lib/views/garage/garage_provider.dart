@@ -12,7 +12,6 @@ class GarageProvider extends BaseProvider {
   List<AutoModel>? _items;
   int id = 0;
   String get error => _error;
-
   void setUp() {
     _error = '';
     modelAuto = null;
@@ -25,6 +24,25 @@ class GarageProvider extends BaseProvider {
   set setError(String value) {
     _error = value;
     notifyListeners();
+  }
+
+  void delete(int value) {
+    id = value;
+    if (!isLoading) {
+      setIsLoading = true;
+      _api.delete(
+        onSuccess: () {
+          items.removeWhere((element) => element.id == value);
+          id = 0;
+          setIsLoading = false;
+        },
+        onFailure: () {
+          id = 0;
+          setIsLoading = false;
+        },
+        id: value,
+      );
+    }
   }
 
   void getItems() {

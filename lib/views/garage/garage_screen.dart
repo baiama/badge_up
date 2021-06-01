@@ -72,8 +72,10 @@ class _GarageScreenState extends State<GarageScreen> {
                                 ),
                               ),
                               IconButton(
-                                onPressed: () {},
-                                icon: provider.isRequestSend &&
+                                onPressed: () {
+                                  provider.delete(provider.items[index].id);
+                                },
+                                icon: provider.isLoading &&
                                         provider.items[index].id == provider.id
                                     ? CircularLoader()
                                     : CustomIcon(

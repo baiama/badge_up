@@ -56,4 +56,26 @@ class GarageApi {
       onFailure();
     }
   }
+
+  void delete({
+    required Function onSuccess,
+    required Function onFailure,
+    required int id,
+  }) async {
+    Dio dio = await BaseApi().dio;
+    try {
+      Response response = await dio.delete(
+        'profile/garage/$id/',
+      );
+      print(response.data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        onSuccess();
+      } else {
+        onFailure();
+      }
+    } on DioError catch (e) {
+      print(e);
+      onFailure();
+    }
+  }
 }
