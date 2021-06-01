@@ -5,6 +5,10 @@ class AutoModel {
   late String brand;
   late int userId;
 
+  String get type {
+    return '$model $brand';
+  }
+
   AutoModel() {
     id = 0;
     number = '';
