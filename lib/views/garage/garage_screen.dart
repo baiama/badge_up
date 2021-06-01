@@ -52,6 +52,16 @@ class _GarageScreenState extends State<GarageScreen> {
                 child: CircularProgressIndicator(),
               );
             }
+
+            if (provider.items.length == 0) {
+              return Container(
+                padding: EdgeInsets.only(top: 50),
+                alignment: Alignment.center,
+                child: EmptyData(
+                    title: 'В вашем гараже нет\nни одного автомобиля'),
+              );
+            }
+
             return Container(
               child: ListView.builder(
                   itemCount: provider.items.length,

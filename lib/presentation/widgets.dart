@@ -1,3 +1,4 @@
+import 'package:budge_up/presentation/text_styles.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_icons.dart';
@@ -22,6 +23,28 @@ class CircularLoader extends StatelessWidget {
       height: 20,
       width: 20,
       child: CircularProgressIndicator(),
+    );
+  }
+}
+
+class EmptyData extends StatelessWidget {
+  final String title;
+  const EmptyData({Key? key, required this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          CustomIcon(customIcon: CustomIcons.car),
+          SizedBox(height: 30),
+          Text(
+            title,
+            style: kInterReg16ColorBlack,
+            textAlign: TextAlign.center,
+          )
+        ],
+      ),
     );
   }
 }
