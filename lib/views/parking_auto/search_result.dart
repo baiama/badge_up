@@ -1,3 +1,4 @@
+import 'package:budge_up/presentation/widgets.dart';
 import 'package:flutter/material.dart';
 
 class SearchResult extends StatelessWidget {
@@ -8,6 +9,12 @@ class SearchResult extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Результат поиска'),
+      ),
+      body: Container(
+        padding: EdgeInsets.only(top: 50),
+        alignment: Alignment.center,
+        child: EmptyData(
+            title: 'К сожалению, пользователь\nне оставил данные о парковке'),
       ),
     );
   }
