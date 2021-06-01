@@ -76,16 +76,16 @@ class _GarageScreenState extends State<GarageScreen> {
                       padding: EdgeInsets.only(top: 20),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => GarageAddScreen(
-                                      auto: provider.items[index],
-                                    )),
-                          ).then((value) {
-                            Provider.of<GarageProvider>(context, listen: false)
-                                .getItems();
-                          });
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => GarageAddScreen(
+                          //             auto: provider.items[index],
+                          //           )),
+                          // ).then((value) {
+                          //   Provider.of<GarageProvider>(context, listen: false)
+                          //       .getItems();
+                          // });
                         },
                         child: AutoItem(
                             auto: provider.items[index],
