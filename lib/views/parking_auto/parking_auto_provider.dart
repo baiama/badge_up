@@ -49,4 +49,8 @@ class ParkingAutoProvider extends BaseProvider {
     _phone = value;
     notifyListeners();
   }
+
+  void updateView() {
+    notifyListeners();
+  }
 }

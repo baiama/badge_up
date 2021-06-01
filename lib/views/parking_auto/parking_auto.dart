@@ -1,9 +1,11 @@
 import 'package:budge_up/presentation/color_scheme.dart';
+import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/custom_themes.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
+import 'package:budge_up/views/parking_auto/scanner_screen.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -117,37 +119,66 @@ class _ParkingAutoState extends State<ParkingAuto> {
                       },
                     ),
                     SizedBox(height: 38),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(40),
-                          ),
-                          border: Border.all(
-                            color: kColorE8E8E8,
-                            width: 2,
-                          )),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              onChanged: (value) {
-                                provider.number = value;
-                              },
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                border: kInputDecorationBorder2,
-                                errorBorder: kInputDecorationBorder2,
-                                focusedBorder: kInputDecorationBorder2,
-                                focusedErrorBorder: kInputDecorationBorder2,
-                                disabledBorder: kInputDecorationBorder2,
-                                enabledBorder: kInputDecorationBorder2,
-                                hintText: 'Номер закрываемого авто',
-                              ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(40),
+                                ),
+                                border: Border.all(
+                                  color: kColorE8E8E8,
+                                  width: 2,
+                                )),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    onChanged: (value) {
+                                      provider.number = value;
+                                      provider.updateView();
+                                    },
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      border: kInputDecorationBorder2,
+                                      errorBorder: kInputDecorationBorder2,
+                                      focusedBorder: kInputDecorationBorder2,
+                                      focusedErrorBorder:
+                                          kInputDecorationBorder2,
+                                      disabledBorder: kInputDecorationBorder2,
+                                      enabledBorder: kInputDecorationBorder2,
+                                      hintText: 'Номер закрываемого авто',
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ScannerScreen()));
+                                    },
+                                    child: Container(
+                                        padding:
+                                            EdgeInsets.only(right: 12, left: 8),
+                                        child: CustomIcon(
+                                            customIcon: CustomIcons.scanner))),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        if (provider.number.length > 5) SizedBox(width: 18),
+                        if (provider.number.length > 5)
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  padding: MaterialStateProperty.all(
+                                      EdgeInsets.zero)),
+                              onPressed: () {},
+                              child: Text('Найти')),
+                      ],
                     ),
                   ],
                 ),
