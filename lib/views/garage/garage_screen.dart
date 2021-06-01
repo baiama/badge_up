@@ -29,7 +29,9 @@ class _GarageScreenState extends State<GarageScreen> {
         appBar: AppBar(
           title: Text('Мой гараж'),
           actions: [
-            IconButton(
+            if (Provider.of<GarageProvider>(context).isViewSetup &&
+                Provider.of<GarageProvider>(context).items.length < 5)
+              IconButton(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -41,7 +43,8 @@ class _GarageScreenState extends State<GarageScreen> {
                 },
                 icon: CustomIcon(
                   customIcon: CustomIcons.addNew,
-                ))
+                ),
+              ),
           ],
         ),
         body: Consumer<GarageProvider>(
