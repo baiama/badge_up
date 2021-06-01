@@ -16,11 +16,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _index = 0;
+  // final _screens = [
+  //   ParkingAuto(),
+  //   ParkScreen(),
+  //   GarageScreen(),
+  //   SettingsScreen(),
+  // ];
   final _screens = [
-    ParkingAuto(),
-    ParkScreen(),
-    GarageScreen(),
-    SettingsScreen(),
+    Container(),
+    Container(),
+    Container(),
+    Container(),
   ];
 
   BottomNavigationBarItem getNavItem(String item, String label) {

@@ -19,9 +19,11 @@ class _ParkingAutoState extends State<ParkingAuto> {
       body: Container(
         child: Consumer<ParkProvider>(
           builder: (context, provider, Widget? child) {
-            return ListView.builder(itemBuilder: (context, index) {
-              return Container();
-            });
+            return ListView.builder(
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return Container();
+                });
           },
         ),
       ),
