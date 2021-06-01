@@ -276,7 +276,6 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             child: TextField(
                               onChanged: (value) {
                                 provider.time = value;
-                                print(value);
                               },
                               inputFormatters: [timeMaskFormatter],
                               decoration: InputDecoration(
