@@ -98,6 +98,12 @@ class GarageProvider extends BaseProvider {
       return;
     }
 
+    if (numberAuto!.trim().length > 15) {
+      setError = 'Номер авто максимум 15 символов';
+      notifyListeners();
+      return;
+    }
+
     setError = '';
     if (!isRequestSend) {
       setIsRequestSend = true;
