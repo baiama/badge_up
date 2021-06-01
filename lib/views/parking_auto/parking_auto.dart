@@ -33,6 +33,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
     });
   }
 
+  final datePadding = EdgeInsets.symmetric(horizontal: 12);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -208,8 +209,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             },
                             decoration: InputDecoration(
                               hintText: '24',
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 12),
+                              contentPadding: datePadding,
                             ),
                           ),
                         ),
@@ -241,8 +241,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             },
                             decoration: InputDecoration(
                               hintText: '2021',
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 12),
+                              contentPadding: datePadding,
                             ),
                           ),
                         ),
@@ -255,8 +254,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                               },
                               decoration: InputDecoration(
                                 hintText: '18:00',
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 12),
+                                contentPadding: datePadding,
                               ),
                             )),
                       ],
