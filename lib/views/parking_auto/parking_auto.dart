@@ -3,6 +3,7 @@ import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/custom_themes.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
+import 'package:budge_up/utils/strings.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
@@ -209,19 +210,27 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             padding:
                                 MaterialStateProperty.all(EdgeInsets.zero)),
                         onPressed: () {
-                          provider.create(
-                              onSuccess: () {},
-                              onFailure: (value) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    backgroundColor: Colors.white,
-                                    content: Text(
-                                      value,
-                                      style: kInterReg16ColorBlack,
-                                    ),
-                                  ),
-                                );
-                              });
+                          provider.create(onSuccess: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: Colors.white,
+                                content: Text(
+                                  Strings.successCreatePark,
+                                  style: kInterReg16ColorBlack,
+                                ),
+                              ),
+                            );
+                          }, onFailure: (value) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: Colors.white,
+                                content: Text(
+                                  value,
+                                  style: kInterReg16ColorBlack,
+                                ),
+                              ),
+                            );
+                          });
                         },
                         child: provider.isCreating
                             ? CircularLoader()
