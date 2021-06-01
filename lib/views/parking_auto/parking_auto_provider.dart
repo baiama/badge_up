@@ -8,6 +8,7 @@ class ParkingAutoProvider extends BaseProvider {
   List<AutoModel> get items => _items != null ? _items! : [];
   AutoModel? _selectedAuto;
   String _phone = '';
+  String number = '';
 
   void getItems() {
     _items = [];

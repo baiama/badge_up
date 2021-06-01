@@ -23,6 +23,14 @@ const kInputDecorationBorder = OutlineInputBorder(
     color: kColorE8E8E8,
   ),
 );
+const kInputDecorationBorder2 = OutlineInputBorder(
+  borderRadius: BorderRadius.all(
+    Radius.circular(100),
+  ),
+  borderSide: BorderSide(
+    color: Colors.transparent,
+  ),
+);
 
 const kInputDecorationTheme = InputDecorationTheme(
   filled: true,

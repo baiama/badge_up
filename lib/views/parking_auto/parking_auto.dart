@@ -1,4 +1,5 @@
 import 'package:budge_up/presentation/color_scheme.dart';
+import 'package:budge_up/presentation/custom_themes.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
@@ -48,72 +49,108 @@ class _ParkingAutoState extends State<ParkingAuto> {
             }
 
             return SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(height: 30),
-                  if (provider.items.length > 0)
-                    AutoItem(
-                        auto: provider.selectedAuto,
-                        onDelete: null,
-                        isLoading: false),
-                  if (provider.items.length > 0)
-                    GestureDetector(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(height: 30),
+                    if (provider.items.length > 0)
+                      AutoItem(
+                          auto: provider.selectedAuto,
+                          onDelete: null,
+                          isLoading: false),
+                    if (provider.items.length > 0)
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AutoListView(
+                                  onTap: (value) {
+                                    provider.setSelectedAuto = value;
+                                  },
+                                  selectedAuto: provider.selectedAuto,
+                                  items: provider.items,
+                                );
+                              });
+                        },
+                        child: Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+                          child: Text(
+                            'Выбрать другой авто',
+                            style: kInterReg16ColorCC6666.copyWith(
+                              color: kColor2980B9,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    if (provider.items.length == 0)
+                      EmptyCar(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => GarageAddScreen()),
+                          ).then((value) {
+                            Provider.of<ParkingAutoProvider>(context,
+                                    listen: false)
+                                .getItems();
+                          });
+                        },
+                      ),
+                    SizedBox(height: 25),
+                    PhoneView(
+                      phone: provider.phone,
                       onTap: () {
                         showDialog(
                             context: context,
                             builder: (context) {
-                              return AutoListView(
+                              return PhoneEditView(
                                 onTap: (value) {
-                                  provider.setSelectedAuto = value;
+                                  provider.setPhone = value;
                                 },
-                                selectedAuto: provider.selectedAuto,
-                                items: provider.items,
                               );
                             });
                       },
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 22, vertical: 8),
-                        child: Text(
-                          'Выбрать другой авто',
-                          style: kInterReg16ColorCC6666.copyWith(
-                            color: kColor2980B9,
+                    ),
+                    SizedBox(height: 38),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(40),
                           ),
-                          textAlign: TextAlign.center,
-                        ),
+                          border: Border.all(
+                            color: kColorE8E8E8,
+                            width: 2,
+                          )),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              onChanged: (value) {
+                                provider.number = value;
+                              },
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: kInputDecorationBorder2,
+                                errorBorder: kInputDecorationBorder2,
+                                focusedBorder: kInputDecorationBorder2,
+                                focusedErrorBorder: kInputDecorationBorder2,
+                                disabledBorder: kInputDecorationBorder2,
+                                enabledBorder: kInputDecorationBorder2,
+                                hintText: 'Номер закрываемого авто',
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  if (provider.items.length == 0)
-                    EmptyCar(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => GarageAddScreen()),
-                        ).then((value) {
-                          Provider.of<ParkingAutoProvider>(context,
-                                  listen: false)
-                              .getItems();
-                        });
-                      },
-                    ),
-                  SizedBox(height: 25),
-                  PhoneView(
-                    phone: provider.phone,
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return PhoneEditView(
-                              onTap: (value) {
-                                provider.setPhone = value;
-                              },
-                            );
-                          });
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },
