@@ -78,6 +78,7 @@ class _GarageAddScreenState extends State<GarageAddScreen> {
                   ),
                   SizedBox(height: 24),
                   TextFormField(
+                    textCapitalization: TextCapitalization.characters,
                     initialValue:
                         widget.auto != null ? widget.auto!.number : null,
                     onChanged: (value) {

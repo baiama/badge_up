@@ -68,13 +68,26 @@ class GarageProvider extends BaseProvider {
   }
 
   Future<void> create({required int id, required Function onSuccess}) async {
-    if (modelAuto == null || modelAuto!.length == 0) {
+    if (markAuto == null || markAuto!.length == 0) {
       setError = Strings.errorEmpty + 'Марка авто';
       notifyListeners();
       return;
     }
+
+    if (markAuto!.length > 50) {
+      setError = 'Марка максимум 50 символов';
+      notifyListeners();
+      return;
+    }
+
     if (modelAuto == null || modelAuto!.length == 0) {
       setError = Strings.errorEmpty + 'Модель авто';
+      notifyListeners();
+      return;
+    }
+
+    if (modelAuto!.length > 50) {
+      setError = 'Модель максимум 50 символов';
       notifyListeners();
       return;
     }
