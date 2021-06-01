@@ -20,7 +20,9 @@ class _InitialScreenState extends State<InitialScreen> {
   @override
   void initState() {
     super.initState();
-    checkToken();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      checkToken();
+    });
   }
 
   void checkToken() async {
