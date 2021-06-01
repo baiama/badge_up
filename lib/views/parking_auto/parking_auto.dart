@@ -2,6 +2,7 @@ import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/custom_themes.dart';
 import 'package:budge_up/presentation/text_styles.dart';
+import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
@@ -207,8 +208,12 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         style: ButtonStyle(
                             padding:
                                 MaterialStateProperty.all(EdgeInsets.zero)),
-                        onPressed: () {},
-                        child: Text('Парковаться')),
+                        onPressed: () {
+                          provider.create();
+                        },
+                        child: provider.isCreating
+                            ? CircularLoader()
+                            : Text('Парковаться')),
                   ],
                 ),
               ),
