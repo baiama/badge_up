@@ -6,8 +6,10 @@ import 'package:budge_up/utils/preference_helper.dart';
 import 'package:budge_up/views/auth/login/login_screen.dart';
 import 'package:budge_up/views/auth/register/register_screen.dart';
 import 'package:budge_up/views/home/home_screen.dart';
+import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:provider/provider.dart';
 
 class InitialScreen extends StatefulWidget {
   @override
@@ -32,6 +34,7 @@ class _InitialScreenState extends State<InitialScreen> {
         Duration tokenTime = JwtDecoder.getRemainingTime(token);
         if (tokenTime.inDays < 2) {
           AuthApi().refreshToken(onSuccess: () {
+            Provider.of<SettingsProvider>(context, listen: false).getProfile();
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -42,6 +45,7 @@ class _InitialScreenState extends State<InitialScreen> {
             });
           });
         } else {
+          Provider.of<SettingsProvider>(context, listen: false).getProfile();
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => HomeScreen()),
