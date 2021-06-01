@@ -52,6 +52,21 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         auto: provider.items[0],
                         onDelete: null,
                         isLoading: false),
+                  if (provider.items.length > 0)
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+                        child: Text(
+                          'Выбрать другой авто',
+                          style: kInterReg16ColorCC6666.copyWith(
+                            color: kColor2980B9,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
                   if (provider.items.length == 0)
                     EmptyCar(
                       onTap: () {
