@@ -60,7 +60,9 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             context: context,
                             builder: (context) {
                               return AutoListView(
-                                onTap: (value) {},
+                                onTap: (value) {
+                                  provider.setSelectedAuto = value;
+                                },
                                 selectedAuto: provider.selectedAuto,
                                 items: provider.items,
                               );
@@ -200,6 +202,13 @@ class _AutoListViewState extends State<AutoListView> {
                       ),
                     );
                   }),
+              SizedBox(height: 10),
+              ElevatedButton(
+                  onPressed: () {
+                    widget.onTap(autoModel);
+                    Navigator.pop(context);
+                  },
+                  child: Text('Готово')),
             ],
           ),
         ),

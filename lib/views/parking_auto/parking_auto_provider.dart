@@ -33,4 +33,9 @@ class ParkingAutoProvider extends BaseProvider {
 
   AutoModel get selectedAuto =>
       _selectedAuto != null ? _selectedAuto! : AutoModel();
+
+  set setSelectedAuto(AutoModel value) {
+    _selectedAuto = value;
+    notifyListeners();
+  }
 }
