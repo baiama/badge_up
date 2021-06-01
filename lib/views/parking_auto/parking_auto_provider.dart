@@ -6,6 +6,7 @@ class ParkingAutoProvider extends BaseProvider {
   GarageApi _api = GarageApi();
   List<AutoModel>? _items;
   List<AutoModel> get items => _items != null ? _items! : [];
+  AutoModel? _selectedAuto;
 
   void getItems() {
     _items = [];
@@ -16,6 +17,9 @@ class ParkingAutoProvider extends BaseProvider {
       _api.getItems(
         onSuccess: (value) {
           _items = value;
+          if (items.length > 0) {
+            _selectedAuto = items[0];
+          }
           isViewSetup = true;
           setIsRequestSend = false;
         },
@@ -26,4 +30,7 @@ class ParkingAutoProvider extends BaseProvider {
       );
     }
   }
+
+  AutoModel get selectedAuto =>
+      _selectedAuto != null ? _selectedAuto! : AutoModel();
 }

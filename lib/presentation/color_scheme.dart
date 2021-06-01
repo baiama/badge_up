@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 const kColor2980B9 = Color(0xFF2980B9);
 const kColorBDBDBD = Color(0xFFBDBDBD);
 const kColorF6F6F6 = Color(0xFFF6F6F6);
+const kColorF8F8F8 = Color(0xFFF8F8F8);
 const kColorE8E8E8 = Color(0xFFE8E8E8);
 const kColorCC6666 = Color(0xFFCC6666);
 const kColorCCCCCC = Color(0xFFCCCCCC);

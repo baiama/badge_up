@@ -1,3 +1,4 @@
+import 'package:budge_up/models/auto_model.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/views/components/auto_item.dart';
@@ -49,12 +50,22 @@ class _ParkingAutoState extends State<ParkingAuto> {
                   SizedBox(height: 30),
                   if (provider.items.length > 0)
                     AutoItem(
-                        auto: provider.items[0],
+                        auto: provider.selectedAuto,
                         onDelete: null,
                         isLoading: false),
                   if (provider.items.length > 0)
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AutoListView(
+                                onTap: (value) {},
+                                selectedAuto: provider.selectedAuto,
+                                items: provider.items,
+                              );
+                            });
+                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 22, vertical: 8),
@@ -119,6 +130,71 @@ class EmptyCar extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class AutoListView extends StatefulWidget {
+  final Function(AutoModel) onTap;
+  final AutoModel selectedAuto;
+  final List<AutoModel> items;
+  AutoListView({
+    required this.onTap,
+    required this.selectedAuto,
+    required this.items,
+  });
+
+  @override
+  _AutoListViewState createState() => _AutoListViewState();
+}
+
+class _AutoListViewState extends State<AutoListView> {
+  AutoModel autoModel = AutoModel();
+
+  @override
+  void initState() {
+    super.initState();
+    autoModel = widget.selectedAuto;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: SizedBox(
+        height: 500,
+        width: MediaQuery.of(context).size.width - 48,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Выбрать другой авто',
+                style: kInterSemiBold18,
+                textAlign: TextAlign.center,
+              ),
+              ListView.builder(
+                  itemCount: widget.items.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Container(
+                      padding: EdgeInsets.only(bottom: 21),
+                      decoration: BoxDecoration(
+                          color: widget.items[index].id == autoModel.id
+                              ? kColorF8F8F8
+                              : Colors.transparent),
+                      child: AutoItem(
+                        onDelete: null,
+                        auto: widget.items[index],
+                        isLoading: false,
+                      ),
+                    );
+                  }),
+            ],
+          ),
+        ),
       ),
     );
   }

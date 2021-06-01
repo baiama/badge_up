@@ -69,13 +69,16 @@ class _GarageScreenState extends State<GarageScreen> {
               child: ListView.builder(
                   itemCount: provider.items.length,
                   itemBuilder: (context, index) {
-                    return AutoItem(
-                        auto: provider.items[index],
-                        onDelete: (value) {
-                          provider.delete(value);
-                        },
-                        isLoading: provider.isLoading &&
-                            provider.items[index].id == provider.id);
+                    return Padding(
+                      padding: EdgeInsets.only(top: 20),
+                      child: AutoItem(
+                          auto: provider.items[index],
+                          onDelete: (value) {
+                            provider.delete(value);
+                          },
+                          isLoading: provider.isLoading &&
+                              provider.items[index].id == provider.id),
+                    );
                   }),
             );
           },

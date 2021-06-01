@@ -19,7 +19,7 @@ class AutoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 32, left: 26, right: 26),
+      padding: EdgeInsets.only(top: 12, left: 26, right: 26),
       child: Column(
         children: [
           Row(
