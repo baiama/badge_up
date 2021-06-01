@@ -4,8 +4,19 @@ import 'package:budge_up/views/garage/garage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class GarageAddScreen extends StatelessWidget {
+class GarageAddScreen extends StatefulWidget {
   const GarageAddScreen({Key? key}) : super(key: key);
+
+  @override
+  _GarageAddScreenState createState() => _GarageAddScreenState();
+}
+
+class _GarageAddScreenState extends State<GarageAddScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<GarageProvider>(context, listen: false).setUp();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +47,19 @@ class GarageAddScreen extends StatelessWidget {
                   SizedBox(height: 25),
                   TextFormField(
                     onChanged: (value) {
+                      provider.markAuto = value;
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Марка авто *',
+                    ),
+                  ),
+                  SizedBox(height: 24),
+                  TextFormField(
+                    onChanged: (value) {
                       provider.modelAuto = value;
                     },
                     decoration: InputDecoration(
-                      hintText: 'Марка и модель авто *',
+                      hintText: 'Модель авто *',
                     ),
                   ),
                   SizedBox(height: 24),
@@ -60,18 +80,14 @@ class GarageAddScreen extends StatelessWidget {
                   Expanded(child: Container()),
                   ElevatedButton(
                       onPressed: () {
-                        // provider.login(onSuccess: () {
-                        //   Navigator.pushAndRemoveUntil(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //           builder: (context) => HomeScreen()),
-                        //       (route) => false);
-                        // });
+                        provider.create(onSuccess: () {
+                          Navigator.pop(context);
+                        });
                       },
                       child: provider.isRequestSend
                           ? CircularLoader()
-                          : Text('Войти')),
-                  SizedBox(height: 20),
+                          : Text('Добавить')),
+                  SizedBox(height: 96),
                 ],
               ),
             );

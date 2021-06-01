@@ -1,11 +1,22 @@
+import 'package:budge_up/api/garage_api.dart';
 import 'package:budge_up/base/base_provider.dart';
+import 'package:budge_up/utils/strings.dart';
 
 class GarageProvider extends BaseProvider {
   String _error = '';
   String? modelAuto;
+  String? markAuto;
   String? numberAuto;
+  GarageApi _api = GarageApi();
 
   String get error => _error;
+
+  void setUp() {
+    _error = '';
+    modelAuto = null;
+    markAuto = null;
+    numberAuto = null;
+  }
 
   set setError(String value) {
     _error = value;
@@ -13,4 +24,41 @@ class GarageProvider extends BaseProvider {
   }
 
   void getItems() {}
+
+  void create({required Function onSuccess}) {
+    if (modelAuto == null || modelAuto!.length == 0) {
+      setError = Strings.errorEmpty + 'Марка авто';
+      notifyListeners();
+      return;
+    }
+    if (modelAuto == null || modelAuto!.length == 0) {
+      setError = Strings.errorEmpty + 'Модель авто';
+      notifyListeners();
+      return;
+    }
+
+    if (numberAuto == null || numberAuto!.length == 0) {
+      setError = Strings.errorEmpty + 'Номер авто';
+      notifyListeners();
+      return;
+    }
+
+    setError = '';
+    if (!isRequestSend) {
+      setIsRequestSend = true;
+      _api.create(
+        onSuccess: () {
+          setIsRequestSend = false;
+          onSuccess();
+        },
+        onFailure: (value) {
+          setError = value;
+          setIsRequestSend = false;
+        },
+        numberAuto: numberAuto!,
+        modelAuto: modelAuto!,
+        markAuto: markAuto!,
+      );
+    }
+  }
 }
