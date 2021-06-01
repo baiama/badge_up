@@ -79,7 +79,10 @@ class _GarageScreenState extends State<GarageScreen> {
                                 builder: (context) => GarageAddScreen(
                                       auto: provider.items[index],
                                     )),
-                          );
+                          ).then((value) {
+                            Provider.of<GarageProvider>(context, listen: false)
+                                .getItems();
+                          });
                         },
                         child: AutoItem(
                             auto: provider.items[index],
