@@ -1,9 +1,11 @@
 import 'package:budge_up/api/garage_api.dart';
+import 'package:budge_up/api/park_api.dart';
 import 'package:budge_up/base/base_provider.dart';
 import 'package:budge_up/models/auto_model.dart';
 
 class ParkingAutoProvider extends BaseProvider {
   GarageApi _api = GarageApi();
+  ParkApi _parkApi = ParkApi();
   List<AutoModel>? _items;
   List<AutoModel> get items => _items != null ? _items! : [];
   AutoModel? _selectedAuto;
@@ -30,6 +32,23 @@ class ParkingAutoProvider extends BaseProvider {
         onFailure: () {
           isViewSetup = true;
           setIsRequestSend = false;
+        },
+      );
+    }
+  }
+
+  void findAuto(String query) {
+    setIsLoading = false;
+    if (!isLoading) {
+      setIsLoading = true;
+      _parkApi.findAuto(
+        number: query,
+        onSuccess: () {
+          setIsLoading = false;
+        },
+        onFailure: () {
+          isViewSetup = true;
+          setIsLoading = false;
         },
       );
     }
