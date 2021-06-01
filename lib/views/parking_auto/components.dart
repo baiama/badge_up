@@ -1,6 +1,7 @@
 import 'package:budge_up/models/auto_model.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/text_styles.dart';
+import 'package:budge_up/utils/strings.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
@@ -228,6 +229,9 @@ class _PhoneEditViewState extends State<PhoneEditView> {
             TextFormField(
               onChanged: (value) {
                 phone = value;
+                setState(() {
+                  error = '';
+                });
               },
               decoration: InputDecoration(
                 hintText: '+79268105001',
@@ -243,6 +247,23 @@ class _PhoneEditViewState extends State<PhoneEditView> {
             SizedBox(height: 26),
             ElevatedButton(
                 onPressed: () {
+                  if (phone.length == 0) {
+                    setState(() {
+                      error = Strings.errorEmpty + 'Телефон';
+                    });
+                    return;
+                  }
+
+                  if (!phone.startsWith('+')) {
+                    phone = '+' + phone;
+                  }
+
+                  if (phone.length != 12) {
+                    setState(() {
+                      error = Strings.errorEmpty2 + 'Телефон';
+                    });
+                    return;
+                  }
                   widget.onTap(phone);
                   Navigator.pop(context);
                 },
