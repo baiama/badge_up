@@ -1,5 +1,6 @@
 import 'package:budge_up/api/garage_api.dart';
 import 'package:budge_up/base/base_provider.dart';
+import 'package:budge_up/models/auto_model.dart';
 import 'package:budge_up/utils/strings.dart';
 
 class GarageProvider extends BaseProvider {
@@ -8,6 +9,7 @@ class GarageProvider extends BaseProvider {
   String? markAuto;
   String? numberAuto;
   GarageApi _api = GarageApi();
+  List<AutoModel>? _items;
 
   String get error => _error;
 
@@ -18,12 +20,27 @@ class GarageProvider extends BaseProvider {
     numberAuto = null;
   }
 
+  List<AutoModel> get items => _items != null ? _items! : [];
+
   set setError(String value) {
     _error = value;
     notifyListeners();
   }
 
-  void getItems() {}
+  void getItems() {
+    if (!isRequestSend) {
+      setIsRequestSend = true;
+      _api.getItems(
+        onSuccess: (value) {
+          _items = value;
+          setIsRequestSend = false;
+        },
+        onFailure: () {
+          setIsRequestSend = false;
+        },
+      );
+    }
+  }
 
   void create({required Function onSuccess}) {
     if (modelAuto == null || modelAuto!.length == 0) {
@@ -51,8 +68,7 @@ class GarageProvider extends BaseProvider {
           setIsRequestSend = false;
           onSuccess();
         },
-        onFailure: (value) {
-          setError = value;
+        onFailure: () {
           setIsRequestSend = false;
         },
         numberAuto: numberAuto!,

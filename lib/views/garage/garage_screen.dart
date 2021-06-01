@@ -1,6 +1,9 @@
 import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'garage_provider.dart';
 
 class GarageScreen extends StatefulWidget {
   const GarageScreen({Key? key}) : super(key: key);
@@ -10,6 +13,12 @@ class GarageScreen extends StatefulWidget {
 }
 
 class _GarageScreenState extends State<GarageScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<GarageProvider>(context, listen: false).getItems();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
