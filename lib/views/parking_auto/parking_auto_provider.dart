@@ -76,6 +76,20 @@ class ParkingAutoProvider extends BaseProvider {
   void create() {
     if (!isCreating) {
       setIsCreating = true;
+      _parkApi.create(
+        garageId: selectedAuto.id,
+        datetime: '2021-06-16 21:30:45',
+        phone: phone,
+        closeId: null,
+        closeGarageId: null,
+        closeNumber: null,
+        onSuccess: () {
+          setIsCreating = false;
+        },
+        onFailure: () {
+          setIsCreating = false;
+        },
+      );
     }
   }
 }
