@@ -59,6 +59,7 @@ class GarageProvider extends BaseProvider {
           setIsRequestSend = false;
         },
         onFailure: () {
+          isViewSetup = true;
           setIsRequestSend = false;
         },
       );
