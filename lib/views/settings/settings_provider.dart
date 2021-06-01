@@ -12,7 +12,7 @@ class SettingsProvider extends AuthProvider {
   UserModel? _user;
   File? image;
 
-  void getProfile() {
+  void getProfile(Function onSuccess) {
     if (!isRequestSend) {
       setIsRequestSend = true;
       _api.getProfile(onSuccess: (value) {

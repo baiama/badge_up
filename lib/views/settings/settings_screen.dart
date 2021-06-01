@@ -22,7 +22,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      Provider.of<SettingsProvider>(context, listen: false).getProfile();
+      Provider.of<SettingsProvider>(context, listen: false).getProfile(() {});
     });
   }
 

@@ -34,22 +34,25 @@ class _InitialScreenState extends State<InitialScreen> {
         Duration tokenTime = JwtDecoder.getRemainingTime(token);
         if (tokenTime.inDays < 2) {
           AuthApi().refreshToken(onSuccess: () {
-            Provider.of<SettingsProvider>(context, listen: false).getProfile();
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => HomeScreen()),
-                (route) => false);
+            Provider.of<SettingsProvider>(context, listen: false)
+                .getProfile(() {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                  (route) => false);
+            });
           }, onFailure: () {
             setState(() {
               isAuthorized = false;
             });
           });
         } else {
-          Provider.of<SettingsProvider>(context, listen: false).getProfile();
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
-              (route) => false);
+          Provider.of<SettingsProvider>(context, listen: false).getProfile(() {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+                (route) => false);
+          });
         }
       } else {
         setState(() {
