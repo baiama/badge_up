@@ -1,4 +1,7 @@
+import 'package:budge_up/presentation/color_scheme.dart';
+import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/views/components/auto_item.dart';
+import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +44,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
 
             return SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(height: 30),
                   if (provider.items.length > 0)
@@ -48,11 +52,58 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         auto: provider.items[0],
                         onDelete: null,
                         isLoading: false),
+                  if (provider.items.length == 0)
+                    EmptyCar(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GarageAddScreen()),
+                        ).then((value) {
+                          Provider.of<ParkingAutoProvider>(context,
+                                  listen: false)
+                              .getItems();
+                        });
+                      },
+                    ),
                 ],
               ),
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class EmptyCar extends StatelessWidget {
+  final Function onTap;
+  const EmptyCar({Key? key, required this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Text(
+            'Нет авто в гараже',
+            style: kInterBold18,
+          ),
+          GestureDetector(
+            onTap: () {
+              onTap();
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 22, vertical: 6),
+              child: Text(
+                'Добавить авто в гараж',
+                style: kInterReg16ColorCC6666.copyWith(
+                  color: kColor2980B9,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

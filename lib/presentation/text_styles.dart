@@ -63,6 +63,7 @@ const kInterSemiBold24ColorBlack = TextStyle(
 
 const kInterBold18 = TextStyle(
   fontFamily: 'Inter-Bold',
-  fontSize: 24,
+  fontSize: 18,
   color: Colors.black,
+  height: 21.78 / 18,
 );

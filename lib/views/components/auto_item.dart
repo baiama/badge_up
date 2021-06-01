@@ -23,9 +23,8 @@ class AutoItem extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(width: 40),
+              if (onDelete != null) SizedBox(width: 40),
               Expanded(
                 child: Text(
                   auto.type,
@@ -46,6 +45,7 @@ class AutoItem extends StatelessWidget {
                 ),
             ],
           ),
+          if (onDelete == null) SizedBox(height: 12),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             decoration: BoxDecoration(
