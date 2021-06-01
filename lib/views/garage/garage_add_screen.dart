@@ -18,6 +18,14 @@ class _GarageAddScreenState extends State<GarageAddScreen> {
   void initState() {
     super.initState();
     Provider.of<GarageProvider>(context, listen: false).setUp();
+    if (widget.auto != null) {
+      Provider.of<GarageProvider>(context, listen: false).numberAuto =
+          widget.auto!.number;
+      Provider.of<GarageProvider>(context, listen: false).modelAuto =
+          widget.auto!.model;
+      Provider.of<GarageProvider>(context, listen: false).markAuto =
+          widget.auto!.brand;
+    }
   }
 
   @override
