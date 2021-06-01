@@ -4,6 +4,7 @@ import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
+import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,8 @@ class _ParkingAutoState extends State<ParkingAuto> {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       Provider.of<ParkingAutoProvider>(context, listen: false).getItems();
+      Provider.of<ParkingAutoProvider>(context, listen: false).setPhone =
+          Provider.of<SettingsProvider>(context, listen: false).user.phone;
     });
   }
 
@@ -94,6 +97,11 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         });
                       },
                     ),
+                  SizedBox(height: 25),
+                  PhoneView(
+                    phone: provider.phone,
+                    onTap: () {},
+                  ),
                 ],
               ),
             );
@@ -125,6 +133,41 @@ class EmptyCar extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 22, vertical: 6),
               child: Text(
                 'Добавить авто в гараж',
+                style: kInterReg16ColorCC6666.copyWith(
+                  color: kColor2980B9,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class PhoneView extends StatelessWidget {
+  final Function onTap;
+  final String phone;
+  const PhoneView({Key? key, required this.onTap, required this.phone})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Text(
+            phone,
+            style: kInterReg16ColorBlack,
+          ),
+          GestureDetector(
+            onTap: () {
+              onTap();
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 22, vertical: 6),
+              child: Text(
+                'Изменить номер',
                 style: kInterReg16ColorCC6666.copyWith(
                   color: kColor2980B9,
                 ),
