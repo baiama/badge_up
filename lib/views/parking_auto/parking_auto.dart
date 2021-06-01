@@ -174,21 +174,29 @@ class _AutoListViewState extends State<AutoListView> {
                 style: kInterSemiBold18,
                 textAlign: TextAlign.center,
               ),
+              SizedBox(height: 25),
               ListView.builder(
                   itemCount: widget.items.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return Container(
-                      padding: EdgeInsets.only(bottom: 21),
-                      decoration: BoxDecoration(
-                          color: widget.items[index].id == autoModel.id
-                              ? kColorF8F8F8
-                              : Colors.transparent),
-                      child: AutoItem(
-                        onDelete: null,
-                        auto: widget.items[index],
-                        isLoading: false,
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          autoModel = widget.items[index];
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(bottom: 21),
+                        decoration: BoxDecoration(
+                            color: widget.items[index].id == autoModel.id
+                                ? kColorF8F8F8
+                                : Colors.white),
+                        child: AutoItem(
+                          onDelete: null,
+                          auto: widget.items[index],
+                          isLoading: false,
+                        ),
                       ),
                     );
                   }),
