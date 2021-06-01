@@ -17,6 +17,7 @@ class GarageProvider extends BaseProvider {
     modelAuto = null;
     markAuto = null;
     numberAuto = null;
+    isViewSetup = false;
   }
 
   List<AutoModel> get items => _items != null ? _items! : [];
@@ -47,12 +48,14 @@ class GarageProvider extends BaseProvider {
 
   void getItems() {
     _items = [];
+    isViewSetup = false;
     setIsRequestSend = false;
     if (!isRequestSend) {
       setIsRequestSend = true;
       _api.getItems(
         onSuccess: (value) {
           _items = value;
+          isViewSetup = true;
           setIsRequestSend = false;
         },
         onFailure: () {

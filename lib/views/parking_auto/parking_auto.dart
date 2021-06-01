@@ -11,6 +11,14 @@ class ParkingAuto extends StatefulWidget {
 
 class _ParkingAutoState extends State<ParkingAuto> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Provider.of<ParkProvider>(context, listen: false).getItems();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -19,11 +27,11 @@ class _ParkingAutoState extends State<ParkingAuto> {
       body: Container(
         child: Consumer<ParkProvider>(
           builder: (context, provider, Widget? child) {
-            return ListView.builder(
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  return Container();
-                });
+            return SingleChildScrollView(
+              child: Column(
+                children: [],
+              ),
+            );
           },
         ),
       ),

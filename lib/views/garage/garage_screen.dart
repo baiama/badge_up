@@ -52,6 +52,10 @@ class _GarageScreenState extends State<GarageScreen> {
               );
             }
 
+            if (!provider.isViewSetup) {
+              return Container();
+            }
+
             if (provider.items.length == 0) {
               return Container(
                 padding: EdgeInsets.only(top: 50),
