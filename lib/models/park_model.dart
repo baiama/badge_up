@@ -28,7 +28,11 @@ class ParkModel {
     if (data != null) {
       id = data['id'] != null ? data['id'] : 0;
       phone = data['phone'] != null ? data['phone'] : '';
-      active = data['active'] != null ? data['active'] : false;
+      active = data['active'] != null
+          ? data['active'] == 1
+              ? true
+              : false
+          : false;
       datetime = data['datetime'] != null ? data['datetime'] : '';
 
       user =
