@@ -62,6 +62,9 @@ class _ParkBodyState extends State<ParkBody> {
           return ParkItem(
             parkModel: provider.results[index],
             user: user,
+            onArchive: (value) {
+              provider.archive(value);
+            },
           );
         });
   }
@@ -70,7 +73,12 @@ class _ParkBodyState extends State<ParkBody> {
 class ParkItem extends StatelessWidget {
   final ParkModel parkModel;
   final UserModel user;
-  const ParkItem({Key? key, required this.parkModel, required this.user})
+  final Function(ParkModel) onArchive;
+  const ParkItem(
+      {Key? key,
+      required this.parkModel,
+      required this.user,
+      required this.onArchive})
       : super(key: key);
 
   @override
@@ -159,7 +167,9 @@ class ParkItem extends StatelessWidget {
               SizedBox(height: 24),
               if (parkModel.active)
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      onArchive(parkModel);
+                    },
                     child: Text(parkModel.close.id > 0 &&
                             parkModel.close.userId != user.id
                         ? 'Я все равно уехал'
