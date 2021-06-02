@@ -32,6 +32,8 @@ class _SearchResultState extends State<SearchResult> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: CustomBackButton(),
         title: Text('Результат поиска'),
       ),
       body: Consumer<ParkingAutoProvider>(
