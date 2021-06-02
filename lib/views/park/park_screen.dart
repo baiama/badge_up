@@ -118,23 +118,25 @@ class ParkItem extends StatelessWidget {
                             ],
                           ),
                         ),
-                        IconButton(
-                          onPressed: () async {
-                            final Uri _emailLaunchUri = Uri(
-                              scheme: 'tel',
-                              path: parkModel.user.phone,
-                            );
-                            String url = _emailLaunchUri.toString();
-                            if (await canLaunch(url)) {
-                              await launch(url);
-                            } else {
-                              throw 'Could not launch $url';
-                            }
-                          },
-                          icon: CustomIcon(
-                            customIcon: CustomIcons.call,
+                        if (parkModel.close.id == 0) SizedBox(width: 40),
+                        if (parkModel.close.id > 0)
+                          IconButton(
+                            onPressed: () async {
+                              final Uri _emailLaunchUri = Uri(
+                                scheme: 'tel',
+                                path: parkModel.user.phone,
+                              );
+                              String url = _emailLaunchUri.toString();
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            },
+                            icon: CustomIcon(
+                              customIcon: CustomIcons.call,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                     SizedBox(height: 20),

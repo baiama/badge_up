@@ -24,4 +24,6 @@ class ParkProvider extends BaseProvider {
       );
     }
   }
+
+  void delete() {}
 }
