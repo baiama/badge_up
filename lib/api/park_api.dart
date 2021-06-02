@@ -49,6 +49,26 @@ class ParkApi {
     }
   }
 
+  void archive({
+    required Function onSuccess,
+    required Function onFailure,
+    required int id,
+  }) async {
+    Dio dio = await BaseApi().dio;
+    try {
+      Response response = await dio.post('parking/$id/archive/');
+      print(response.data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        onSuccess();
+      } else {
+        onFailure();
+      }
+    } on DioError catch (e) {
+      print(e);
+      onFailure();
+    }
+  }
+
   void create({
     required int garageId,
     required String datetime,

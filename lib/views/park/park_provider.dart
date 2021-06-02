@@ -25,5 +25,18 @@ class ParkProvider extends BaseProvider {
     }
   }
 
-  void delete() {}
+  void archive(ParkModel parkModel) {
+    if (isLoading) {
+      setIsLoading = true;
+      _parkApi.archive(
+          onSuccess: () {
+            results.remove(parkModel);
+            setIsLoading = false;
+          },
+          onFailure: () {
+            setIsLoading = false;
+          },
+          id: parkModel.id);
+    }
+  }
 }
