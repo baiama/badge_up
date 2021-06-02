@@ -16,8 +16,6 @@ class ParkingAutoProvider extends BaseProvider {
   String year = '';
   String time = '';
   void _setUp() {
-    _items = [];
-    isViewSetup = false;
     _phone = '';
     number = '';
     day = '';
@@ -28,6 +26,8 @@ class ParkingAutoProvider extends BaseProvider {
   }
 
   void getItems() {
+    _items = [];
+    isViewSetup = false;
     _setUp();
     if (!isRequestSend) {
       setIsRequestSend = true;
