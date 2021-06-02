@@ -3,6 +3,7 @@ import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/views/auth/login/login_provider.dart';
 import 'package:budge_up/views/auth/reset_password/reset_password.dart';
 import 'package:budge_up/views/home/home_screen.dart';
+import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -73,11 +74,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ElevatedButton(
                       onPressed: () {
                         provider.login(onSuccess: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
-                              (route) => false);
+                          Provider.of<SettingsProvider>(context, listen: false)
+                              .getProfile(() {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()),
+                                (route) => false);
+                          });
                         });
                       },
                       child: provider.isRequestSend
