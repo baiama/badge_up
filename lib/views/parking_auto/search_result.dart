@@ -1,5 +1,8 @@
 import 'package:budge_up/models/park_model.dart';
+import 'package:budge_up/presentation/color_scheme.dart';
+import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
+import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/components/avatar_item.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +78,31 @@ class SearchItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AvatarItem(image: parkModel.user.photo, height: 123, width: 123)
+          SizedBox(height: 30),
+          AvatarItem(image: parkModel.user.photo, height: 123, width: 123),
+          SizedBox(height: 24),
+          Text(
+            parkModel.user.name,
+            textAlign: TextAlign.center,
+            style: kInterSemiBold18,
+          ),
+          SizedBox(height: 4),
+          Text(
+            parkModel.user.phone,
+            textAlign: TextAlign.center,
+            style: kInterReg16ColorBlack,
+          ),
+          if (parkModel.user.description.length > 0) SizedBox(height: 28),
+          if (parkModel.user.description.length > 0)
+            Text(
+              parkModel.user.description,
+              textAlign: TextAlign.center,
+              style: kInterReg16ColorBlack.copyWith(color: kColor999999),
+            ),
+          SizedBox(height: 20),
+          AutoItem(
+              auto: parkModel.garageItem, onDelete: null, isLoading: false),
+          SizedBox(height: 16),
         ],
       ),
     );
