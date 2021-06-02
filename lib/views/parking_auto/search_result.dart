@@ -62,7 +62,10 @@ class _SearchResultState extends State<SearchResult> {
                 itemBuilder: (context, index) {
                   return SearchItem(
                     parkModel: provider.results[index],
-                    onTap: (value) {},
+                    onTap: (value) {
+                      provider.setClosePark = value;
+                      Navigator.pop(context);
+                    },
                   );
                 }),
           );

@@ -81,6 +81,11 @@ class ParkingAutoProvider extends BaseProvider {
 
   ParkModel get closePark => _closePark != null ? _closePark! : ParkModel();
 
+  set setClosePark(ParkModel value) {
+    _closePark = value;
+    notifyListeners();
+  }
+
   set setSelectedAuto(AutoModel value) {
     _selectedAuto = value;
     notifyListeners();
