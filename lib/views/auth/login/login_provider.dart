@@ -9,14 +9,6 @@ class LoginProvider extends AuthProvider {
       return;
     }
 
-    int? number = int.tryParse(email!);
-
-    if (number != null) {
-      if (!email!.startsWith('+')) {
-        email = '+' + email!;
-      }
-    }
-
     if (password == null || password!.length == 0) {
       setError = Strings.errorEmpty + 'Пароль';
       notifyListeners();
