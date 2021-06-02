@@ -4,6 +4,7 @@ import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/components/avatar_item.dart';
+import 'package:budge_up/views/components/time_date_item.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -103,6 +104,13 @@ class SearchItem extends StatelessWidget {
           AutoItem(
               auto: parkModel.garageItem, onDelete: null, isLoading: false),
           SizedBox(height: 16),
+          Container(
+            alignment: Alignment.center,
+            child: TimeDateItem(
+              date: '',
+              time: '',
+            ),
+          ),
         ],
       ),
     );
