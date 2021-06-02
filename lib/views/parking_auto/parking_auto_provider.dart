@@ -131,9 +131,9 @@ class ParkingAutoProvider extends BaseProvider {
         garageId: selectedAuto.id,
         datetime: date,
         phone: phone,
-        closeId: closeId,
-        closeGarageId: closeGarageId,
-        closeNumber: number.length > 0 ? number : null,
+        closeId: _closePark != null ? _closePark!.id : null,
+        closeGarageId: _closePark != null ? _closePark!.garageItem.id : null,
+        closeNumber: _closePark != null ? _closePark!.garageItem.number : null,
         onSuccess: () {
           _setUp();
           onSuccess();
