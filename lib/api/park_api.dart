@@ -13,7 +13,6 @@ class ParkApi {
     try {
       Response response =
           await dio.get('/parking/find/', queryParameters: {'number': number});
-      print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
         Iterable itemsJson = response.data['items'];
         List<ParkModel> items =
@@ -24,7 +23,6 @@ class ParkApi {
       }
     } on DioError catch (e) {
       print(e);
-      print(e.response);
       onFailure();
     }
   }
@@ -48,22 +46,17 @@ class ParkApi {
       'close_garage_id': closeId,
       'close_number': closeId,
     });
-    print(formData.fields);
     try {
       Response response = await dio.post(
         '/parking/',
         data: formData,
       );
-      print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
         onSuccess();
       } else {
         onFailure(Strings.errorEmpty3);
       }
     } on DioError catch (e) {
-      print(e);
-      print(e.response);
-      print(e.response!.realUri);
       if (e.response != null) {
         if (e.response!.statusCode == 400 ||
             e.response!.statusCode == 401 ||

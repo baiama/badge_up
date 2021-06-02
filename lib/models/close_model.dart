@@ -1,7 +1,3 @@
-import 'package:budge_up/models/auto_model.dart';
-import 'package:budge_up/models/user_model.dart';
-import 'package:intl/intl.dart';
-
 class CloseModel {
   late int id;
   late String phone;
