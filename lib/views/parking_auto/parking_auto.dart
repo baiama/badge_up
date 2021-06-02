@@ -202,7 +202,12 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                     builder: (context) =>
                                         SearchResult(query: provider.number),
                                   ),
-                                );
+                                ).then((value) {
+                                  if (value != null && value == 'selected') {
+                                    autoNumController.text =
+                                        provider.closePark.garageItem.number;
+                                  }
+                                });
                               },
                               child: Text('Найти')),
                       ],

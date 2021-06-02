@@ -64,7 +64,7 @@ class _SearchResultState extends State<SearchResult> {
                     parkModel: provider.results[index],
                     onTap: (value) {
                       provider.setClosePark = value;
-                      Navigator.pop(context);
+                      Navigator.of(context).pop('selected');
                     },
                   );
                 }),
