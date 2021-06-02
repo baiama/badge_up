@@ -28,6 +28,7 @@ class ParkingAutoProvider extends BaseProvider {
     month = 8;
     year = '';
     time = '';
+    _closePark = null;
     setIsRequestSend = false;
   }
 
