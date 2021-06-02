@@ -27,6 +27,28 @@ class ParkApi {
     }
   }
 
+  void getItems({
+    required Function(List<ParkModel>) onSuccess,
+    required Function onFailure,
+  }) async {
+    Dio dio = await BaseApi().dio;
+    try {
+      Response response = await dio.get('parking/');
+      print(response.data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        Iterable itemsJson = response.data['items'];
+        List<ParkModel> items =
+            itemsJson.map((i) => ParkModel.fromJson(i)).toList();
+        onSuccess(items);
+      } else {
+        onFailure();
+      }
+    } on DioError catch (e) {
+      print(e);
+      onFailure();
+    }
+  }
+
   void create({
     required int garageId,
     required String datetime,
