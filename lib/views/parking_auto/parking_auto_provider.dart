@@ -12,7 +12,7 @@ class ParkingAutoProvider extends BaseProvider {
   AutoModel? _selectedAuto;
   List<ParkModel>? _results;
   List<ParkModel> get results => _results != null ? _results! : [];
-  AutoModel? _closedAuto;
+  ParkModel? _closePark;
 
   String _phone = '';
   String number = '';
@@ -57,7 +57,7 @@ class ParkingAutoProvider extends BaseProvider {
 
   void findAuto(String query) {
     _results = [];
-    _closedAuto = null;
+    _closePark = null;
     setIsLoading = false;
     if (!isLoading) {
       setIsLoading = true;
@@ -77,6 +77,8 @@ class ParkingAutoProvider extends BaseProvider {
 
   AutoModel get selectedAuto =>
       _selectedAuto != null ? _selectedAuto! : AutoModel();
+
+  ParkModel get closePark => _closePark != null ? _closePark! : ParkModel();
 
   set setSelectedAuto(AutoModel value) {
     _selectedAuto = value;
