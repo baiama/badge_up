@@ -107,8 +107,8 @@ class SearchItem extends StatelessWidget {
           Container(
             alignment: Alignment.center,
             child: TimeDateItem(
-              date: '',
-              time: '',
+              date: parkModel.date,
+              time: parkModel.time,
             ),
           ),
         ],

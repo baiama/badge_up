@@ -1,5 +1,6 @@
 import 'package:budge_up/models/auto_model.dart';
 import 'package:budge_up/models/user_model.dart';
+import 'package:intl/intl.dart';
 
 class ParkModel {
   late int id;
@@ -13,6 +14,22 @@ class ParkModel {
 
   late UserModel user;
   late AutoModel garageItem;
+
+  String get time {
+    DateTime? parsedDate = DateTime.tryParse(datetime);
+    if (parsedDate != null) {
+      return DateFormat.Hm().format(parsedDate);
+    }
+    return '';
+  }
+
+  String get date {
+    DateTime? parsedDate = DateTime.tryParse(datetime);
+    if (parsedDate != null) {
+      return DateFormat('dd.MM.yyyy').format(parsedDate);
+    }
+    return '';
+  }
 
   ParkModel() {
     id = 0;
