@@ -6,9 +6,10 @@ class ParkProvider extends BaseProvider {
   List<ParkModel>? _results;
   List<ParkModel> get results => _results != null ? _results! : [];
   ParkApi _parkApi = ParkApi();
-
+  int id = 0;
   void getItems() {
     _results = [];
+    id = 0;
     setIsLoading = false;
     if (!isLoading) {
       setIsLoading = true;
@@ -26,14 +27,17 @@ class ParkProvider extends BaseProvider {
   }
 
   void archive(ParkModel parkModel) {
+    id = parkModel.id;
     if (!isLoading) {
       setIsLoading = true;
       _parkApi.archive(
           onSuccess: () {
             results.removeWhere((element) => element.id == parkModel.id);
+            id = 0;
             setIsLoading = false;
           },
           onFailure: () {
+            id = 0;
             setIsLoading = false;
           },
           id: parkModel.id);

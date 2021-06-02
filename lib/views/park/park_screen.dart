@@ -3,6 +3,7 @@ import 'package:budge_up/models/user_model.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/text_styles.dart';
+import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/components/avatar_item.dart';
 import 'package:budge_up/views/components/time_date_item.dart';
@@ -65,6 +66,8 @@ class _ParkBodyState extends State<ParkBody> {
             onArchive: (value) {
               provider.archive(value);
             },
+            isLoading:
+                provider.id == provider.results[index].id && provider.isLoading,
           );
         });
   }
@@ -74,12 +77,14 @@ class ParkItem extends StatelessWidget {
   final ParkModel parkModel;
   final UserModel user;
   final Function(ParkModel) onArchive;
-  const ParkItem(
-      {Key? key,
-      required this.parkModel,
-      required this.user,
-      required this.onArchive})
-      : super(key: key);
+  final bool isLoading;
+  const ParkItem({
+    Key? key,
+    required this.parkModel,
+    required this.user,
+    required this.isLoading,
+    required this.onArchive,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -170,10 +175,12 @@ class ParkItem extends StatelessWidget {
                     onPressed: () {
                       onArchive(parkModel);
                     },
-                    child: Text(parkModel.close.id > 0 &&
-                            parkModel.close.userId != user.id
-                        ? 'Я все равно уехал'
-                        : 'Уехать')),
+                    child: isLoading
+                        ? CircularLoader()
+                        : Text(parkModel.close.id > 0 &&
+                                parkModel.close.userId != user.id
+                            ? 'Я все равно уехал'
+                            : 'Уехать')),
               SizedBox(height: 12),
             ],
           ),
