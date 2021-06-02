@@ -43,6 +43,11 @@ class _ParkingAutoState extends State<ParkingAuto> {
   var timeMaskFormatter = new MaskTextInputFormatter(
       mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
 
+  var autoNumController = TextEditingController();
+  var dayController = TextEditingController();
+  var yearController = TextEditingController();
+  var timeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,6 +153,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                               children: [
                                 Expanded(
                                   child: TextFormField(
+                                    controller: autoNumController,
                                     onChanged: (value) {
                                       provider.number = value;
                                       provider.updateView();
@@ -213,6 +219,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         Expanded(
                           flex: 4,
                           child: TextField(
+                            controller: dayController,
                             onChanged: (value) {
                               provider.day = value;
                               provider.updateView();
@@ -261,6 +268,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         Expanded(
                           flex: 5,
                           child: TextField(
+                            controller: yearController,
                             onChanged: (value) {
                               provider.year = value;
                               provider.updateView();
@@ -276,6 +284,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         Expanded(
                             flex: 5,
                             child: TextField(
+                              controller: timeController,
                               onChanged: (value) {
                                 provider.time = value;
                                 provider.updateView();
@@ -311,6 +320,10 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         onPressed: provider.buttonIsEnabled
                             ? () {
                                 provider.create(onSuccess: () {
+                                  autoNumController.clear();
+                                  dayController.clear();
+                                  yearController.clear();
+                                  timeController.clear();
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       backgroundColor: Colors.white,
