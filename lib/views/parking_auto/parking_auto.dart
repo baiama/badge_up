@@ -156,6 +156,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                     controller: autoNumController,
                                     onChanged: (value) {
                                       provider.number = value;
+                                      provider.setClosePark2 = null;
                                       provider.updateView();
                                     },
                                     decoration: InputDecoration(
