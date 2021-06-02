@@ -2,6 +2,7 @@ import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/views/auth/register/register_provider.dart';
 import 'package:budge_up/views/home/home_screen.dart';
+import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -110,11 +111,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ElevatedButton(
                         onPressed: () {
                           provider.register(onSuccess: () {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomeScreen()),
-                                (route) => false);
+                            Provider.of<SettingsProvider>(context,
+                                    listen: false)
+                                .getProfile(() {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeScreen()),
+                                  (route) => false);
+                            });
                           });
                         },
                         child: provider.isRequestSend

@@ -14,11 +14,11 @@ class RegisterProvider extends AuthProvider {
       return;
     }
 
-    if (!phone!.startsWith('+')) {
-      phone = '+' + phone!;
-    }
-
-    if (phone!.length != 12) {
+    // if (!phone!.startsWith('+')) {
+    //   phone = '+' + phone!;
+    // }
+    print(phone);
+    if (phone!.length != 11) {
       setError = Strings.errorEmpty2 + 'Телефон';
       notifyListeners();
       return;
