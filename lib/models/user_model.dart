@@ -1,3 +1,6 @@
+const String defaultImage =
+    'https://datadezign.co.uk/wp-content/uploads/2020/04/user-default-grey.png';
+
 class UserModel {
   late int id;
   late String name;
@@ -25,7 +28,7 @@ class UserModel {
       name = data['name'] != null ? data['name'] : '';
       email = data['email'] != null ? data['email'] : '';
       phone = data['phone'] != null ? data['phone'] : '';
-      photo = data['photo'] != null ? data['photo'] : '';
+      photo = data['photo'] != null ? data['photo'] : defaultImage;
       description = data['description'] != null ? data['description'] : '';
       isSendPush = data['is_send_push'] != null ? data['is_send_push'] : false;
       isEmailConfirm =
