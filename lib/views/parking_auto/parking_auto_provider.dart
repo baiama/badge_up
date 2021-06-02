@@ -2,6 +2,7 @@ import 'package:budge_up/api/garage_api.dart';
 import 'package:budge_up/api/park_api.dart';
 import 'package:budge_up/base/base_provider.dart';
 import 'package:budge_up/models/auto_model.dart';
+import 'package:budge_up/models/park_model.dart';
 
 class ParkingAutoProvider extends BaseProvider {
   GarageApi _api = GarageApi();
@@ -9,12 +10,17 @@ class ParkingAutoProvider extends BaseProvider {
   List<AutoModel>? _items;
   List<AutoModel> get items => _items != null ? _items! : [];
   AutoModel? _selectedAuto;
+  List<ParkModel>? _results;
+  List<ParkModel> get results => _results != null ? _results! : [];
+  AutoModel? _closedAuto;
+
   String _phone = '';
   String number = '';
   String day = '';
   int month = 8;
   String year = '';
   String time = '';
+
   void _setUp() {
     _phone = '';
     number = '';
@@ -27,6 +33,7 @@ class ParkingAutoProvider extends BaseProvider {
 
   void getItems() {
     _items = [];
+    _selectedAuto = null;
     isViewSetup = false;
     _setUp();
     if (!isRequestSend) {
@@ -49,12 +56,15 @@ class ParkingAutoProvider extends BaseProvider {
   }
 
   void findAuto(String query) {
+    _results = [];
+    _closedAuto = null;
     setIsLoading = false;
     if (!isLoading) {
       setIsLoading = true;
       _parkApi.findAuto(
         number: query,
-        onSuccess: () {
+        onSuccess: (value) {
+          _results = value;
           setIsLoading = false;
         },
         onFailure: () {
