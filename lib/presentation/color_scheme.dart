@@ -4,6 +4,7 @@ const kColor2980B9 = Color(0xFF2980B9);
 const kColorBDBDBD = Color(0xFFBDBDBD);
 const kColorF6F6F6 = Color(0xFFF6F6F6);
 const kColorF8F8F8 = Color(0xFFF8F8F8);
+const kColorF9F9F9 = Color(0xFFF9F9F9);
 const kColor999999 = Color(0xFF999999);
 const kColorE8E8E8 = Color(0xFFE8E8E8);
 const kColorCC6666 = Color(0xFFCC6666);
