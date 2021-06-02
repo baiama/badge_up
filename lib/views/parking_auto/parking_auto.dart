@@ -295,6 +295,14 @@ class _ParkingAutoState extends State<ParkingAuto> {
                     SizedBox(height: 50),
                     ElevatedButton(
                         style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.disabled)) {
+                                return kColorCCCCCC;
+                              }
+                              return kColor2980B9;
+                            }),
                             padding:
                                 MaterialStateProperty.all(EdgeInsets.zero)),
                         onPressed: () {
