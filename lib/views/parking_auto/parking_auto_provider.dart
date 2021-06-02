@@ -94,25 +94,25 @@ class ParkingAutoProvider extends BaseProvider {
         '$year-${month < 10 ? '0$month' : month.toString()}-${day.length < 2 ? '0$day' : day.toString()} $time:00';
     print(date);
     // '2021-06-16 21:30:00'
-    // if (!isCreating) {
-    //   setIsCreating = true;
-    //   _parkApi.create(
-    //     garageId: selectedAuto.id,
-    //     datetime: date,
-    //     phone: phone,
-    //     closeId: closeId,
-    //     closeGarageId: closeGarageId,
-    //     closeNumber: number.length > 0 ? number : null,
-    //     onSuccess: () {
-    //       _setUp();
-    //       onSuccess();
-    //       setIsCreating = false;
-    //     },
-    //     onFailure: (value) {
-    //       onFailure(value);
-    //       setIsCreating = false;
-    //     },
-    //   );
-    // }
+    if (!isCreating) {
+      setIsCreating = true;
+      _parkApi.create(
+        garageId: selectedAuto.id,
+        datetime: date,
+        phone: phone,
+        closeId: closeId,
+        closeGarageId: closeGarageId,
+        closeNumber: number.length > 0 ? number : null,
+        onSuccess: () {
+          _setUp();
+          onSuccess();
+          setIsCreating = false;
+        },
+        onFailure: (value) {
+          onFailure(value);
+          setIsCreating = false;
+        },
+      );
+    }
   }
 }
