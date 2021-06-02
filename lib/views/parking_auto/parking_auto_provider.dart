@@ -84,6 +84,14 @@ class ParkingAutoProvider extends BaseProvider {
     notifyListeners();
   }
 
+  bool get buttonIsEnabled {
+    return phone.length > 0 &&
+        selectedAuto.id > 0 &&
+        day.length > 0 &&
+        year.length == 4 &&
+        time.length == 5;
+  }
+
   void create({
     required Function onSuccess,
     required Function(String) onFailure,

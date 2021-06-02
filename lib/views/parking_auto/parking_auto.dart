@@ -215,6 +215,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                           child: TextField(
                             onChanged: (value) {
                               provider.day = value;
+                              provider.updateView();
                             },
                             inputFormatters: [dayMaskFormatter],
                             decoration: InputDecoration(
@@ -262,6 +263,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                           child: TextField(
                             onChanged: (value) {
                               provider.year = value;
+                              provider.updateView();
                             },
                             inputFormatters: [yearMaskFormatter],
                             decoration: InputDecoration(
@@ -276,6 +278,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             child: TextField(
                               onChanged: (value) {
                                 provider.time = value;
+                                provider.updateView();
                               },
                               inputFormatters: [timeMaskFormatter],
                               decoration: InputDecoration(
@@ -305,29 +308,31 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             }),
                             padding:
                                 MaterialStateProperty.all(EdgeInsets.zero)),
-                        onPressed: () {
-                          provider.create(onSuccess: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: Colors.white,
-                                content: Text(
-                                  Strings.successCreatePark,
-                                  style: kInterReg16ColorBlack,
-                                ),
-                              ),
-                            );
-                          }, onFailure: (value) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: Colors.white,
-                                content: Text(
-                                  value,
-                                  style: kInterReg16ColorBlack,
-                                ),
-                              ),
-                            );
-                          });
-                        },
+                        onPressed: provider.buttonIsEnabled
+                            ? () {
+                                provider.create(onSuccess: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: Colors.white,
+                                      content: Text(
+                                        Strings.successCreatePark,
+                                        style: kInterReg16ColorBlack,
+                                      ),
+                                    ),
+                                  );
+                                }, onFailure: (value) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: Colors.white,
+                                      content: Text(
+                                        value,
+                                        style: kInterReg16ColorBlack,
+                                      ),
+                                    ),
+                                  );
+                                });
+                              }
+                            : null,
                         child: provider.isCreating
                             ? CircularLoader()
                             : Text('Парковаться')),
