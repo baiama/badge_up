@@ -26,11 +26,11 @@ class ParkProvider extends BaseProvider {
   }
 
   void archive(ParkModel parkModel) {
-    if (isLoading) {
+    if (!isLoading) {
       setIsLoading = true;
       _parkApi.archive(
           onSuccess: () {
-            results.remove(parkModel);
+            results.removeWhere((element) => element.id == parkModel.id);
             setIsLoading = false;
           },
           onFailure: () {
