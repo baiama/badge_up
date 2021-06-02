@@ -15,6 +15,11 @@ const kInterReg10 = TextStyle(
   height: 12.1 / 10,
 );
 
+const kInterReg12 = TextStyle(
+  fontFamily: 'Inter-Regular',
+  fontSize: 12,
+);
+
 const kInterReg14 = TextStyle(
   fontFamily: 'Inter-Regular',
   fontSize: 14,

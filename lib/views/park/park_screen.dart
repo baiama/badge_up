@@ -1,9 +1,13 @@
 import 'package:budge_up/models/park_model.dart';
+import 'package:budge_up/models/user_model.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/text_styles.dart';
+import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/components/avatar_item.dart';
+import 'package:budge_up/views/components/time_date_item.dart';
 import 'package:budge_up/views/park/park_provider.dart';
+import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -39,9 +43,11 @@ class ParkBody extends StatefulWidget {
 }
 
 class _ParkBodyState extends State<ParkBody> {
+  UserModel user = UserModel();
   @override
   void initState() {
     super.initState();
+    user = Provider.of<SettingsProvider>(context, listen: false).user;
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       Provider.of<ParkProvider>(context, listen: false).getItems();
     });
@@ -55,6 +61,7 @@ class _ParkBodyState extends State<ParkBody> {
         itemBuilder: (context, index) {
           return ParkItem(
             parkModel: provider.results[index],
+            user: user,
           );
         });
   }
@@ -62,63 +69,114 @@ class _ParkBodyState extends State<ParkBody> {
 
 class ParkItem extends StatelessWidget {
   final ParkModel parkModel;
-  const ParkItem({Key? key, required this.parkModel}) : super(key: key);
+  final UserModel user;
+  const ParkItem({Key? key, required this.parkModel, required this.user})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 24),
-      decoration: BoxDecoration(
-        color: parkModel.close.id > 0 ? kColorF8F8F8 : Colors.transparent,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Padding(
+      padding: EdgeInsets.only(left: 24, right: 24, top: 12),
+      child: Stack(
         children: [
-          SizedBox(height: 24),
-          AvatarItem(image: parkModel.user.photo, height: 96, width: 96),
-          SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(width: 40),
-              Expanded(
+              Container(
+                decoration: BoxDecoration(
+                  color: parkModel.close.id > 0
+                      ? kColorF8F8F8
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      parkModel.user.name,
-                      textAlign: TextAlign.center,
-                      style: kInterSemiBold18,
+                    SizedBox(height: 24),
+                    AvatarItem(
+                        image: parkModel.user.photo, height: 96, width: 96),
+                    SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 40),
+                        Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                parkModel.user.name,
+                                textAlign: TextAlign.center,
+                                style: kInterSemiBold18,
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                parkModel.user.phone,
+                                textAlign: TextAlign.center,
+                                style: kInterReg16ColorBlack,
+                              ),
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () async {
+                            final Uri _emailLaunchUri = Uri(
+                              scheme: 'tel',
+                              path: parkModel.user.phone,
+                            );
+                            String url = _emailLaunchUri.toString();
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          },
+                          icon: CustomIcon(
+                            customIcon: CustomIcons.call,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 4),
-                    Text(
-                      parkModel.user.phone,
-                      textAlign: TextAlign.center,
-                      style: kInterReg16ColorBlack,
+                    SizedBox(height: 20),
+                    AutoItem(
+                        auto: parkModel.garageItem,
+                        onDelete: null,
+                        isLoading: false),
+                    SizedBox(height: 16),
+                    Container(
+                      alignment: Alignment.center,
+                      child: TimeDateItem(
+                        date: parkModel.date,
+                        time: parkModel.time,
+                      ),
                     ),
+                    SizedBox(height: 30),
                   ],
                 ),
               ),
-              IconButton(
-                onPressed: () async {
-                  final Uri _emailLaunchUri = Uri(
-                    scheme: 'tel',
-                    path: parkModel.user.phone,
-                  );
-                  String url = _emailLaunchUri.toString();
-                  if (await canLaunch(url)) {
-                    await launch(url);
-                  } else {
-                    throw 'Could not launch $url';
-                  }
-                },
-                icon: CustomIcon(
-                  customIcon: CustomIcons.call,
+              SizedBox(height: 24),
+              ElevatedButton(
+                  onPressed: () {}, child: Text('Я все равно уехал')),
+              SizedBox(height: 12),
+            ],
+          ),
+          if (parkModel.close.id > 0)
+            Positioned(
+              right: 0,
+              top: 0,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 11, vertical: 4),
+                decoration: BoxDecoration(
+                    color: kColorB2CC6666,
+                    borderRadius: BorderRadius.circular(8)),
+                child: Text(
+                  parkModel.close.userId == user.id
+                      ? 'Закрыт мной'
+                      : 'Закрыл меня',
+                  style: kInterReg12.copyWith(color: Colors.white),
                 ),
               ),
-            ],
-          )
+            ),
         ],
       ),
     );
