@@ -60,7 +60,10 @@ class _SearchResultState extends State<SearchResult> {
             child: ListView.builder(
                 itemCount: provider.results.length,
                 itemBuilder: (context, index) {
-                  return SearchItem(parkModel: provider.results[index]);
+                  return SearchItem(
+                    parkModel: provider.results[index],
+                    onTap: (value) {},
+                  );
                 }),
           );
         },
@@ -71,7 +74,9 @@ class _SearchResultState extends State<SearchResult> {
 
 class SearchItem extends StatelessWidget {
   final ParkModel parkModel;
-  const SearchItem({Key? key, required this.parkModel}) : super(key: key);
+  final Function(ParkModel) onTap;
+  const SearchItem({Key? key, required this.parkModel, required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +115,16 @@ class SearchItem extends StatelessWidget {
               date: parkModel.date,
               time: parkModel.time,
             ),
+          ),
+          SizedBox(height: 30),
+          ElevatedButton(
+              onPressed: () {
+                onTap(parkModel);
+              },
+              child: Text('Закрыть этот авто')),
+          SizedBox(height: 16),
+          Divider(
+            thickness: 1.5,
           ),
         ],
       ),
