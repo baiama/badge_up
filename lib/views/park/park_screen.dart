@@ -11,6 +11,28 @@ class ParkScreen extends StatefulWidget {
 
 class _ParkScreenState extends State<ParkScreen> {
   @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => ParkProvider(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Парковки'),
+        ),
+        body: ParkBody(),
+      ),
+    );
+  }
+}
+
+class ParkBody extends StatefulWidget {
+  const ParkBody({Key? key}) : super(key: key);
+
+  @override
+  _ParkBodyState createState() => _ParkBodyState();
+}
+
+class _ParkBodyState extends State<ParkBody> {
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
@@ -20,10 +42,6 @@ class _ParkScreenState extends State<ParkScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Парковки'),
-      ),
-    );
+    return Container();
   }
 }
