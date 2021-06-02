@@ -8,6 +8,7 @@ import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/components/avatar_item.dart';
 import 'package:budge_up/views/components/time_date_item.dart';
 import 'package:budge_up/views/park/park_provider.dart';
+import 'package:budge_up/views/profile/profile_screen.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -106,8 +107,17 @@ class ParkItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SizedBox(height: 24),
-                    AvatarItem(
-                        image: parkModel.user.photo, height: 96, width: 96),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ProfileScreen(user: parkModel.user)));
+                      },
+                      child: AvatarItem(
+                          image: parkModel.user.photo, height: 96, width: 96),
+                    ),
                     SizedBox(height: 24),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

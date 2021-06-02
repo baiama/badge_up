@@ -6,6 +6,7 @@ import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/components/avatar_item.dart';
 import 'package:budge_up/views/components/time_date_item.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
+import 'package:budge_up/views/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -88,7 +89,16 @@ class SearchItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(height: 30),
-          AvatarItem(image: parkModel.user.photo, height: 123, width: 123),
+          GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ProfileScreen(user: parkModel.user)));
+              },
+              child: AvatarItem(
+                  image: parkModel.user.photo, height: 123, width: 123)),
           SizedBox(height: 24),
           Text(
             parkModel.user.name,
