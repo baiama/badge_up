@@ -155,8 +155,13 @@ class ParkItem extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 24),
-              ElevatedButton(
-                  onPressed: () {}, child: Text('Я все равно уехал')),
+              if (parkModel.active)
+                ElevatedButton(
+                    onPressed: () {},
+                    child: Text(parkModel.close.id > 0 &&
+                            parkModel.close.userId != user.id
+                        ? 'Я все равно уехал'
+                        : 'Уехать')),
               SizedBox(height: 12),
             ],
           ),
