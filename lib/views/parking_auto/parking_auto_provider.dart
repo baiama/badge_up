@@ -121,8 +121,9 @@ class ParkingAutoProvider extends BaseProvider {
     int? closeId,
     int? closeGarageId,
   }) {
+    int currentMonth = month + 1;
     String date =
-        '$year-${month < 10 ? '0$month' : month.toString()}-${day.length < 2 ? '0$day' : day.toString()} $time:00';
+        '$year-${currentMonth < 10 ? '0$currentMonth' : currentMonth.toString()}-${day.length < 2 ? '0$day' : day.toString()} $time:00';
     print(date);
     // '2021-06-16 21:30:00'
     if (!isCreating) {
