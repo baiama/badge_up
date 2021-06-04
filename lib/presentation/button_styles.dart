@@ -49,3 +49,18 @@ var kElevatedButtonStyle3 = ButtonStyle(
     ),
   ),
 );
+
+
+var kAlertElevatedButtonStyle = ButtonStyle(
+  minimumSize: MaterialStateProperty.all(Size(20, 30)),
+  textStyle: MaterialStateProperty.all(kInterSemiBold16ColorWhite),
+  foregroundColor: MaterialStateProperty.all(Colors.white),
+  backgroundColor: MaterialStateProperty.all(kColor2980B9),
+  shape: MaterialStateProperty.all(
+    RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(10.0),
+      ),
+    ),
+  ),
+);

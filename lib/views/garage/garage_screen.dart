@@ -1,6 +1,7 @@
 import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/views/components/auto_item.dart';
+import 'package:budge_up/views/components/cutom_allerts.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -90,7 +91,14 @@ class _GarageScreenState extends State<GarageScreen> {
                         child: AutoItem(
                             auto: provider.items[index],
                             onDelete: (value) {
-                              provider.delete(value);
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AutoDeleteDialog(onDeleteTap: (){
+                                      provider.delete(value);
+                                    },);
+                                  });
+
                             },
                             isLoading: provider.isLoading &&
                                 provider.items[index].id == provider.id),

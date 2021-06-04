@@ -10,5 +10,6 @@ class Strings {
   static const String gallery = 'Галерея';
   static const String camera = 'Камера';
   static const String delete = 'Удалить?';
+  static const String delete1 = 'Удалить';
   static const String successCreatePark = 'Вы успешно парковались.';
 }
