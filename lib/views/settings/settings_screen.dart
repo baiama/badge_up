@@ -5,6 +5,7 @@ import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/utils/full_screen.dart';
 import 'package:budge_up/utils/strings.dart';
+import 'package:budge_up/views/components/cutom_allerts.dart';
 import 'package:budge_up/views/initial/initial_screen.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
@@ -34,12 +35,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Provider.of<SettingsProvider>(context, listen: false).logout(() {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => InitialScreen()),
-                    (route) => false);
-              });
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return SingOutDialog(onTap: (){
+                      Provider.of<SettingsProvider>(context, listen: false).logout(() {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => InitialScreen()),
+                                (route) => false);
+                      });
+                    },);
+                  });
+
             },
             icon: CustomIcon(
               customIcon: CustomIcons.logout,

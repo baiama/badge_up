@@ -6,6 +6,7 @@ class Strings {
 
   static const String cancel = 'Отмена';
   static const String yes = 'Да';
+  static const String no = 'Нет';
 
   static const String gallery = 'Галерея';
   static const String camera = 'Камера';
