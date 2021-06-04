@@ -15,6 +15,7 @@ class BaseApi {
     var _token = await PreferenceHelper().token;
 
     if (_token.length > 0) {
+      print(_token);
       options.headers['Authorization'] = 'Bearer $_token';
     }
 
