@@ -126,10 +126,8 @@ class AuthApi {
       }
     } on DioError catch (e) {
       print(e);
-      if (e.response != null) {
-        if (e.response!.statusCode == 400 ||
-            e.response!.statusCode == 401 ||
-            e.response!.statusCode == 404) {
+      if (e.response != null && e.response!.statusCode != null) {
+        if (e.response!.statusCode! > 399 && e.response!.statusCode! < 500 ) {
           String err = e.response!.data['error'];
           onFailure(err);
         } else {
