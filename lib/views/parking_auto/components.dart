@@ -152,7 +152,6 @@ class _AutoListViewState extends State<AutoListView> {
               if (widget.items.length < 5)
                 GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -162,6 +161,7 @@ class _AutoListViewState extends State<AutoListView> {
                     ).then((value) {
                       Provider.of<ParkingAutoProvider>(context, listen: false)
                           .getItems();
+                      Navigator.pop(context);
                     });
                   },
                   child: Container(
