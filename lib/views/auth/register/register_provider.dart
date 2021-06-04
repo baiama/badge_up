@@ -44,7 +44,7 @@ class RegisterProvider extends AuthProvider {
       return;
     }
 
-    if (password!.length < 6) {
+    if (password!.length < 5) {
       setError = 'Пароль должен быть, не менее 5 символов';
       notifyListeners();
       return;
@@ -57,7 +57,7 @@ class RegisterProvider extends AuthProvider {
     }
 
     if (password! != passwordRepeat!) {
-      setError = Strings.errorEmpty + 'Пароли не совподают';
+      setError = 'Пароли не совподают';
       notifyListeners();
       return;
     }
