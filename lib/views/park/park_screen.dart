@@ -187,8 +187,8 @@ class ParkItem extends StatelessWidget {
                     },
                     child: isLoading
                         ? CircularLoader()
-                        : Text(parkModel.user.id > 0 &&
-                                parkModel.user.id != user.id
+                        : Text(parkModel.close.id > 0 &&
+                                parkModel.close.id != user.id
                             ? 'Я все равно уехал'
                             : 'Уехать')),
               SizedBox(height: 12),
@@ -204,7 +204,7 @@ class ParkItem extends StatelessWidget {
                     color: kColorB2CC6666,
                     borderRadius: BorderRadius.circular(8)),
                 child: Text(
-                  parkModel.user.id == user.id
+                  parkModel.close.userId == user.id
                       ? 'Закрыт мной'
                       : 'Закрыл меня',
                   style: kInterReg12.copyWith(color: Colors.white),
