@@ -48,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
     },),);
     _screens.add(ParkScreen(),);
     _screens.add(GarageScreen(),);
-    _screens.add(GarageScreen(),);
     _screens.add(SettingsScreen(),);
   }
 
