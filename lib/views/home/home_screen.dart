@@ -17,11 +17,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _index = 0;
   final _screens = [
-    ParkingAuto(),
-    ParkScreen(),
-    GarageScreen(),
-    SettingsScreen(),
+
   ];
+
 
   BottomNavigationBarItem getNavItem(String item, String label) {
     return BottomNavigationBarItem(
@@ -38,6 +36,20 @@ class _HomeScreenState extends State<HomeScreen> {
               color: kColor666666,
             )),
         label: label);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _screens.add(ParkingAuto(onPark: (){
+      setState(() {
+        _index = 1;
+      });
+    },),);
+    _screens.add(ParkScreen(),);
+    _screens.add(GarageScreen(),);
+    _screens.add(GarageScreen(),);
+    _screens.add(SettingsScreen(),);
   }
 
   @override

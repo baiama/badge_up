@@ -18,7 +18,8 @@ import 'package:provider/provider.dart';
 import 'components.dart';
 
 class ParkingAuto extends StatefulWidget {
-  const ParkingAuto({Key? key}) : super(key: key);
+  final Function onPark;
+  const ParkingAuto({Key? key, required this.onPark}) : super(key: key);
 
   @override
   _ParkingAutoState createState() => _ParkingAutoState();
@@ -339,6 +340,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                       ),
                                     ),
                                   );
+                                  widget.onPark();
                                 }, onFailure: (value) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
