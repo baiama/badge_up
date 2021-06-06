@@ -62,3 +62,34 @@ class SingOutDialog extends StatelessWidget {
   }
 }
 
+
+class ParkArchiveDialog extends StatelessWidget {
+  final Function onTap;
+  const ParkArchiveDialog({Key? key, required this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: Text(
+          'Вы уверены, что решили уехать?'),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            onTap();
+            Navigator.pop(context);
+          },
+          child: Text(Strings.yes),
+          style: kAlertElevatedButtonStyle,
+        ),
+        ElevatedButton(
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          child: Text(Strings.no),
+          style: kAlertElevatedButtonStyle,
+        ),
+      ],
+    );
+  }
+}
+

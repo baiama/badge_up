@@ -6,6 +6,7 @@ import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/components/avatar_item.dart';
+import 'package:budge_up/views/components/cutom_allerts.dart';
 import 'package:budge_up/views/components/time_date_item.dart';
 import 'package:budge_up/views/park/park_provider.dart';
 import 'package:budge_up/views/parking_auto/components.dart';
@@ -201,7 +202,13 @@ class ParkItem extends StatelessWidget {
               if (parkModel.active)
                 ElevatedButton(
                     onPressed: () {
-                      onArchive(parkModel);
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return ParkArchiveDialog(onTap: (){
+                              onArchive(parkModel);
+                            },);
+                          });
                     },
                     child: isLoading
                         ? CircularLoader()
