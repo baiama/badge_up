@@ -43,4 +43,8 @@ class ParkProvider extends BaseProvider {
           id: parkModel.id);
     }
   }
+
+  void updatePhone(String value){
+
+  }
 }

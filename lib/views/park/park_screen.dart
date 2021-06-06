@@ -8,6 +8,7 @@ import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/components/avatar_item.dart';
 import 'package:budge_up/views/components/time_date_item.dart';
 import 'package:budge_up/views/park/park_provider.dart';
+import 'package:budge_up/views/parking_auto/components.dart';
 import 'package:budge_up/views/profile/profile_screen.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
@@ -122,7 +123,7 @@ class ParkItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(width: 40),
+                        SizedBox(width: 60),
                         Expanded(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -141,8 +142,7 @@ class ParkItem extends StatelessWidget {
                             ],
                           ),
                         ),
-                        if (parkModel.close.id == 0) SizedBox(width: 40),
-                        if (parkModel.close.id > 0)
+                        if (parkModel.user.id != user.id)
                           IconButton(
                             onPressed: () async {
                               final Uri _emailLaunchUri = Uri(
@@ -160,6 +160,24 @@ class ParkItem extends StatelessWidget {
                               customIcon: CustomIcons.call,
                             ),
                           ),
+                        if (parkModel.user.id == user.id)
+                          IconButton(
+                            onPressed: () async {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return PhoneEditView(
+                                      onTap: (value) {
+                                        // provider.setPhone = value;
+                                      },
+                                    );
+                                  });
+                            },
+                            icon: CustomIcon(
+                              customIcon: CustomIcons.edit,
+                            ),
+                          ),
+                        SizedBox(width: 20),
                       ],
                     ),
                     SizedBox(height: 20),
