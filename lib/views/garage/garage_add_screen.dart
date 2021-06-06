@@ -3,6 +3,7 @@ import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/views/garage/garage_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class GarageAddScreen extends StatefulWidget {
@@ -84,6 +85,7 @@ class _GarageAddScreenState extends State<GarageAddScreen> {
                     onChanged: (value) {
                       provider.numberAuto = value;
                     },
+                    inputFormatters: [new  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9 ]")),],
                     decoration: InputDecoration(
                       hintText: 'Номер авто *',
                     ),
