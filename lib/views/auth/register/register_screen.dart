@@ -58,6 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       onChanged: (value) {
                         provider.name = value;
+                        provider.setError = '';
                       },
                       decoration: InputDecoration(
                         hintText: 'Имя *',
@@ -67,6 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       onChanged: (value) {
                         provider.phone = value;
+                        provider.setError = '';
                       },
                       decoration: InputDecoration(
                         hintText: 'Телефон *',
@@ -76,6 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       onChanged: (value) {
                         provider.email = value;
+                        provider.setError = '';
                       },
                       decoration: InputDecoration(
                         hintText: 'Email *',
@@ -85,6 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       onChanged: (value) {
                         provider.password = value;
+                        provider.setError = '';
                       },
                       decoration: InputDecoration(
                         hintText: 'Пароль *',
@@ -94,6 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       onChanged: (value) {
                         provider.passwordRepeat = value;
+                        provider.setError = '';
                       },
                       decoration: InputDecoration(
                         hintText: 'Пароль еще раз *',
