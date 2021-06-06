@@ -12,6 +12,7 @@ import 'package:budge_up/views/parking_auto/scanner_screen.dart';
 import 'package:budge_up/views/parking_auto/search_result.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
@@ -154,6 +155,8 @@ class _ParkingAutoState extends State<ParkingAuto> {
                               children: [
                                 Expanded(
                                   child: TextFormField(
+                                    textCapitalization: TextCapitalization.characters,
+                                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9 ]")),],
                                     controller: autoNumController,
                                     onChanged: (value) {
                                       provider.number = value;

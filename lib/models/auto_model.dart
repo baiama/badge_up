@@ -6,7 +6,7 @@ class AutoModel {
   late int userId;
 
   String get type {
-    return '$model $brand';
+    return '$brand $model';
   }
 
   AutoModel() {
