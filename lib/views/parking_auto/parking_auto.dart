@@ -49,6 +49,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
   var dayController = TextEditingController();
   var yearController = TextEditingController();
   var timeController = TextEditingController();
+  var textStyle = kInterReg16ColorBDBDBD;
 
   @override
   Widget build(BuildContext context) {
@@ -253,6 +254,9 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                       onSelected: (value) {
                                         provider.month = value;
                                         provider.updateView();
+                                        setState(() {
+                                          textStyle = kInterReg16ColorBlack;
+                                        });
                                       },
                                     );
                                   });
@@ -269,7 +273,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                               alignment: Alignment.center,
                               child: Text(
                                 MonthModel.monthShort[provider.month],
-                                style: kInterReg16ColorBDBDBD,
+                                style: textStyle,
                               ),
                             ),
                           ),
@@ -334,6 +338,9 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                   dayController.clear();
                                   yearController.clear();
                                   timeController.clear();
+                                  setState(() {
+                                    textStyle = kInterReg16ColorBDBDBD;
+                                  });
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       backgroundColor: Colors.white,
