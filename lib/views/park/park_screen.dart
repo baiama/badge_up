@@ -141,7 +141,7 @@ class ParkItem extends StatelessWidget {
                               ),
                               SizedBox(height: 4),
                               Text(
-                                parkModel.user.phone,
+                                parkModel.phone,
                                 textAlign: TextAlign.center,
                                 style: kInterReg16ColorBlack,
                               ),

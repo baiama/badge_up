@@ -50,9 +50,9 @@ class ParkProvider extends BaseProvider {
       setIsLoading = true;
       _parkApi.updatePhone(
           onSuccess: () {
-            // results.removeWhere((element) => element.id == parkModel.id);
             id = 0;
             setIsLoading = false;
+            parkModel.setPhone(value);
           },
           onFailure: () {
             id = 0;

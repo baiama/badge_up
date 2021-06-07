@@ -30,6 +30,10 @@ class ParkModel {
     return '';
   }
 
+  void setPhone(String value){
+    phone = value;
+  }
+
   ParkModel() {
     id = 0;
     phone = '';
