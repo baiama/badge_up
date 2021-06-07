@@ -210,7 +210,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        SearchResult(query: provider.number),
+                                        SearchResult(query: numberMaskFormatter.getUnmaskedText()),
                                   ),
                                 ).then((value) {
                                   if (value != null && value == 'selected') {

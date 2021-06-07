@@ -10,6 +10,7 @@ class ParkApi {
     required Function onFailure,
   }) async {
     Dio dio = await BaseApi().dio;
+    print(number);
     try {
       Response response =
           await dio.get('/parking/find/', queryParameters: {'number': number});
