@@ -34,7 +34,7 @@ class ParkApi {
     Dio dio = await BaseApi().dio;
     try {
       Response response = await dio.get('parking/');
-      print(response.data);
+      // print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
         Iterable itemsJson = response.data['items'];
         List<ParkModel> items =
@@ -57,6 +57,35 @@ class ParkApi {
     Dio dio = await BaseApi().dio;
     try {
       Response response = await dio.post('parking/$id/archive/');
+      print(response.data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        onSuccess();
+      } else {
+        onFailure();
+      }
+    } on DioError catch (e) {
+      print(e);
+      onFailure();
+    }
+  }
+
+  void updatePhone({
+    required Function onSuccess,
+    required Function onFailure,
+    required int id,
+    required String phone,
+
+  }) async {
+    Dio dio = await BaseApi().dio;
+    FormData formData = FormData.fromMap({
+      "phone":phone,
+    });
+    try {
+      Response response = await dio.put('parking/$id/', data: formData, options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          }), );
       print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
         onSuccess();

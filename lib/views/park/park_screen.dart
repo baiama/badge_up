@@ -71,6 +71,9 @@ class _ParkBodyState extends State<ParkBody> {
             },
             isLoading:
                 provider.id == provider.results[index].id && provider.isLoading,
+            onPhoneChanged: (value ) {
+              provider.updatePhone(value, provider.results[index]);
+            },
           );
         });
   }
@@ -81,12 +84,14 @@ class ParkItem extends StatelessWidget {
   final UserModel user;
   final Function(ParkModel) onArchive;
   final bool isLoading;
+  final Function(String) onPhoneChanged;
   const ParkItem({
     Key? key,
     required this.parkModel,
     required this.user,
     required this.isLoading,
     required this.onArchive,
+    required this.onPhoneChanged,
   }) : super(key: key);
 
   @override
@@ -169,7 +174,7 @@ class ParkItem extends StatelessWidget {
                                   builder: (context) {
                                     return PhoneEditView(
                                       onTap: (value) {
-                                        // provider.setPhone = value;
+                                        onPhoneChanged(value);
                                       },
                                     );
                                   });

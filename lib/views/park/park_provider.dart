@@ -44,7 +44,21 @@ class ParkProvider extends BaseProvider {
     }
   }
 
-  void updatePhone(String value){
-
+  void updatePhone(String value, ParkModel parkModel){
+    id = parkModel.id;
+    if (!isLoading) {
+      setIsLoading = true;
+      _parkApi.updatePhone(
+          onSuccess: () {
+            // results.removeWhere((element) => element.id == parkModel.id);
+            id = 0;
+            setIsLoading = false;
+          },
+          onFailure: () {
+            id = 0;
+            setIsLoading = false;
+          },
+          id: parkModel.id, phone: value);
+    }
   }
 }
