@@ -45,6 +45,9 @@ class _ParkingAutoState extends State<ParkingAuto> {
   var timeMaskFormatter = new MaskTextInputFormatter(
       mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
 
+  var numberMaskFormatter = new MaskTextInputFormatter(
+      mask: '##:##', filter: {"#": RegExp(r'[А В Е К ]')});
+  // А, В, Е, К, М, Н, О, Р, С, Т, У и Х
   var autoNumController = TextEditingController();
   var dayController = TextEditingController();
   var yearController = TextEditingController();
@@ -157,7 +160,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                 Expanded(
                                   child: TextFormField(
                                     textCapitalization: TextCapitalization.characters,
-                                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9 ]")),],
+                                    inputFormatters: [numberMaskFormatter],
                                     controller: autoNumController,
                                     onChanged: (value) {
                                       provider.number = value;
