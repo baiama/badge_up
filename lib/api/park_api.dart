@@ -78,12 +78,12 @@ class ParkApi {
 
   }) async {
     Dio dio = await BaseApi().dio;
-    FormData formData = FormData.fromMap({
-      "phone":phone,
-    });
     try {
-      Response response = await dio.put('parking/$id/', data: formData, options: Options(
+      Response response = await dio.put('parking/$id/', data: {'phone':phone}, options: Options(
           followRedirects: false,
+          headers: {
+            'content-type':'application/json'
+          },
           validateStatus: (status) {
             return status! < 500;
           }), );
