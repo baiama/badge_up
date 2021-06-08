@@ -296,7 +296,6 @@ class _PhoneEditViewState extends State<PhoneEditView> {
             ),
             SizedBox(height: 26),
             TextFormField(
-              maxLength: 12,
               onChanged: (value) {
                 phone = value;
                 setState(() {
