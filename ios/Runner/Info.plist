@@ -41,5 +41,14 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>https</string>
+      <string>http</string>
+    </array>
+    <key>NSPhotoLibraryUsageDescription</key>
+   	<string>Разрешите доступ к галерее</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Разрешите доступ к камере</string>
 </dict>
 </plist>
