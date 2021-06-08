@@ -48,6 +48,7 @@ class ParkProvider extends BaseProvider {
     id = parkModel.id;
     if (!isLoading) {
       setIsLoading = true;
+      String phone = value.replaceAll('+', '');
       _parkApi.updatePhone(
           onSuccess: () {
             id = 0;
@@ -58,7 +59,7 @@ class ParkProvider extends BaseProvider {
             id = 0;
             setIsLoading = false;
           },
-          id: parkModel.id, phone: value);
+          id: parkModel.id, phone: phone);
     }
   }
 }
