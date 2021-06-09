@@ -46,9 +46,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
       mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
 
   var numberMaskFormatter = new MaskTextInputFormatter(
-      mask: '# *** ## ***', filter: {"#": RegExp(r'[АВЕКМНОРСТУХ]'), "*": RegExp(r'[0-9]')});
-  // А, В, Е, К, М, Н, О, Р, С, Т, У и Х
-  // А 888 АА 777
+      mask: '# ### ## ###', filter: {"#": RegExp(r'[а-яА-Я0-9]')});
   var autoNumController = TextEditingController();
   var dayController = TextEditingController();
   var yearController = TextEditingController();
@@ -178,7 +176,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                           kInputDecorationBorder2,
                                       disabledBorder: kInputDecorationBorder2,
                                       enabledBorder: kInputDecorationBorder2,
-                                      hintText: 'Номер закрываемого авто',
+                                      hintText: 'А 777 АА 777',
                                     ),
                                   ),
                                 ),

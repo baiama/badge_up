@@ -85,9 +85,9 @@ class _GarageAddScreenState extends State<GarageAddScreen> {
                     onChanged: (value) {
                       provider.numberAuto = value;
                     },
-                    inputFormatters: [new  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9 ]")),],
+                    inputFormatters: [new  FilteringTextInputFormatter.allow(RegExp("[а-яА-Я0-9 ]")),],
                     decoration: InputDecoration(
-                      hintText: 'Номер авто *',
+                      hintText: 'А 777 АА 777',
                     ),
                   ),
                   SizedBox(height: 24),
