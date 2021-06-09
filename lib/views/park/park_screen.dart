@@ -60,6 +60,15 @@ class _ParkBodyState extends State<ParkBody> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<ParkProvider>();
+    if (provider.results.length == 0 && provider.isViewSetup) {
+      return Container(
+        padding: EdgeInsets.only(top: 50),
+        alignment: Alignment.center,
+        child: EmptyData(
+            title:
+            'Нет ни одной активной парковки'),
+      );
+    }
     return ListView.builder(
         itemCount: provider.results.length,
         itemBuilder: (context, index) {

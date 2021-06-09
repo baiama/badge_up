@@ -8,6 +8,7 @@ class ParkProvider extends BaseProvider {
   ParkApi _parkApi = ParkApi();
   int id = 0;
   void getItems() {
+    isViewSetup = false;
     _results = [];
     id = 0;
     setIsLoading = false;
@@ -16,6 +17,7 @@ class ParkProvider extends BaseProvider {
       _parkApi.getItems(
         onSuccess: (value) {
           _results = value;
+          isViewSetup = true;
           setIsLoading = false;
         },
         onFailure: () {
