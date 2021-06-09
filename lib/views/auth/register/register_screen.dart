@@ -70,6 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         provider.phone = value;
                         provider.setError = '';
                       },
+                      keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         hintText: 'Телефон *',
                       ),
