@@ -182,6 +182,7 @@ class ParkItem extends StatelessWidget {
                                   context: context,
                                   builder: (context) {
                                     return PhoneEditView(
+                                      phone: parkModel.phone,
                                       onTap: (value) {
                                         onPhoneChanged(value);
                                       },

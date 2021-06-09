@@ -264,7 +264,8 @@ class MonthListView extends StatelessWidget {
 
 class PhoneEditView extends StatefulWidget {
   final Function(String) onTap;
-  const PhoneEditView({Key? key, required this.onTap}) : super(key: key);
+  final String? phone;
+  const PhoneEditView({Key? key, required this.onTap, this.phone}) : super(key: key);
 
   @override
   _PhoneEditViewState createState() => _PhoneEditViewState();
@@ -296,6 +297,7 @@ class _PhoneEditViewState extends State<PhoneEditView> {
             ),
             SizedBox(height: 26),
             TextFormField(
+              initialValue: widget.phone,
               onChanged: (value) {
                 phone = value;
                 setState(() {

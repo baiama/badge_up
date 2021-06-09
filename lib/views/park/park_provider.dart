@@ -55,7 +55,7 @@ class ParkProvider extends BaseProvider {
           onSuccess: () {
             id = 0;
             setIsLoading = false;
-            parkModel.setPhone(value);
+            parkModel.setPhone(phone);
           },
           onFailure: () {
             id = 0;
