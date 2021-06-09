@@ -86,6 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     SizedBox(height: 24),
                     TextFormField(
+                      obscureText: true,
                       onChanged: (value) {
                         provider.password = value;
                         provider.setError = '';
@@ -96,6 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     SizedBox(height: 24),
                     TextFormField(
+                      obscureText: true,
                       onChanged: (value) {
                         provider.passwordRepeat = value;
                         provider.setError = '';

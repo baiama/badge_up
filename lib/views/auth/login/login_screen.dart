@@ -57,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 24),
                   TextFormField(
+                    obscureText: true,
                     onChanged: (value) {
                       provider.password = value;
                     },
