@@ -60,6 +60,13 @@ class _ParkBodyState extends State<ParkBody> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<ParkProvider>();
+    if (provider.isLoading) {
+      return Container(
+        padding: EdgeInsets.only(top: 100),
+        alignment: Alignment.topCenter,
+        child: CircularProgressIndicator(),
+      );
+    }
     if (provider.results.length == 0 && provider.isViewSetup) {
       return Container(
         padding: EdgeInsets.only(top: 50),
