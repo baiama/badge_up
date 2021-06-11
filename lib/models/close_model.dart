@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class CloseModel {
   late int id;
   late String phone;
@@ -5,6 +7,7 @@ class CloseModel {
   late String datetime;
   late int garageId;
   late int userId;
+  late String number;
 
   CloseModel() {
     id = 0;
@@ -13,6 +16,23 @@ class CloseModel {
     datetime = '';
     garageId = 0;
     userId = 0;
+    number = '';
+  }
+
+  String get time {
+    DateTime? parsedDate = DateTime.tryParse(datetime);
+    if (parsedDate != null) {
+      return DateFormat.Hm().format(parsedDate);
+    }
+    return '';
+  }
+
+  String get date {
+    DateTime? parsedDate = DateTime.tryParse(datetime);
+    if (parsedDate != null) {
+      return DateFormat('dd.MM.yyyy').format(parsedDate);
+    }
+    return '';
   }
 
   CloseModel.fromJson(Map? data) {
@@ -27,6 +47,7 @@ class CloseModel {
       datetime = data['datetime'] != null ? data['datetime'] : '';
       garageId = data['garage_id'] != null ? data['garage_id'] : 0;
       userId = data['user_id'] != null ? data['user_id'] : 0;
+      number = data['close_number'] != null ? data['close_number'] : '';
     }
   }
 }

@@ -115,6 +115,7 @@ class ParkListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(user.id);
     return Container(
       child: Column(
         children: [
@@ -125,6 +126,16 @@ class ParkListItem extends StatelessWidget {
               phone: parkModel.phone,
               user: parkModel.user,
               time: parkModel.time,),
+          ParkItemClose(
+            auto: parkModel.closeGarageItem,
+            user: user,
+            currentUser: user,
+            phone: parkModel.close.phone,
+            time: parkModel.close.time,
+            isLoading: isLoading,
+            onArchive: (){
+            onArchive(parkModel);
+          }, date: parkModel.close.date,),
         ],
       ),
     );
