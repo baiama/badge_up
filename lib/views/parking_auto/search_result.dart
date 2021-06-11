@@ -138,9 +138,6 @@ class SearchItem extends StatelessWidget {
               },
               child: Text('Закрыть этот авто')),
           SizedBox(height: 16),
-          Divider(
-            thickness: 1.5,
-          ),
         ],
       ),
     );

@@ -11,18 +11,18 @@ class ParkProvider extends BaseProvider {
     isViewSetup = false;
     _results = [];
     id = 0;
-    setIsLoading = false;
-    if (!isLoading) {
-      setIsLoading = true;
+    setIsRequestSend = false;
+    if (!isRequestSend) {
+      setIsRequestSend = true;
       _parkApi.getItems(
         onSuccess: (value) {
           _results = value;
           isViewSetup = true;
-          setIsLoading = false;
+          setIsRequestSend = false;
         },
         onFailure: () {
           isViewSetup = true;
-          setIsLoading = false;
+          setIsRequestSend = false;
         },
       );
     }
