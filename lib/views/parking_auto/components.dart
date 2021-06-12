@@ -305,7 +305,7 @@ class _PhoneEditViewState extends State<PhoneEditView> {
                 });
               },
               decoration: InputDecoration(
-                hintText: '+79268105001',
+                hintText: 'Телефон',
               ),
             ),
             if (error.length > 0) SizedBox(height: 24),
