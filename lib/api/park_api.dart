@@ -75,18 +75,19 @@ class ParkApi {
     required Function onFailure,
     required int id,
     required String phone,
-
   }) async {
     Dio dio = await BaseApi().dio;
     try {
-      Response response = await dio.put('parking/$id/', data: {'phone':phone}, options: Options(
-          followRedirects: false,
-          headers: {
-            'content-type':'application/json'
-          },
-          validateStatus: (status) {
-            return status! < 500;
-          }), );
+      Response response = await dio.put(
+        'parking/$id/',
+        data: {'phone': phone},
+        options: Options(
+            followRedirects: false,
+            headers: {'content-type': 'application/json'},
+            validateStatus: (status) {
+              return status! < 500;
+            }),
+      );
       print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
         onSuccess();
@@ -115,8 +116,8 @@ class ParkApi {
       'datetime': datetime,
       'phone': phone,
       'close_id': closeId,
-      'close_garage_id': closeId,
-      'close_number': closeId,
+      'close_garage_id': closeGarageId,
+      'close_number': closeNumber,
     });
     try {
       Response response = await dio.post(
