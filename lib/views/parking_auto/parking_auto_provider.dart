@@ -22,7 +22,6 @@ class ParkingAutoProvider extends BaseProvider {
   String time = '';
 
   void _setUp() {
-    _phone = '';
     number = '';
     day = '';
     month = 8;
@@ -139,6 +138,7 @@ class ParkingAutoProvider extends BaseProvider {
         closeNumber: _closePark != null ? _closePark!.garageItem.number : null,
         onSuccess: () {
           _setUp();
+          _phone = '';
           onSuccess();
           setIsCreating = false;
         },
