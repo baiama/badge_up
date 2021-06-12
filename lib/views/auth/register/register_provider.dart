@@ -14,9 +14,7 @@ class RegisterProvider extends AuthProvider {
       return;
     }
 
-    // if (!phone!.startsWith('+')) {
-    //   phone = '+' + phone!;
-    // }
+    phone = '7' + phone!;
     print(phone);
     if (phone!.length != 11) {
       setError = Strings.errorEmpty2 + 'Телефон';

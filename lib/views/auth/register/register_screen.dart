@@ -4,6 +4,7 @@ import 'package:budge_up/views/auth/register/register_provider.dart';
 import 'package:budge_up/views/home/home_screen.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,6 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       launch(url);
     }
   }
+  var textInputMask =  MaskTextInputFormatter(mask: '+7(###)###-##-##', filter: {"#": RegExp(r'[0-9]')});
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +69,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(height: 24),
                     TextFormField(
                       onChanged: (value) {
-                        provider.phone = value;
                         provider.setError = '';
                       },
+                      inputFormatters: [textInputMask],
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         hintText: 'Телефон *',
@@ -118,6 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     ElevatedButton(
                         onPressed: () {
+                          provider.phone = textInputMask.getUnmaskedText();
                           provider.register(onSuccess: () {
                             Provider.of<SettingsProvider>(context,
                                     listen: false)
