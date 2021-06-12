@@ -113,7 +113,8 @@ class GarageProvider extends BaseProvider {
           setIsRequestSend = false;
           onSuccess();
         },
-        onFailure: () {
+        onFailure: (value) {
+          setError = value;
           setIsRequestSend = false;
         },
         numberAuto: numberAuto!,

@@ -1,5 +1,6 @@
 import 'package:budge_up/base/base_api.dart';
 import 'package:budge_up/models/auto_model.dart';
+import 'package:budge_up/utils/strings.dart';
 import 'package:dio/dio.dart';
 
 class GarageApi {
@@ -8,7 +9,7 @@ class GarageApi {
     required String modelAuto,
     required String numberAuto,
     required Function onSuccess,
-    required Function onFailure,
+    required Function(String) onFailure,
     required int id,
   }) async {
     Dio dio = await BaseApi().dio;
@@ -33,13 +34,22 @@ class GarageApi {
       if (response.statusCode == 201 || response.statusCode == 200) {
         onSuccess();
       } else {
-        onFailure();
+        onFailure(Strings.errorEmpty3);
       }
     } on DioError catch (e) {
       print(e);
       print(e.response);
       print(e.response!.realUri);
-      onFailure();
+      if (e.response != null && e.response!.statusCode != null) {
+        if (e.response!.statusCode! > 399 && e.response!.statusCode! < 500) {
+          String err = e.response!.data['error'];
+          onFailure(err);
+        } else {
+          onFailure(Strings.errorEmpty3);
+        }
+      } else {
+        onFailure(Strings.errorEmpty3);
+      }
     }
   }
 
