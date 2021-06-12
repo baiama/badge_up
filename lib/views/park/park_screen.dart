@@ -77,22 +77,27 @@ class _ParkBodyState extends State<ParkBody> {
             'Нет ни одной активной парковки'),
       );
     }
-    return ListView.builder(
-        itemCount: provider.results.length,
-        itemBuilder: (context, index) {
-          return ParkListItem(
-            parkModel: provider.results[index],
-            user: user,
-            onArchive: (value) {
-              provider.archive(value);
-            },
-            isLoading:
-                provider.id == provider.results[index].id && provider.isLoading,
-            onPhoneChanged: (value ) {
-              provider.updatePhone(value, provider.results[index]);
-            },
-          );
-        });
+    return RefreshIndicator(
+      onRefresh: () async{
+        provider.getItems();
+      },
+      child: ListView.builder(
+          itemCount: provider.results.length,
+          itemBuilder: (context, index) {
+            return ParkListItem(
+              parkModel: provider.results[index],
+              user: user,
+              onArchive: (value) {
+                provider.archive(value);
+              },
+              isLoading:
+                  provider.id == provider.results[index].id && provider.isLoading,
+              onPhoneChanged: (value ) {
+                provider.updatePhone(value, provider.results[index]);
+              },
+            );
+          }),
+    );
   }
 }
 
