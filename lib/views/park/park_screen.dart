@@ -72,13 +72,11 @@ class _ParkBodyState extends State<ParkBody> {
       return Container(
         padding: EdgeInsets.only(top: 50),
         alignment: Alignment.center,
-        child: EmptyData(
-            title:
-            'Нет ни одной активной парковки'),
+        child: EmptyData(title: 'Нет ни одной активной парковки'),
       );
     }
     return RefreshIndicator(
-      onRefresh: () async{
+      onRefresh: () async {
         provider.getItems();
       },
       child: ListView.builder(
@@ -90,9 +88,9 @@ class _ParkBodyState extends State<ParkBody> {
               onArchive: (value) {
                 provider.archive(value);
               },
-              isLoading:
-                  provider.id == provider.results[index].id && provider.isLoading,
-              onPhoneChanged: (value ) {
+              isLoading: provider.id == provider.results[index].id &&
+                  provider.isLoading,
+              onPhoneChanged: (value) {
                 provider.updatePhone(value, provider.results[index]);
               },
             );
@@ -100,7 +98,6 @@ class _ParkBodyState extends State<ParkBody> {
     );
   }
 }
-
 
 class ParkListItem extends StatelessWidget {
   final ParkModel parkModel;
@@ -125,28 +122,37 @@ class ParkListItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if(parkModel.close.id > 0)
-          ParkItemClose(
-            auto: parkModel.closeGarageItem,
-            user: parkModel.close.user,
-            text: 'Закрыт мной',
-            phone: parkModel.close.phone,
-            time: parkModel.close.time,
-            date: parkModel.close.date,),
-            ParkItemUser(onPhoneChanged:  onPhoneChanged,
-              date: parkModel.date,
-              auto: parkModel.garageItem,
-              phone: parkModel.phone,
-              user: parkModel.user,
-              time: parkModel.time,),
-          if(parkModel.closeMe.id > 0)
+          if (parkModel.close.id > 0)
+            ParkItemClose(
+              auto: parkModel.closeGarageItem,
+              user: parkModel.close.user,
+              text: 'Закрыт мной',
+              phone: parkModel.close.phone,
+              time: parkModel.close.time,
+              date: parkModel.close.date,
+            ),
+          if (parkModel.close.id == 0 && parkModel.closeNumber.length > 0)
+            ParkItemCloseNumber(
+              number: parkModel.closeNumber,
+              text: 'Закрыт мной',
+            ),
+          ParkItemUser(
+            onPhoneChanged: onPhoneChanged,
+            date: parkModel.date,
+            auto: parkModel.garageItem,
+            phone: parkModel.phone,
+            user: parkModel.user,
+            time: parkModel.time,
+          ),
+          if (parkModel.closeMe.id > 0)
             ParkItemClose(
               auto: parkModel.closeMe.garageItem,
               user: parkModel.closeMe.user,
               text: 'Закрыл меня',
               phone: parkModel.closeMe.phone,
               time: parkModel.closeMe.time,
-              date: parkModel.closeMe.date,),
+              date: parkModel.closeMe.date,
+            ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: ElevatedButton(
@@ -154,16 +160,18 @@ class ParkListItem extends StatelessWidget {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return ParkArchiveDialog(onTap: (){
-                          onArchive(parkModel);
-                        },);
+                        return ParkArchiveDialog(
+                          onTap: () {
+                            onArchive(parkModel);
+                          },
+                        );
                       });
                 },
                 child: isLoading
                     ? CircularLoader()
                     : Text(parkModel.closeMe.id > 0
-                    ? 'Я все равно уехал'
-                    : 'Уехать')),
+                        ? 'Я все равно уехал'
+                        : 'Уехать')),
           ),
           SizedBox(height: 12),
         ],
@@ -172,6 +180,58 @@ class ParkListItem extends StatelessWidget {
   }
 }
 
+class ParkItemCloseNumber extends StatelessWidget {
+  final String number;
+  final String text;
+  const ParkItemCloseNumber({
+    Key? key,
+    required this.number,
+    required this.text,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: 24, right: 24, top: 12),
+      child: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 24),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: kColorF8F8F8,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              decoration: BoxDecoration(
+                  color: kColor4D7EB7DC,
+                  borderRadius: BorderRadius.circular(8)),
+              child: Text(
+                number,
+                style: kInterReg16ColorBlack,
+              ),
+            ),
+          ),
+          Positioned(
+            right: 0,
+            top: 0,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 11, vertical: 4),
+              decoration: BoxDecoration(
+                  color: kColorB2CC6666,
+                  borderRadius: BorderRadius.circular(8)),
+              child: Text(
+                text,
+                style: kInterReg12.copyWith(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class ParkItemUser extends StatelessWidget {
   final AutoModel auto;
@@ -203,11 +263,9 @@ class ParkItemUser extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          ProfileScreen(user: user)));
+                      builder: (context) => ProfileScreen(user: user)));
             },
-            child: AvatarItem(
-                image: user.photo, height: 96, width: 96),
+            child: AvatarItem(image: user.photo, height: 96, width: 96),
           ),
           SizedBox(height: 24),
           Row(
@@ -253,10 +311,7 @@ class ParkItemUser extends StatelessWidget {
             ],
           ),
           SizedBox(height: 20),
-          AutoItem(
-              auto: auto,
-              onDelete: null,
-              isLoading: false),
+          AutoItem(auto: auto, onDelete: null, isLoading: false),
           SizedBox(height: 16),
           Container(
             alignment: Alignment.center,
@@ -315,8 +370,8 @@ class ParkItemClose extends StatelessWidget {
                                 builder: (context) =>
                                     ProfileScreen(user: user)));
                       },
-                      child: AvatarItem(
-                          image: user.photo, height: 96, width: 96),
+                      child:
+                          AvatarItem(image: user.photo, height: 96, width: 96),
                     ),
                     SizedBox(height: 24),
                     Row(
@@ -341,31 +396,28 @@ class ParkItemClose extends StatelessWidget {
                             ],
                           ),
                         ),
-                          IconButton(
-                            onPressed: () async {
-                              final Uri _emailLaunchUri = Uri(
-                                scheme: 'tel',
-                                path: phone,
-                              );
-                              String url = _emailLaunchUri.toString();
-                              if (await canLaunch(url)) {
-                                await launch(url);
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
-                            icon: CustomIcon(
-                              customIcon: CustomIcons.call,
-                            ),
+                        IconButton(
+                          onPressed: () async {
+                            final Uri _emailLaunchUri = Uri(
+                              scheme: 'tel',
+                              path: phone,
+                            );
+                            String url = _emailLaunchUri.toString();
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          },
+                          icon: CustomIcon(
+                            customIcon: CustomIcons.call,
                           ),
+                        ),
                         SizedBox(width: 20),
                       ],
                     ),
                     SizedBox(height: 20),
-                    AutoItem(
-                        auto: auto,
-                        onDelete: null,
-                        isLoading: false),
+                    AutoItem(auto: auto, onDelete: null, isLoading: false),
                     SizedBox(height: 16),
                     Container(
                       alignment: Alignment.center,
@@ -381,19 +433,20 @@ class ParkItemClose extends StatelessWidget {
               SizedBox(height: 24),
             ],
           ),
-            Positioned(
-              right: 0,
-              top: 0,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 11, vertical: 4),
-                decoration: BoxDecoration(
-                    color: kColorB2CC6666,
-                    borderRadius: BorderRadius.circular(8)),
-                child: Text(text,
-                  style: kInterReg12.copyWith(color: Colors.white),
-                ),
+          Positioned(
+            right: 0,
+            top: 0,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 11, vertical: 4),
+              decoration: BoxDecoration(
+                  color: kColorB2CC6666,
+                  borderRadius: BorderRadius.circular(8)),
+              child: Text(
+                text,
+                style: kInterReg12.copyWith(color: Colors.white),
               ),
             ),
+          ),
         ],
       ),
     );
