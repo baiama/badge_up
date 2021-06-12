@@ -47,7 +47,7 @@ class CloseModel {
           : false;
       datetime = data['datetime'] != null ? data['datetime'] : '';
       garageId = data['garage_id'] != null ? data['garage_id'] : 0;
-      user = data['user'] != null ? data['user'] : UserModel();
+      user = data['user'] != null ? UserModel.fromJson(data['user']) : UserModel();
       number = data['close_number'] != null ? data['close_number'] : '';
     }
   }

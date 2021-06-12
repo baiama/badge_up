@@ -118,6 +118,7 @@ class ParkListItem extends StatelessWidget {
     print(user.id);
     return Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if(user.id == parkModel.close.user.id)
           ParkItemClose(
@@ -127,28 +128,46 @@ class ParkListItem extends StatelessWidget {
             phone: parkModel.close.phone,
             time: parkModel.close.time,
             date: parkModel.close.date,),
-          if(user.id == parkModel.user.id)
+          if(user.id == parkModel.close.user.id)
             ParkItemUser(onPhoneChanged:  onPhoneChanged,
               date: parkModel.date,
               auto: parkModel.garageItem,
               phone: parkModel.phone,
               user: parkModel.user,
               time: parkModel.time,),
-          ElevatedButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ParkArchiveDialog(onTap: (){
-                        onArchive(parkModel);
-                      },);
-                    });
-              },
-              child: isLoading
-                  ? CircularLoader()
-                  : Text(parkModel.close.user.id == user.id
-                  ? 'Я все равно уехал'
-                  : 'Уехать')),
+          if(user.id != parkModel.close.user.id)
+            ParkItemUser(onPhoneChanged:  onPhoneChanged,
+              date: parkModel.date,
+              auto: parkModel.garageItem,
+              phone: parkModel.phone,
+              user: parkModel.user,
+              time: parkModel.time,),
+          if(user.id != parkModel.close.user.id && parkModel.close.user.id > 0)
+            ParkItemClose(
+              auto: parkModel.closeGarageItem,
+              user: parkModel.close.user,
+              currentUser: user,
+              phone: parkModel.close.phone,
+              time: parkModel.close.time,
+              date: parkModel.close.date,),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return ParkArchiveDialog(onTap: (){
+                          onArchive(parkModel);
+                        },);
+                      });
+                },
+                child: isLoading
+                    ? CircularLoader()
+                    : Text(parkModel.close.user.id != user.id && parkModel.close.user.id > 0
+                    ? 'Я все равно уехал'
+                    : 'Уехать')),
+          ),
           SizedBox(height: 12),
         ],
       ),
