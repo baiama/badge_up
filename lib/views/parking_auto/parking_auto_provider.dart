@@ -22,11 +22,14 @@ class ParkingAutoProvider extends BaseProvider {
   String time = '';
 
   void _setUp() {
+    DateTime date = DateTime.now();
     number = '';
-    day = '';
-    month = 8;
-    year = '';
-    time = '';
+    day = date.day.toString();
+    month = date.month;
+    year = date.year.toString();
+    int min = date.minute;
+    int hour = date.hour + 1;
+    time = '${hour < 10 ? '0$hour' : hour.toString()}: ${min < 10 ? '0$min' : min.toString()}';
     _closePark = null;
     setIsRequestSend = false;
   }

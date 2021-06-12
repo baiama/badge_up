@@ -46,10 +46,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
       mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
 
   var autoNumController = TextEditingController();
-  var dayController = TextEditingController();
-  var yearController = TextEditingController();
-  var timeController = TextEditingController();
-  var textStyle = kInterReg16ColorBDBDBD;
+
 
   @override
   Widget build(BuildContext context) {
@@ -230,8 +227,8 @@ class _ParkingAutoState extends State<ParkingAuto> {
                       children: [
                         Expanded(
                           flex: 4,
-                          child: TextField(
-                            controller: dayController,
+                          child: TextFormField(
+                            initialValue: dayMaskFormatter.maskText(provider.day),
                             onChanged: (value) {
                               provider.day = value;
                               provider.updateView();
@@ -255,9 +252,6 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                       onSelected: (value) {
                                         provider.month = value;
                                         provider.updateView();
-                                        setState(() {
-                                          textStyle = kInterReg16ColorBlack;
-                                        });
                                       },
                                     );
                                   });
@@ -274,7 +268,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                               alignment: Alignment.center,
                               child: Text(
                                 MonthModel.monthShort[provider.month],
-                                style: textStyle,
+                                style: kInterReg16ColorBlack,
                               ),
                             ),
                           ),
@@ -282,8 +276,8 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         SizedBox(width: 8),
                         Expanded(
                           flex: 5,
-                          child: TextField(
-                            controller: yearController,
+                          child: TextFormField(
+                            initialValue: yearMaskFormatter.maskText(provider.year),
                             onChanged: (value) {
                               provider.year = value;
                               provider.updateView();
@@ -298,8 +292,8 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         SizedBox(width: 8),
                         Expanded(
                             flex: 5,
-                            child: TextField(
-                              controller: timeController,
+                            child: TextFormField(
+                              initialValue: timeMaskFormatter.maskText(provider.time),
                               onChanged: (value) {
                                 provider.time = value;
                                 provider.updateView();
@@ -335,13 +329,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         onPressed: provider.buttonIsEnabled
                             ? () {
                                 provider.create(onSuccess: () {
-                                  autoNumController.clear();
-                                  dayController.clear();
-                                  yearController.clear();
-                                  timeController.clear();
-                                  setState(() {
-                                    textStyle = kInterReg16ColorBDBDBD;
-                                  });
+
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       backgroundColor: Colors.white,
