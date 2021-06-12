@@ -10,6 +10,7 @@ class ParkModel {
   late String datetime;
   late String closeNumber;
   late CloseModel close;
+  late ParkModel closeMe;
   late AutoModel closeGarageItem;
   late UserModel user;
   late AutoModel garageItem;
@@ -44,6 +45,7 @@ class ParkModel {
     user = UserModel();
     garageItem = AutoModel();
     closeGarageItem = AutoModel();
+    closeMe = ParkModel();
   }
 
   ParkModel.fromJson(Map? data) {
@@ -69,6 +71,9 @@ class ParkModel {
       close = data['close'] != null
           ? CloseModel.fromJson(data['close'])
           : CloseModel();
+      closeMe = data['closeme'] != null
+          ? ParkModel.fromJson(data['closeme'])
+          : ParkModel();
     }
   }
 }
