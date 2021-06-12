@@ -60,6 +60,8 @@ class ParkingAutoProvider extends BaseProvider {
     _results = [];
     _closePark = null;
     setIsLoading = false;
+    query = query.replaceAll(' ', '');
+    print(query);
     if (!isLoading) {
       setIsLoading = true;
       _parkApi.findAuto(

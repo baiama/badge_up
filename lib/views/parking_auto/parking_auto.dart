@@ -45,8 +45,6 @@ class _ParkingAutoState extends State<ParkingAuto> {
   var timeMaskFormatter = new MaskTextInputFormatter(
       mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
 
-  var numberMaskFormatter = new MaskTextInputFormatter(
-      mask: '# ### ## ###', filter: {"#": RegExp(r'[а-яА-Я0-9]')});
   var autoNumController = TextEditingController();
   var dayController = TextEditingController();
   var yearController = TextEditingController();
@@ -159,7 +157,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                 Expanded(
                                   child: TextFormField(
                                     textCapitalization: TextCapitalization.characters,
-                                    inputFormatters: [numberMaskFormatter],
+                                    inputFormatters: [new  FilteringTextInputFormatter.allow(RegExp("[а-яА-Я0-9 ]")),],
                                     controller: autoNumController,
                                     onChanged: (value) {
                                       provider.number = value;
@@ -208,7 +206,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        SearchResult(query: numberMaskFormatter.getUnmaskedText()),
+                                        SearchResult(query: provider.number),
                                   ),
                                 ).then((value) {
                                   if (value != null && value == 'selected') {
