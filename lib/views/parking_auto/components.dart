@@ -7,6 +7,7 @@ import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 class EmptyCar extends StatelessWidget {
@@ -264,8 +265,8 @@ class MonthListView extends StatelessWidget {
 
 class PhoneEditView extends StatefulWidget {
   final Function(String) onTap;
-  final String? phone;
-  const PhoneEditView({Key? key, required this.onTap, this.phone}) : super(key: key);
+  final String phone;
+  const PhoneEditView({Key? key, required this.onTap, required this.phone}) : super(key: key);
 
   @override
   _PhoneEditViewState createState() => _PhoneEditViewState();
@@ -274,11 +275,24 @@ class PhoneEditView extends StatefulWidget {
 class _PhoneEditViewState extends State<PhoneEditView> {
   String phone = '';
   String error = '';
+  var maskFormatter =
+  new MaskTextInputFormatter(mask: '+7(###)###-##-##', filter: {"#": RegExp(r'[0-9]')});
+  var textController = TextEditingController();
   @override
   void initState() {
     super.initState();
     phone = '';
     error = '';
+    String text = widget.phone;
+    if(text.startsWith('+')){
+      text = text.substring(1, text.length - 1);
+      print(text);
+    }
+    if(text.startsWith('7')){
+      text = text.substring(1, text.length - 1);
+      print(text);
+    }
+    textController.text = maskFormatter.maskText(widget.phone);
   }
 
   @override
@@ -297,7 +311,9 @@ class _PhoneEditViewState extends State<PhoneEditView> {
             ),
             SizedBox(height: 26),
             TextFormField(
-              initialValue: widget.phone,
+              controller: textController,
+              inputFormatters: [maskFormatter],
+              keyboardType: TextInputType.phone,
               onChanged: (value) {
                 phone = value;
                 setState(() {
@@ -324,10 +340,11 @@ class _PhoneEditViewState extends State<PhoneEditView> {
                     });
                     return;
                   }
+                  phone = maskFormatter.getUnmaskedText();
 
-                  if (!phone.startsWith('+')) {
-                    phone = '+' + phone;
-                  }
+                  phone = '+7' + phone ;
+                  print(phone);
+                  print(phone.length);
 
                   if (phone.length != 12) {
                     setState(() {
