@@ -132,6 +132,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             context: context,
                             builder: (context) {
                               return PhoneEditView(
+                                phone: provider.phone,
                                 onTap: (value) {
                                   provider.setPhone = value;
                                 },
