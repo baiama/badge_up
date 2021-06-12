@@ -31,7 +31,8 @@ class ParkingAutoProvider extends BaseProvider {
     year = date.year.toString();
     int min = date.minute;
     int hour = date.hour + 1;
-    time = '${hour < 10 ? '0$hour' : hour.toString()}: ${min < 10 ? '0$min' : min.toString()}';
+    time =
+        '${hour < 10 ? '0$hour' : hour.toString()}: ${min < 10 ? '0$min' : min.toString()}';
     _closePark = null;
     setIsRequestSend = false;
   }
@@ -132,6 +133,12 @@ class ParkingAutoProvider extends BaseProvider {
         '$year-${currentMonth < 10 ? '0$currentMonth' : currentMonth.toString()}-${day.length < 2 ? '0$day' : day.toString()} $time:00';
     print(date);
     // '2021-06-16 21:30:00'
+    String closeNumber = '';
+    if (_closePark != null) {
+      closeNumber = _closePark!.garageItem.number;
+    } else if (isOk) {
+      closeNumber = number;
+    }
     if (!isCreating) {
       setIsCreating = true;
       _parkApi.create(
@@ -140,7 +147,7 @@ class ParkingAutoProvider extends BaseProvider {
         phone: phone,
         closeId: _closePark != null ? _closePark!.id : null,
         closeGarageId: _closePark != null ? _closePark!.garageItem.id : null,
-        closeNumber: _closePark != null ? _closePark!.garageItem.number : null,
+        closeNumber: closeNumber.length > 0 ? closeNumber : null,
         onSuccess: () {
           _setUp();
           _phone = '';
