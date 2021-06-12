@@ -120,36 +120,28 @@ class ParkListItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if(user.id == parkModel.close.user.id)
+          if(parkModel.close.id > 0)
           ParkItemClose(
             auto: parkModel.closeGarageItem,
             user: parkModel.close.user,
-            currentUser: user,
+            text: 'Закрыт мной',
             phone: parkModel.close.phone,
             time: parkModel.close.time,
             date: parkModel.close.date,),
-          if(user.id == parkModel.close.user.id)
             ParkItemUser(onPhoneChanged:  onPhoneChanged,
               date: parkModel.date,
               auto: parkModel.garageItem,
               phone: parkModel.phone,
               user: parkModel.user,
               time: parkModel.time,),
-          if(user.id != parkModel.close.user.id)
-            ParkItemUser(onPhoneChanged:  onPhoneChanged,
-              date: parkModel.date,
-              auto: parkModel.garageItem,
-              phone: parkModel.phone,
-              user: parkModel.user,
-              time: parkModel.time,),
-          if(user.id != parkModel.close.user.id && parkModel.close.user.id > 0)
+          if(parkModel.closeMe.id > 0)
             ParkItemClose(
-              auto: parkModel.closeGarageItem,
-              user: parkModel.close.user,
-              currentUser: user,
-              phone: parkModel.close.phone,
-              time: parkModel.close.time,
-              date: parkModel.close.date,),
+              auto: parkModel.closeMe.garageItem,
+              user: parkModel.closeMe.user,
+              text: 'Закрыл меня',
+              phone: parkModel.closeMe.phone,
+              time: parkModel.closeMe.time,
+              date: parkModel.closeMe.date,),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: ElevatedButton(
@@ -164,7 +156,7 @@ class ParkListItem extends StatelessWidget {
                 },
                 child: isLoading
                     ? CircularLoader()
-                    : Text(parkModel.close.user.id != user.id && parkModel.close.user.id > 0
+                    : Text(parkModel.closeMe.id > 0
                     ? 'Я все равно уехал'
                     : 'Уехать')),
           ),
@@ -278,18 +270,18 @@ class ParkItemUser extends StatelessWidget {
 class ParkItemClose extends StatelessWidget {
   final AutoModel auto;
   final UserModel user;
-  final UserModel currentUser;
   final String phone;
   final String date;
   final String time;
+  final String text;
   const ParkItemClose({
     Key? key,
     required this.auto,
     required this.user,
-    required this.currentUser,
     required this.phone,
     required this.time,
     required this.date,
+    required this.text,
   }) : super(key: key);
 
   @override
@@ -392,10 +384,7 @@ class ParkItemClose extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: kColorB2CC6666,
                     borderRadius: BorderRadius.circular(8)),
-                child: Text(
-                  currentUser.id != user.id
-                      ? 'Закрыл меня'
-                      : 'Закрыт мной',
+                child: Text(text,
                   style: kInterReg12.copyWith(color: Colors.white),
                 ),
               ),

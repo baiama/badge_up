@@ -3,16 +3,13 @@ import 'package:budge_up/models/close_model.dart';
 import 'package:budge_up/models/user_model.dart';
 import 'package:intl/intl.dart';
 
-import 'close_me.dart';
-
-class ParkModel {
+class CloseMe {
   late int id;
   late String phone;
   late bool active;
   late String datetime;
   late String closeNumber;
   late CloseModel close;
-  late CloseMe closeMe;
   late AutoModel closeGarageItem;
   late UserModel user;
   late AutoModel garageItem;
@@ -37,7 +34,7 @@ class ParkModel {
     phone = value;
   }
 
-  ParkModel() {
+  CloseMe() {
     id = 0;
     phone = '';
     active = false;
@@ -47,23 +44,22 @@ class ParkModel {
     user = UserModel();
     garageItem = AutoModel();
     closeGarageItem = AutoModel();
-    closeMe = CloseMe();
   }
 
-  ParkModel.fromJson(Map? data) {
+  CloseMe.fromJson(Map? data) {
     if (data != null) {
       id = data['id'] != null ? data['id'] : 0;
       phone = data['phone'] != null ? data['phone'] : '';
       active = data['active'] != null
           ? data['active'] == 1
-              ? true
-              : false
+          ? true
+          : false
           : false;
       datetime = data['datetime'] != null ? data['datetime'] : '';
       closeNumber = data['close_number'] != null ? data['close_number'] : '';
 
       user =
-          data['user'] != null ? UserModel.fromJson(data['user']) : UserModel();
+      data['user'] != null ? UserModel.fromJson(data['user']) : UserModel();
       garageItem = data['garage_item'] != null
           ? AutoModel.fromJson(data['garage_item'])
           : AutoModel();
@@ -73,9 +69,6 @@ class ParkModel {
       close = data['close'] != null
           ? CloseModel.fromJson(data['close'])
           : CloseModel();
-      closeMe = data['closeme'] != null
-          ? CloseMe.fromJson(data['closeme'])
-          : CloseMe();
     }
   }
 }
