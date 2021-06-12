@@ -69,42 +69,47 @@ class _GarageScreenState extends State<GarageScreen> {
               );
             }
 
-            return Container(
-              child: ListView.builder(
-                  itemCount: provider.items.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.only(top: 20),
-                      child: GestureDetector(
-                        onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => GarageAddScreen(
-                          //             auto: provider.items[index],
-                          //           )),
-                          // ).then((value) {
-                          //   Provider.of<GarageProvider>(context, listen: false)
-                          //       .getItems();
-                          // });
-                        },
-                        child: AutoItem(
-                            auto: provider.items[index],
-                            onDelete: (value) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AutoDeleteDialog(onDeleteTap: (){
-                                      provider.delete(value);
-                                    },);
-                                  });
+            return RefreshIndicator(
+              onRefresh: () async {
+                provider.getItems();
+              },
+              child: Container(
+                child: ListView.builder(
+                    itemCount: provider.items.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: GestureDetector(
+                          onTap: () {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => GarageAddScreen(
+                            //             auto: provider.items[index],
+                            //           )),
+                            // ).then((value) {
+                            //   Provider.of<GarageProvider>(context, listen: false)
+                            //       .getItems();
+                            // });
+                          },
+                          child: AutoItem(
+                              auto: provider.items[index],
+                              onDelete: (value) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AutoDeleteDialog(onDeleteTap: (){
+                                        provider.delete(value);
+                                      },);
+                                    });
 
-                            },
-                            isLoading: provider.isLoading &&
-                                provider.items[index].id == provider.id),
-                      ),
-                    );
-                  }),
+                              },
+                              isLoading: provider.isLoading &&
+                                  provider.items[index].id == provider.id),
+                        ),
+                      );
+                    }),
+              ),
             );
           },
         ));
