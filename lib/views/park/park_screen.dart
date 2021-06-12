@@ -119,6 +119,14 @@ class ParkListItem extends StatelessWidget {
     return Container(
       child: Column(
         children: [
+          if(user.id == parkModel.close.user.id)
+          ParkItemClose(
+            auto: parkModel.closeGarageItem,
+            user: parkModel.close.user,
+            currentUser: user,
+            phone: parkModel.close.phone,
+            time: parkModel.close.time,
+            date: parkModel.close.date,),
           if(user.id == parkModel.user.id)
             ParkItemUser(onPhoneChanged:  onPhoneChanged,
               date: parkModel.date,
@@ -126,17 +134,22 @@ class ParkListItem extends StatelessWidget {
               phone: parkModel.phone,
               user: parkModel.user,
               time: parkModel.time,),
-          if(user.id == parkModel.close.userId)
-          ParkItemClose(
-            auto: parkModel.closeGarageItem,
-            user: user,
-            currentUser: user,
-            phone: parkModel.close.phone,
-            time: parkModel.close.time,
-            isLoading: isLoading,
-            onArchive: (){
-            onArchive(parkModel);
-          }, date: parkModel.close.date,),
+          ElevatedButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ParkArchiveDialog(onTap: (){
+                        onArchive(parkModel);
+                      },);
+                    });
+              },
+              child: isLoading
+                  ? CircularLoader()
+                  : Text(parkModel.close.user.id == user.id
+                  ? 'Я все равно уехал'
+                  : 'Уехать')),
+          SizedBox(height: 12),
         ],
       ),
     );
@@ -247,11 +260,9 @@ class ParkItemClose extends StatelessWidget {
   final AutoModel auto;
   final UserModel user;
   final UserModel currentUser;
-  final Function onArchive;
   final String phone;
   final String date;
   final String time;
-  final bool isLoading;
   const ParkItemClose({
     Key? key,
     required this.auto,
@@ -259,8 +270,6 @@ class ParkItemClose extends StatelessWidget {
     required this.currentUser,
     required this.phone,
     required this.time,
-    required this.isLoading,
-    required this.onArchive,
     required this.date,
   }) : super(key: key);
 
@@ -354,22 +363,6 @@ class ParkItemClose extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 24),
-                ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return ParkArchiveDialog(onTap: (){
-                              onArchive();
-                            },);
-                          });
-                    },
-                    child: isLoading
-                        ? CircularLoader()
-                        : Text(currentUser.id != user.id
-                        ? 'Я все равно уехал'
-                        : 'Уехать')),
-              SizedBox(height: 12),
             ],
           ),
             Positioned(

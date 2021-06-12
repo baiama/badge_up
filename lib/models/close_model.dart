@@ -1,3 +1,4 @@
+import 'package:budge_up/models/user_model.dart';
 import 'package:intl/intl.dart';
 
 class CloseModel {
@@ -6,7 +7,7 @@ class CloseModel {
   late bool active;
   late String datetime;
   late int garageId;
-  late int userId;
+  late UserModel user;
   late String number;
 
   CloseModel() {
@@ -15,7 +16,7 @@ class CloseModel {
     active = false;
     datetime = '';
     garageId = 0;
-    userId = 0;
+    user = UserModel();
     number = '';
   }
 
@@ -46,7 +47,7 @@ class CloseModel {
           : false;
       datetime = data['datetime'] != null ? data['datetime'] : '';
       garageId = data['garage_id'] != null ? data['garage_id'] : 0;
-      userId = data['user_id'] != null ? data['user_id'] : 0;
+      user = data['user'] != null ? data['user'] : UserModel();
       number = data['close_number'] != null ? data['close_number'] : '';
     }
   }
