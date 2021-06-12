@@ -20,8 +20,10 @@ class ParkingAutoProvider extends BaseProvider {
   int month = 8;
   String year = '';
   String time = '';
+  bool isOk = false;
 
   void _setUp() {
+    isOk = false;
     DateTime date = DateTime.now();
     number = '';
     day = date.day.toString();

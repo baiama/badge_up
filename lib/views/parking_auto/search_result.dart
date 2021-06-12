@@ -46,12 +46,30 @@ class _SearchResultState extends State<SearchResult> {
             );
           }
           if (provider.results.length == 0) {
-            return Container(
-              padding: EdgeInsets.only(top: 50),
-              alignment: Alignment.center,
-              child: EmptyData(
-                  title:
-                      'К сожалению, пользователь\nне оставил данные о парковке'),
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 50),
+                  alignment: Alignment.center,
+                  child: EmptyData(
+                      title:
+                          'К сожалению, пользователь\nне оставил данные о парковке'),
+                ),
+                Expanded(child: Container()),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        provider.isOk = true;
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Все равно закрыть этот авто')),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+              ],
             );
           }
 
