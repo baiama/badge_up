@@ -98,11 +98,12 @@ class _GarageScreenState extends State<GarageScreen> {
                                 showDialog(
                                     context: context,
                                     builder: (context) {
-                                      return AutoDeleteDialog(onDeleteTap: (){
-                                        provider.delete(value);
-                                      },);
+                                      return AutoDeleteDialog(
+                                        onDeleteTap: () {
+                                          provider.delete(value);
+                                        },
+                                      );
                                     });
-
                               },
                               isLoading: provider.isLoading &&
                                   provider.items[index].id == provider.id),
