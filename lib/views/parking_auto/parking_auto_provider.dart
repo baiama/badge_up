@@ -37,7 +37,7 @@ class ParkingAutoProvider extends BaseProvider {
       hour = hour + 1;
     }
     time =
-        '${hour < 10 ? '0$hour' : hour.toString()}: ${min < 10 ? '0$min' : min.toString()}';
+        '${hour < 10 ? '0$hour' : hour.toString()}:${min < 10 ? '0$min' : min.toString()}';
     _closePark = null;
     setIsRequestSend = false;
   }
@@ -120,6 +120,11 @@ class ParkingAutoProvider extends BaseProvider {
   }
 
   bool get buttonIsEnabled {
+    print(phone);
+    print(selectedAuto.id);
+    print(day);
+    print(year);
+    print(time);
     return phone.length > 0 &&
         selectedAuto.id > 0 &&
         day.length > 0 &&
