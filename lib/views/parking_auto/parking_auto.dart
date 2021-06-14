@@ -232,6 +232,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         Expanded(
                           flex: 4,
                           child: TextFormField(
+                            textAlign: TextAlign.center,
                             initialValue:
                                 dayMaskFormatter.maskText(provider.day),
                             onChanged: (value) {
@@ -282,6 +283,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         Expanded(
                           flex: 5,
                           child: TextFormField(
+                            textAlign: TextAlign.center,
                             initialValue:
                                 yearMaskFormatter.maskText(provider.year),
                             onChanged: (value) {
@@ -299,6 +301,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         Expanded(
                             flex: 5,
                             child: TextFormField(
+                              textAlign: TextAlign.center,
                               initialValue:
                                   timeMaskFormatter.maskText(provider.time),
                               onChanged: (value) {
