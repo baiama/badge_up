@@ -31,8 +31,8 @@ class _GarageAddScreenState extends State<GarageAddScreen> {
   }
 
   var numMaskFormatter = new MaskTextInputFormatter(
-      mask: '# ### ## ###', filter: {"#": RegExp("[а-яА-Я0-9]")});
-
+      mask: '# *** ## ***',
+      filter: {"#": RegExp("[а-яА-Я]"), "*": RegExp("[0-9]")});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

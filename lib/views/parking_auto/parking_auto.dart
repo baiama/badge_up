@@ -46,7 +46,8 @@ class _ParkingAutoState extends State<ParkingAuto> {
       mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
 
   var numMaskFormatter = new MaskTextInputFormatter(
-      mask: '# ### ## ###', filter: {"#": RegExp("[а-яА-Я0-9]")});
+      mask: '# *** ## ***',
+      filter: {"#": RegExp("[а-яА-Я]"), "*": RegExp("[0-9]")});
 
   var autoNumController = TextEditingController();
 
