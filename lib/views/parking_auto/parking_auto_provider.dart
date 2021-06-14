@@ -19,6 +19,8 @@ class ParkingAutoProvider extends BaseProvider {
   int day = 0;
   int month = 8;
   int year = 0;
+  int hour = 0;
+  int min = 0;
   String time = '';
 
   bool isOk = false;
@@ -30,15 +32,16 @@ class ParkingAutoProvider extends BaseProvider {
     day = date.day;
     month = date.month;
     year = date.year;
-    int min = date.minute;
-    int hour = date.hour;
-    if (hour == 23) {
-      hour = 0;
+    min = date.minute;
+    hour = date.hour + 1;
+    int hour1 = hour - 1;
+    if (hour1 == 23) {
+      hour1 = 0;
     } else {
-      hour = hour + 1;
+      hour1 = hour1 + 1;
     }
     time =
-        '${hour < 10 ? '0$hour' : hour.toString()}:${min < 10 ? '0$min' : min.toString()}';
+        '${hour1 < 10 ? '0$hour1' : hour1.toString()}:${min < 10 ? '0$min' : min.toString()}';
     _closePark = null;
     setIsRequestSend = false;
   }
@@ -47,6 +50,12 @@ class ParkingAutoProvider extends BaseProvider {
     day = dateTime.day;
     year = dateTime.year;
     month = dateTime.month;
+    notifyListeners();
+  }
+
+  void setTime(DateTime dateTime) {
+    hour = dateTime.hour;
+    year = dateTime.year;
     notifyListeners();
   }
 
