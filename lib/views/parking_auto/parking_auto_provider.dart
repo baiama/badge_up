@@ -42,6 +42,13 @@ class ParkingAutoProvider extends BaseProvider {
     setIsRequestSend = false;
   }
 
+  void setDate(DateTime dateTime) {
+    day = dateTime.day.toString();
+    year = dateTime.year.toString();
+    month = dateTime.month - 1;
+    notifyListeners();
+  }
+
   void getItems() {
     _items = [];
     _selectedAuto = null;

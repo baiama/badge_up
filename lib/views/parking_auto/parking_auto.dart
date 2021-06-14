@@ -13,6 +13,7 @@ import 'package:budge_up/views/parking_auto/search_result.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
@@ -42,6 +43,17 @@ class _ParkingAutoState extends State<ParkingAuto> {
       filter: {"#": RegExp("[а-яА-Я]"), "*": RegExp("[0-9]")});
 
   var autoNumController = TextEditingController();
+
+  void _selectDate() {
+    DatePicker.showDatePicker(context,
+        showTitleActions: true,
+        minTime: DateTime.now(),
+        maxTime: DateTime(2050, 6, 7), onChanged: (date) {
+      print('change $date');
+    }, onConfirm: (date) {
+      Provider.of<ParkingAutoProvider>(context, listen: false).setDate(date);
+    }, currentTime: DateTime.now(), locale: LocaleType.ru);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +236,9 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         Expanded(
                           flex: 4,
                           child: DateLabel(
-                            onTap: () {},
+                            onTap: () {
+                              _selectDate();
+                            },
                             title: provider.day,
                           ),
                         ),
@@ -234,16 +248,17 @@ class _ParkingAutoState extends State<ParkingAuto> {
                           child: DateLabel(
                             title: MonthModel.monthShort[provider.month],
                             onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return MonthListView(
-                                      onSelected: (value) {
-                                        provider.month = value;
-                                        provider.updateView();
-                                      },
-                                    );
-                                  });
+                              _selectDate();
+                              // showDialog(
+                              //     context: context,
+                              //     builder: (context) {
+                              //       return MonthListView(
+                              //         onSelected: (value) {
+                              //           provider.month = value;
+                              //           provider.updateView();
+                              //         },
+                              //       );
+                              //     });
                             },
                           ),
                         ),
@@ -251,7 +266,9 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         Expanded(
                           flex: 5,
                           child: DateLabel(
-                            onTap: () {},
+                            onTap: () {
+                              _selectDate();
+                            },
                             title: provider.year,
                           ),
                         ),
@@ -259,7 +276,9 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         Expanded(
                             flex: 5,
                             child: DateLabel(
-                              onTap: () {},
+                              onTap: () {
+                                _selectDate();
+                              },
                               title: provider.time,
                             )),
                       ],
