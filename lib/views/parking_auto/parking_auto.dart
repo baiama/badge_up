@@ -45,8 +45,10 @@ class _ParkingAutoState extends State<ParkingAuto> {
   var timeMaskFormatter = new MaskTextInputFormatter(
       mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
 
-  var autoNumController = TextEditingController();
+  var numMaskFormatter = new MaskTextInputFormatter(
+      mask: '# ### ## ###', filter: {"#": RegExp("[а-яА-Я0-9]")});
 
+  var autoNumController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -154,11 +156,13 @@ class _ParkingAutoState extends State<ParkingAuto> {
                               children: [
                                 Expanded(
                                   child: TextFormField(
-                                    textCapitalization: TextCapitalization.characters,
-                                    inputFormatters: [new  FilteringTextInputFormatter.allow(RegExp("[а-яА-Я0-9 ]")),],
+                                    textCapitalization:
+                                        TextCapitalization.characters,
+                                    inputFormatters: [numMaskFormatter],
                                     controller: autoNumController,
                                     onChanged: (value) {
-                                      provider.number = value;
+                                      provider.number =
+                                          numMaskFormatter.getUnmaskedText();
                                       provider.setClosePark2 = null;
                                       provider.updateView();
                                     },
@@ -228,7 +232,8 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         Expanded(
                           flex: 4,
                           child: TextFormField(
-                            initialValue: dayMaskFormatter.maskText(provider.day),
+                            initialValue:
+                                dayMaskFormatter.maskText(provider.day),
                             onChanged: (value) {
                               provider.day = value;
                               provider.updateView();
@@ -277,7 +282,8 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         Expanded(
                           flex: 5,
                           child: TextFormField(
-                            initialValue: yearMaskFormatter.maskText(provider.year),
+                            initialValue:
+                                yearMaskFormatter.maskText(provider.year),
                             onChanged: (value) {
                               provider.year = value;
                               provider.updateView();
@@ -293,7 +299,8 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         Expanded(
                             flex: 5,
                             child: TextFormField(
-                              initialValue: timeMaskFormatter.maskText(provider.time),
+                              initialValue:
+                                  timeMaskFormatter.maskText(provider.time),
                               onChanged: (value) {
                                 provider.time = value;
                                 provider.updateView();
@@ -329,7 +336,6 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         onPressed: provider.buttonIsEnabled
                             ? () {
                                 provider.create(onSuccess: () {
-
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       backgroundColor: Colors.white,
