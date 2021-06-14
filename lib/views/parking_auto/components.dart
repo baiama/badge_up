@@ -10,6 +10,40 @@ import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
+class DateLabel extends StatelessWidget {
+  final String title;
+  final Function onTap;
+  const DateLabel({
+    Key? key,
+    required this.onTap,
+    required this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        onTap();
+      },
+      child: Container(
+        padding: EdgeInsets.only(top: 14, bottom: 14),
+        decoration: BoxDecoration(
+          color: kColorF6F6F6,
+          borderRadius: BorderRadius.circular(51),
+          border: Border.all(
+            color: kColorE8E8E8,
+          ),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          title,
+          style: kInterReg16ColorBlack,
+        ),
+      ),
+    );
+  }
+}
+
 class EmptyCar extends StatelessWidget {
   final Function onTap;
   const EmptyCar({Key? key, required this.onTap}) : super(key: key);

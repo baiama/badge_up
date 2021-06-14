@@ -37,14 +37,6 @@ class _ParkingAutoState extends State<ParkingAuto> {
     });
   }
 
-  final datePadding = EdgeInsets.symmetric(horizontal: 12);
-  var dayMaskFormatter =
-      new MaskTextInputFormatter(mask: '##', filter: {"#": RegExp(r'[0-9]')});
-  var yearMaskFormatter =
-      new MaskTextInputFormatter(mask: '####', filter: {"#": RegExp(r'[0-9]')});
-  var timeMaskFormatter = new MaskTextInputFormatter(
-      mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
-
   var numMaskFormatter = new MaskTextInputFormatter(
       mask: '# *** ## ***',
       filter: {"#": RegExp("[а-яА-Я]"), "*": RegExp("[0-9]")});
@@ -231,25 +223,16 @@ class _ParkingAutoState extends State<ParkingAuto> {
                       children: [
                         Expanded(
                           flex: 4,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            initialValue:
-                                dayMaskFormatter.maskText(provider.day),
-                            onChanged: (value) {
-                              provider.day = value;
-                              provider.updateView();
-                            },
-                            inputFormatters: [dayMaskFormatter],
-                            decoration: InputDecoration(
-                              hintText: '24',
-                              contentPadding: datePadding,
-                            ),
+                          child: DateLabel(
+                            onTap: () {},
+                            title: provider.day,
                           ),
                         ),
                         SizedBox(width: 8),
                         Expanded(
                           flex: 4,
-                          child: GestureDetector(
+                          child: DateLabel(
+                            title: MonthModel.monthShort[provider.month],
                             onTap: () {
                               showDialog(
                                   context: context,
@@ -262,57 +245,22 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                     );
                                   });
                             },
-                            child: Container(
-                              padding: EdgeInsets.only(top: 14, bottom: 14),
-                              decoration: BoxDecoration(
-                                color: kColorF6F6F6,
-                                borderRadius: BorderRadius.circular(51),
-                                border: Border.all(
-                                  color: kColorE8E8E8,
-                                ),
-                              ),
-                              alignment: Alignment.center,
-                              child: Text(
-                                MonthModel.monthShort[provider.month],
-                                style: kInterReg16ColorBlack,
-                              ),
-                            ),
                           ),
                         ),
                         SizedBox(width: 8),
                         Expanded(
                           flex: 5,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            initialValue:
-                                yearMaskFormatter.maskText(provider.year),
-                            onChanged: (value) {
-                              provider.year = value;
-                              provider.updateView();
-                            },
-                            inputFormatters: [yearMaskFormatter],
-                            decoration: InputDecoration(
-                              hintText: '2021',
-                              contentPadding: datePadding,
-                            ),
+                          child: DateLabel(
+                            onTap: () {},
+                            title: provider.year,
                           ),
                         ),
                         SizedBox(width: 8),
                         Expanded(
                             flex: 5,
-                            child: TextFormField(
-                              textAlign: TextAlign.center,
-                              initialValue:
-                                  timeMaskFormatter.maskText(provider.time),
-                              onChanged: (value) {
-                                provider.time = value;
-                                provider.updateView();
-                              },
-                              inputFormatters: [timeMaskFormatter],
-                              decoration: InputDecoration(
-                                hintText: '18:00',
-                                contentPadding: datePadding,
-                              ),
+                            child: DateLabel(
+                              onTap: () {},
+                              title: provider.time,
                             )),
                       ],
                     ),
