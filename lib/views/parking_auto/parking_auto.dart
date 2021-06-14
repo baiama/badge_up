@@ -93,7 +93,6 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                     provider.setSelectedAuto = value;
                                   },
                                   selectedAuto: provider.selectedAuto,
-                                  items: provider.items,
                                 );
                               });
                         },
