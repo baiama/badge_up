@@ -30,7 +30,12 @@ class ParkingAutoProvider extends BaseProvider {
     month = date.month;
     year = date.year.toString();
     int min = date.minute;
-    int hour = date.hour + 1;
+    int hour = date.hour;
+    if (hour == 23) {
+      hour = 0;
+    } else {
+      hour = hour + 1;
+    }
     time =
         '${hour < 10 ? '0$hour' : hour.toString()}: ${min < 10 ? '0$min' : min.toString()}';
     _closePark = null;
