@@ -64,7 +64,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
 
   void _selectTime() {
     DatePicker.showTimePicker(context, onConfirm: (date) {
-      currentProvider.setDate(date);
+      currentProvider.setTime(date);
     },
         currentTime: DateTime.utc(currentProvider.year, currentProvider.month,
             currentProvider.day, currentProvider.hour, currentProvider.min),

@@ -27,23 +27,24 @@ class ParkingAutoProvider extends BaseProvider {
 
   void _setUp() {
     isOk = false;
-    DateTime date = DateTime.now();
+    DateTime now = DateTime.now();
+    DateTime date =
+        DateTime.utc(now.year, now.month, now.day, now.hour + 1, now.minute);
     number = '';
     day = date.day;
     month = date.month;
     year = date.year;
     min = date.minute;
-    hour = date.hour + 1;
-    int hour1 = hour - 1;
-    if (hour1 == 23) {
-      hour1 = 0;
-    } else {
-      hour1 = hour1 + 1;
-    }
-    time =
-        '${hour1 < 10 ? '0$hour1' : hour1.toString()}:${min < 10 ? '0$min' : min.toString()}';
+    hour = date.hour;
     _closePark = null;
+    _setTime();
     setIsRequestSend = false;
+  }
+
+  void _setTime() {
+    time =
+        '${hour < 10 ? '0$hour' : hour.toString()}:${min < 10 ? '0$min' : min.toString()}';
+    notifyListeners();
   }
 
   void setDate(DateTime dateTime) {
@@ -55,8 +56,8 @@ class ParkingAutoProvider extends BaseProvider {
 
   void setTime(DateTime dateTime) {
     hour = dateTime.hour;
-    year = dateTime.year;
-    notifyListeners();
+    min = dateTime.minute;
+    _setTime();
   }
 
   void getItems() {
