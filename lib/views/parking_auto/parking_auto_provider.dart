@@ -120,11 +120,6 @@ class ParkingAutoProvider extends BaseProvider {
   }
 
   bool get buttonIsEnabled {
-    print(phone);
-    print(selectedAuto.id);
-    print(day);
-    print(year);
-    print(time);
     return phone.length > 0 &&
         selectedAuto.id > 0 &&
         day.length > 0 &&
