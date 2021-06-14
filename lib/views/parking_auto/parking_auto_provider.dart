@@ -16,19 +16,20 @@ class ParkingAutoProvider extends BaseProvider {
 
   String _phone = '';
   String number = '';
-  String day = '';
+  int day = 0;
   int month = 8;
-  String year = '';
+  int year = 0;
   String time = '';
+
   bool isOk = false;
 
   void _setUp() {
     isOk = false;
     DateTime date = DateTime.now();
     number = '';
-    day = date.day.toString();
+    day = date.day;
     month = date.month;
-    year = date.year.toString();
+    year = date.year;
     int min = date.minute;
     int hour = date.hour;
     if (hour == 23) {
@@ -43,9 +44,9 @@ class ParkingAutoProvider extends BaseProvider {
   }
 
   void setDate(DateTime dateTime) {
-    day = dateTime.day.toString();
-    year = dateTime.year.toString();
-    month = dateTime.month - 1;
+    day = dateTime.day;
+    year = dateTime.year;
+    month = dateTime.month;
     notifyListeners();
   }
 
@@ -129,8 +130,8 @@ class ParkingAutoProvider extends BaseProvider {
   bool get buttonIsEnabled {
     return phone.length > 0 &&
         selectedAuto.id > 0 &&
-        day.length > 0 &&
-        year.length == 4 &&
+        day > 0 &&
+        year > 4 &&
         time.length == 5;
   }
 
@@ -142,7 +143,7 @@ class ParkingAutoProvider extends BaseProvider {
   }) {
     int currentMonth = month + 1;
     String date =
-        '$year-${currentMonth < 10 ? '0$currentMonth' : currentMonth.toString()}-${day.length < 2 ? '0$day' : day.toString()} $time:00';
+        '$year-${currentMonth < 10 ? '0$currentMonth' : currentMonth.toString()}-${day < 10 ? '0$day' : day.toString()} $time:00';
     print(date);
     // '2021-06-16 21:30:00'
     String closeNumber = '';

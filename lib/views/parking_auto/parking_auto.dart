@@ -28,12 +28,15 @@ class ParkingAuto extends StatefulWidget {
 }
 
 class _ParkingAutoState extends State<ParkingAuto> {
+  late ParkingAutoProvider currentProvider;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      Provider.of<ParkingAutoProvider>(context, listen: false).getItems();
-      Provider.of<ParkingAutoProvider>(context, listen: false).setPhone =
+      currentProvider =
+          Provider.of<ParkingAutoProvider>(context, listen: false);
+      currentProvider.getItems();
+      currentProvider.setPhone =
           Provider.of<SettingsProvider>(context, listen: false).user.phone;
     });
   }
@@ -45,13 +48,23 @@ class _ParkingAutoState extends State<ParkingAuto> {
   var autoNumController = TextEditingController();
 
   void _selectDate() {
+    final now = DateTime.now();
     DatePicker.showDatePicker(context,
         showTitleActions: true,
-        minTime: DateTime.now(),
+        minTime: now,
         maxTime: DateTime(2050, 6, 7), onChanged: (date) {
       print('change $date');
     }, onConfirm: (date) {
-      Provider.of<ParkingAutoProvider>(context, listen: false).setDate(date);
+      currentProvider.setDate(date);
+    },
+        currentTime: DateTime.utc(
+            currentProvider.year, currentProvider.month, currentProvider.day),
+        locale: LocaleType.ru);
+  }
+
+  void _selectTime() {
+    DatePicker.showTimePicker(context, onConfirm: (date) {
+      currentProvider.setDate(date);
     }, currentTime: DateTime.now(), locale: LocaleType.ru);
   }
 
@@ -239,14 +252,14 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             onTap: () {
                               _selectDate();
                             },
-                            title: provider.day,
+                            title: provider.day.toString(),
                           ),
                         ),
                         SizedBox(width: 8),
                         Expanded(
                           flex: 4,
                           child: DateLabel(
-                            title: MonthModel.monthShort[provider.month],
+                            title: MonthModel.monthShort[provider.month - 1],
                             onTap: () {
                               _selectDate();
                               // showDialog(
@@ -269,7 +282,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             onTap: () {
                               _selectDate();
                             },
-                            title: provider.year,
+                            title: provider.year.toString(),
                           ),
                         ),
                         SizedBox(width: 8),
@@ -277,7 +290,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             flex: 5,
                             child: DateLabel(
                               onTap: () {
-                                _selectDate();
+                                _selectTime();
                               },
                               title: provider.time,
                             )),
