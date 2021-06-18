@@ -27,7 +27,8 @@ class UserModel {
       id = data['id'] != null ? data['id'] : 0;
       name = data['name'] != null ? data['name'] : '';
       email = data['email'] != null ? data['email'] : '';
-      phone = data['phone'] != null ? '+' + data['phone'] : '';
+      var phoneJson = data['phone'] != null ? data['phone'] : '';
+      phone = '+' + phoneJson;
       photo = data['photo'] != null ? data['photo'] : defaultImage;
       description = data['description'] != null ? data['description'] : '';
       isSendPush = data['is_send_push'] != null ? data['is_send_push'] : false;
