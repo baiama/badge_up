@@ -1,4 +1,4 @@
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:budge_up/utils/utils.dart';
 
 class AutoModel {
   late int id;
@@ -26,12 +26,7 @@ class AutoModel {
       brand = data['brand'] != null ? data['brand'] : '';
       userId = data['user_id'] != null ? data['user_id'] : '';
       String numberJson = data['number'] != null ? data['number'] : '';
-      number = maskFormatter.maskText(numberJson);
+      number = Utils.formatAutoNumber(numberJson);
     }
   }
-
-  var maskFormatter = new MaskTextInputFormatter(
-  mask: '# ### ## ### ### ### ### ##', filter: {"#": RegExp("[а-яА-Я0-9a-zA-Z]")});
 }
-
-

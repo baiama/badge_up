@@ -2,6 +2,7 @@ import 'package:budge_up/models/park_model.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
+import 'package:budge_up/utils/utils.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/components/avatar_item.dart';
 import 'package:budge_up/views/components/time_date_item.dart';
@@ -55,6 +56,20 @@ class _SearchResultState extends State<SearchResult> {
                   child: EmptyData(
                       title:
                           'К сожалению, пользователь\nне оставил данные о парковке'),
+                ),
+                SizedBox(height: 35),
+                Container(
+                  alignment: Alignment.center,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    decoration: BoxDecoration(
+                        color: kColor4D7EB7DC,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Text(
+                      Utils.formatAutoNumber(provider.number),
+                      style: kInterReg16ColorBlack,
+                    ),
+                  ),
                 ),
                 Expanded(child: Container()),
                 Container(

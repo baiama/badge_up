@@ -8,7 +8,6 @@ import 'package:budge_up/utils/strings.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
-import 'package:budge_up/views/parking_auto/scanner_screen.dart';
 import 'package:budge_up/views/parking_auto/search_result.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
