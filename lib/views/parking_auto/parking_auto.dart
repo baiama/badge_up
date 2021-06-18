@@ -52,6 +52,9 @@ class _ParkingAutoState extends State<ParkingAuto> {
     DatePicker.showDatePicker(context,
         showTitleActions: true,
         minTime: now,
+        theme: DatePickerTheme(
+          backgroundColor: Colors.white,
+        ),
         maxTime: DateTime(2050, 6, 7), onChanged: (date) {
       print('change $date');
     }, onConfirm: (date) {
