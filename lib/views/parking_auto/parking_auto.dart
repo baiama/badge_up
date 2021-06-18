@@ -203,19 +203,19 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                     ),
                                   ),
                                 ),
-                                GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ScannerScreen()));
-                                    },
-                                    child: Container(
-                                        padding:
-                                            EdgeInsets.only(right: 12, left: 8),
-                                        child: CustomIcon(
-                                            customIcon: CustomIcons.scanner))),
+                                // GestureDetector(
+                                //     onTap: () {
+                                //       Navigator.push(
+                                //           context,
+                                //           MaterialPageRoute(
+                                //               builder: (context) =>
+                                //                   ScannerScreen()));
+                                //     },
+                                //     child: Container(
+                                //         padding:
+                                //             EdgeInsets.only(right: 12, left: 8),
+                                //         child: CustomIcon(
+                                //             customIcon: CustomIcons.scanner))),
                               ],
                             ),
                           ),
@@ -243,7 +243,26 @@ class _ParkingAutoState extends State<ParkingAuto> {
                               child: Text('Найти')),
                       ],
                     ),
-                    SizedBox(height: 50),
+                    SizedBox(height: 20),
+                    if (provider.closePark.id > 0)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Выбран авто: ${provider.closePark.garageItem.number}',
+                            style: kInterReg16ColorBlack,
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              provider.setClosePark2 = null;
+                            },
+                            icon: CustomIcon(
+                              customIcon: CustomIcons.remove,
+                            ),
+                          ),
+                        ],
+                      ),
+                    SizedBox(height: 30),
                     Text(
                       'Когда вы планируете уехать?',
                       style: kInterBold16,
