@@ -77,6 +77,7 @@ class _SearchResultState extends State<SearchResult> {
                   child: ElevatedButton(
                       onPressed: () {
                         provider.isOk = true;
+                        provider.updateView();
                         Navigator.of(context).pop();
                       },
                       child: Text('Все равно закрыть этот авто')),

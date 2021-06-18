@@ -3,7 +3,6 @@ import 'package:budge_up/api/park_api.dart';
 import 'package:budge_up/base/base_provider.dart';
 import 'package:budge_up/models/auto_model.dart';
 import 'package:budge_up/models/park_model.dart';
-import 'package:budge_up/utils/strings.dart';
 
 class ParkingAutoProvider extends BaseProvider {
   GarageApi _api = GarageApi();
@@ -49,7 +48,8 @@ class ParkingAutoProvider extends BaseProvider {
   }
 
   void removeSelectedAuto() {
-    _selectedAuto = AutoModel();
+    setClosePark2 = null;
+    isOk = false;
     notifyListeners();
   }
 
@@ -116,6 +116,15 @@ class ParkingAutoProvider extends BaseProvider {
       _selectedAuto != null ? _selectedAuto! : AutoModel();
 
   ParkModel get closePark => _closePark != null ? _closePark! : ParkModel();
+
+  String get getCurrentNumber {
+    if (closePark.id > 0) {
+      return closePark.garageItem.number;
+    } else if (isOk) {
+      return number;
+    }
+    return '';
+  }
 
   set setClosePark(ParkModel value) {
     _closePark = value;

@@ -243,17 +243,17 @@ class _ParkingAutoState extends State<ParkingAuto> {
                       ],
                     ),
                     SizedBox(height: 20),
-                    if (provider.closePark.id > 0)
+                    if (provider.closePark.id > 0 || provider.isOk)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Выбран авто: ${provider.closePark.garageItem.number}',
+                            'Выбран авто: ${provider.getCurrentNumber}',
                             style: kInterReg16ColorBlack,
                           ),
                           IconButton(
                             onPressed: () {
-                              provider.setClosePark2 = null;
+                              provider.removeSelectedAuto();
                             },
                             icon: CustomIcon(
                               customIcon: CustomIcons.remove,
