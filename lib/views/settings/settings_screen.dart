@@ -8,6 +8,7 @@ import 'package:budge_up/views/initial/initial_screen.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:budge_up/views/settings/widgets/profile_image_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
@@ -127,6 +128,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         SizedBox(height: 35),
                         TextFormField(
                           maxLength: 50,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[A-Za-zа-яА-Я0-9 ]')),
+                          ],
                           initialValue: provider.user.name,
                           onChanged: (value) {
                             provider.name = value;
@@ -141,7 +146,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 10),
                         TextFormField(
                           inputFormatters: [textInputMask],
                           initialValue: textInputMask
@@ -199,6 +204,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         SizedBox(height: 20),
                         TextFormField(
                           maxLength: 200,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[A-Za-zа-яА-Я0-9!”№;%:?*()_+.] ')),
+                          ],
                           initialValue: provider.user.desc,
                           onChanged: (value) {
                             provider.aboutMe = value;
