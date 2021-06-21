@@ -22,6 +22,25 @@ class UserModel {
     isEmailConfirm = false;
   }
 
+  String get desc {
+    if (description.length == 0) {
+      return 'Здесь написано обо мне';
+    }
+    return description;
+  }
+
+  String get unMaskedPhone {
+    var value = phone;
+    if (value.startsWith('+')) {
+      value = value.substring(1, value.length - 1);
+    }
+    if (value.startsWith('7')) {
+      value = value.substring(1, value.length - 1);
+    }
+
+    return value;
+  }
+
   UserModel.fromJson(Map? data) {
     if (data != null) {
       id = data['id'] != null ? data['id'] : 0;

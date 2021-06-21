@@ -7,6 +7,7 @@ import 'package:budge_up/views/initial/initial_screen.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:budge_up/views/settings/widgets/profile_image_container.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -22,8 +23,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       Provider.of<SettingsProvider>(context, listen: false).getProfile(() {});
+      Provider.of<SettingsProvider>(context, listen: false).setUp();
+      Provider.of<SettingsProvider>(context, listen: false).setUpSettings();
     });
   }
+
+  var textInputMask = MaskTextInputFormatter(
+      mask: '+7(###)###-##-##', filter: {"#": RegExp(r'[0-9]')});
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +83,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               color: Colors.white,
               padding: EdgeInsets.all(24),
               child: Consumer<SettingsProvider>(
-                builder: (context, provider, Widget? child) {
+                builder: (context, provider, child) {
                   return Form(
                     autovalidateMode: AutovalidateMode.always,
                     child: Column(
@@ -92,7 +98,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                           imageProvider: provider.currentImage,
                         ),
-                        SizedBox(height: 24),
+                        SizedBox(height: 16),
                         Container(
                           alignment: Alignment.center,
                           child: Text(
@@ -101,8 +107,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 kInterSemiBold18.copyWith(color: Colors.black),
                           ),
                         ),
-                        SizedBox(height: 50),
+                        SizedBox(height: 35),
                         TextFormField(
+                          initialValue: provider.user.name,
                           onChanged: (value) {
                             provider.name = value;
                           },
@@ -110,8 +117,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             hintText: 'Имя *',
                           ),
                         ),
-                        SizedBox(height: 24),
+                        SizedBox(height: 20),
                         TextFormField(
+                          inputFormatters: [textInputMask],
+                          initialValue: textInputMask
+                              .maskText(provider.user.unMaskedPhone),
                           onChanged: (value) {
                             provider.phone = value;
                           },
@@ -119,8 +129,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             hintText: 'Телефон *',
                           ),
                         ),
-                        SizedBox(height: 24),
+                        SizedBox(height: 20),
                         TextFormField(
+                          initialValue: provider.user.email,
                           onChanged: (value) {
                             provider.email = value;
                           },
@@ -128,7 +139,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             hintText: 'Email *',
                           ),
                         ),
-                        SizedBox(height: 24),
+                        if (!provider.user.isEmailConfirm) SizedBox(height: 20),
+                        if (!provider.user.isEmailConfirm)
+                          TextFormField(
+                            onChanged: (value) {
+                              provider.code = value;
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Код подтверждения',
+                              hintStyle: kInterReg16ColorCC6666,
+                            ),
+                          ),
+                        SizedBox(height: 20),
                         TextFormField(
                           onChanged: (value) {
                             provider.password = value;
@@ -137,16 +159,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             hintText: 'Пароль *',
                           ),
                         ),
-                        SizedBox(height: 24),
+                        SizedBox(height: 20),
                         TextFormField(
+                          initialValue: provider.user.desc,
                           onChanged: (value) {
-                            provider.passwordRepeat = value;
+                            provider.aboutMe = value;
                           },
                           decoration: InputDecoration(
-                            hintText: 'Пароль еще раз *',
+                            hintText: 'Здесь написано обо мне',
                           ),
                         ),
-                        SizedBox(height: 24),
+                        SizedBox(height: 20),
                         Text(
                           provider.error,
                           style: kInterReg16ColorCC6666,

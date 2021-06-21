@@ -11,6 +11,14 @@ class SettingsProvider extends AuthProvider {
   PreferenceHelper _helper = PreferenceHelper();
   UserModel? _user;
   File? image;
+  String? code;
+  String? aboutMe;
+
+  void setUpSettings() {
+    image = null;
+    code = null;
+    aboutMe = null;
+  }
 
   void getProfile(Function onSuccess) {
     if (!isRequestSend) {
