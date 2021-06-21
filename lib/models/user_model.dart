@@ -32,12 +32,11 @@ class UserModel {
   String get unMaskedPhone {
     var value = phone;
     if (value.startsWith('+')) {
-      value = value.substring(1, value.length - 1);
+      value = value.substring(1);
     }
     if (value.startsWith('7')) {
-      value = value.substring(1, value.length - 1);
+      value = value.substring(1);
     }
-
     return value;
   }
 
