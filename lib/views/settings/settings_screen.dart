@@ -38,16 +38,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return SingOutDialog(onTap: (){
-                      Provider.of<SettingsProvider>(context, listen: false).logout(() {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (context) => InitialScreen()),
-                                (route) => false);
-                      });
-                    },);
+                    return SingOutDialog(
+                      onTap: () {
+                        Provider.of<SettingsProvider>(context, listen: false)
+                            .logout(() {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => InitialScreen()),
+                              (route) => false);
+                        });
+                      },
+                    );
                   });
-
             },
             icon: CustomIcon(
               customIcon: CustomIcons.logout,
@@ -56,8 +59,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () async{
-          Provider.of<SettingsProvider>(context, listen: false).getProfile(() {});
+        onRefresh: () async {
+          Provider.of<SettingsProvider>(context, listen: false)
+              .getProfile(() {});
         },
         child: GestureDetector(
           onTap: () {
@@ -252,15 +256,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            // provider.register(onSuccess: () {
-                            //   Navigator.pushAndRemoveUntil(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (context) => HomeScreen()),
-                            //           (route) => false);
-                            // });
+                            provider.updateProfile(onSuccess: () {});
                           },
-                          child: provider.isRequestSend
+                          child: provider.isLoading
                               ? CircularLoader()
                               : Text(Strings.save)),
                       SizedBox(height: 10),

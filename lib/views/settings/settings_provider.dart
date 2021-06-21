@@ -42,4 +42,23 @@ class SettingsProvider extends AuthProvider {
     }
     return NetworkImage(user.photo);
   }
+
+  void updateProfile({required Function onSuccess}) {
+    _safeImage();
+  }
+
+  void _safeImage() {
+    if (!isLoading) {
+      setIsLoading = true;
+      _api.uploadAvatar(
+        image: image!,
+        onSuccess: () {
+          setIsLoading = false;
+        },
+        onFailure: (value) {
+          setIsLoading = false;
+        },
+      );
+    }
+  }
 }
