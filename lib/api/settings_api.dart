@@ -68,4 +68,47 @@ class SettingsApi {
       print(e.response!.data);
     }
   }
+
+  void updateProfile(
+      {required String? name,
+      required String? phone,
+      required String? email,
+      required String? password,
+      required String? aboutMe,
+      required bool isSendPush,
+      required Function onSuccess,
+      required Function(String) onFailure}) async {
+    FormData formData = FormData.fromMap({
+      'phone': phone,
+      'name': name,
+      "email": email,
+      "description": aboutMe,
+      "is_send_push": isSendPush,
+      // 'password': password,
+    });
+    Dio dio = await BaseApi().dio;
+    try {
+      Response response = await dio.post('registration/', data: formData);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+      } else {
+        onFailure(Strings.errorEmpty3);
+      }
+    } on DioError catch (e) {
+      print(e);
+      if (e.response != null && e.response!.statusCode != null) {
+        if (e.response!.statusCode! > 399 && e.response!.statusCode! < 500) {
+          String err = e.response!.data['error'];
+          onFailure(err);
+        } else {
+          onFailure(Strings.errorEmpty3);
+        }
+      } else {
+        onFailure(Strings.errorEmpty3);
+      }
+      print(e.response);
+      print(e.response!.realUri);
+      print(e.response!.statusCode);
+      print(e.response!.data);
+    }
+  }
 }

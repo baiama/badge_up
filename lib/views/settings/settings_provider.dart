@@ -55,6 +55,23 @@ class SettingsProvider extends AuthProvider {
     if (image != null) {
       _safeImage();
     }
+    if (!isLoading) {
+      setIsLoading = true;
+      _api.updateProfile(
+        onSuccess: () {
+          setIsLoading = false;
+        },
+        onFailure: (value) {
+          setIsLoading = false;
+        },
+        isSendPush: user.isSendPush,
+        phone: phone != null ? '7' + phone! : null,
+        password: '',
+        name: name,
+        email: email,
+        aboutMe: aboutMe,
+      );
+    }
   }
 
   void _safeImage() {

@@ -133,6 +133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           initialValue: textInputMask
                               .maskText(provider.user.unMaskedPhone),
                           onChanged: (value) {
+                            print(value);
                             provider.phone = value;
                           },
                           decoration: InputDecoration(
@@ -234,6 +235,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   !_formKey.currentState!.validate()) {
                                 return;
                               }
+                              provider.phone = textInputMask.getUnmaskedText();
                               provider.updateProfile(onSuccess: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
