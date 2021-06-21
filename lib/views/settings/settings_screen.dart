@@ -1,3 +1,4 @@
+import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
@@ -169,14 +170,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             hintText: 'Здесь написано обо мне',
                           ),
                         ),
-                        SizedBox(height: 20),
-                        Text(
-                          provider.error,
-                          style: kInterReg16ColorCC6666,
-                          textAlign: TextAlign.center,
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Switch(
+                                inactiveTrackColor: kColor2980B9,
+                                value: provider.user.isSendPush,
+                                onChanged: (value) {
+                                  provider.user.isSendPush = value;
+                                  provider.updateView();
+                                }),
+                            SizedBox(width: 6),
+                            Expanded(
+                              child: Text(
+                                'Получать PUSH уведомления',
+                                style: kInterReg16ColorCC6666.copyWith(
+                                  color: kColor666666,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
+                        if (provider.error.length > 0) SizedBox(height: 20),
+                        if (provider.error.length > 0)
+                          Text(
+                            provider.error,
+                            style: kInterReg16ColorCC6666,
+                            textAlign: TextAlign.center,
+                          ),
                         SizedBox(
-                          height: 130,
+                          height: 20,
                         ),
                         ElevatedButton(
                             onPressed: () {
