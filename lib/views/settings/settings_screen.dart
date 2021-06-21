@@ -92,6 +92,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               padding: EdgeInsets.all(24),
               child: Consumer<SettingsProvider>(
                 builder: (context, provider, child) {
+                  if (provider.isRequestSend) {
+                    return Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.only(top: 100),
+                      child: CircularLoader(),
+                    );
+                  }
+
                   return Form(
                     key: _formKey,
                     autovalidateMode: AutovalidateMode.disabled,
