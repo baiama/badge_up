@@ -126,6 +126,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         SizedBox(height: 35),
                         TextFormField(
+                          maxLength: 50,
                           initialValue: provider.user.name,
                           onChanged: (value) {
                             provider.name = value;
@@ -197,6 +198,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         SizedBox(height: 20),
                         TextFormField(
+                          maxLength: 200,
                           initialValue: provider.user.desc,
                           onChanged: (value) {
                             provider.aboutMe = value;

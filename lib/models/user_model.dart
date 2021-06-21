@@ -23,9 +23,9 @@ class UserModel {
   }
 
   String get desc {
-    if (description.length == 0) {
-      return 'Здесь написано обо мне';
-    }
+    // if (description.length == 0) {
+    //   return 'Здесь написано обо мне';
+    // }
     return description;
   }
 
