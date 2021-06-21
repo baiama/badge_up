@@ -84,12 +84,13 @@ class SettingsApi {
       "email": email,
       "description": aboutMe,
       "is_send_push": isSendPush,
-      // 'password': password,
+      'password': '123456',
+      'password_confirmation': '123456',
     });
     print(formData.fields);
     Dio dio = await BaseApi().dio;
     try {
-      Response response = await dio.post('registration/', data: formData);
+      Response response = await dio.post('profile/', data: formData);
       if (response.statusCode == 201 || response.statusCode == 200) {
       } else {
         onFailure(Strings.errorEmpty3);

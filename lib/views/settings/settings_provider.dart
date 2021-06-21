@@ -70,8 +70,8 @@ class SettingsProvider extends AuthProvider {
             ? '7' + phone!
             : user.unMaskedPhone2,
         password: '',
-        name: name,
-        email: email,
+        name: name != null && name!.length > 0 ? name! : user.name,
+        email: email != null && email!.length > 0 ? email! : user.email,
         aboutMe: aboutMe,
       );
     }
