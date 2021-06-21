@@ -206,7 +206,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           maxLength: 200,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
-                                RegExp(r'[A-Za-zа-яА-Я0-9!”№;%:?*()_+.] ')),
+                                RegExp(r'[A-Za-zа-яА-Я0-9!”№;%:?*()_+. ]')),
                           ],
                           initialValue: provider.user.desc,
                           onChanged: (value) {
@@ -269,6 +269,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       'Данные успешно обновлены.',
                                       style: kInterReg16ColorBlack,
                                     ),
+                                  ),
+                                );
+                              }, onFailure: (value) {
+                                SnackBar(
+                                  backgroundColor: Colors.white,
+                                  content: Text(
+                                    value,
+                                    style: kInterReg16ColorBlack,
                                   ),
                                 );
                               });

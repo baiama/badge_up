@@ -4,6 +4,8 @@ import 'package:budge_up/api/settings_api.dart';
 import 'package:budge_up/base/auth_provider.dart';
 import 'package:budge_up/models/user_model.dart';
 import 'package:budge_up/utils/preference_helper.dart';
+import 'package:budge_up/utils/strings.dart';
+import 'package:budge_up/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class SettingsProvider extends AuthProvider {
@@ -51,9 +53,16 @@ class SettingsProvider extends AuthProvider {
     return NetworkImage(user.photo);
   }
 
-  void updateProfile({required Function onSuccess}) {
+  void updateProfile(
+      {required Function onSuccess,
+      required Function(String) onFailure}) async {
     if (image != null) {
-      _safeImage();
+      var fileSize = await Utils.getFileSize(image!);
+      if (fileSize > 2) {
+        onFailure(Strings.errorFileLength);
+      } else {
+        _safeImage();
+      }
     }
     if (!isLoading) {
       setIsLoading = true;
