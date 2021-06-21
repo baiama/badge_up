@@ -76,7 +76,7 @@ class SettingsApi {
       required String? password,
       required String? aboutMe,
       required bool isSendPush,
-      required Function onSuccess,
+      required Function(UserModel) onSuccess,
       required Function(String) onFailure}) async {
     FormData formData = FormData.fromMap({
       'phone': phone,
@@ -93,7 +93,8 @@ class SettingsApi {
       Response response = await dio.post('profile/', data: formData);
       print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        onSuccess();
+        UserModel user = UserModel.fromJson(response.data);
+        onSuccess(user);
       } else {
         onFailure(Strings.errorEmpty3);
       }

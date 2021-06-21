@@ -58,8 +58,11 @@ class SettingsProvider extends AuthProvider {
     if (!isLoading) {
       setIsLoading = true;
       _api.updateProfile(
-        onSuccess: () {
+        onSuccess: (value) {
+          _user = value;
+          setError = '';
           setIsLoading = false;
+          onSuccess();
         },
         onFailure: (value) {
           setError = value;

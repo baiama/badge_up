@@ -56,7 +56,20 @@ class UserModel {
       phone = '+' + phoneJson;
       photo = data['photo'] != null ? data['photo'] : defaultImage;
       description = data['description'] != null ? data['description'] : '';
-      isSendPush = data['is_send_push'] != null ? data['is_send_push'] : false;
+      var pushJson = data['is_send_push'];
+      if (pushJson != null) {
+        if (pushJson is int) {
+          if (pushJson == 1) {
+            isSendPush = true;
+          } else {
+            isSendPush = false;
+          }
+        } else if (pushJson is bool) {
+          isSendPush = pushJson;
+        }
+      } else {
+        isSendPush = true;
+      }
       isEmailConfirm =
           data['is_email_confirm'] != null ? data['is_email_confirm'] : false;
     }
