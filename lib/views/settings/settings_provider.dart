@@ -62,10 +62,13 @@ class SettingsProvider extends AuthProvider {
           setIsLoading = false;
         },
         onFailure: (value) {
+          setError = value;
           setIsLoading = false;
         },
         isSendPush: user.isSendPush,
-        phone: phone != null ? '7' + phone! : null,
+        phone: phone != null && phone!.length > 0
+            ? '7' + phone!
+            : user.unMaskedPhone2,
         password: '',
         name: name,
         email: email,

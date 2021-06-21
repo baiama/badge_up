@@ -41,6 +41,12 @@ class UserModel {
     return value;
   }
 
+  String get unMaskedPhone2 {
+    var value = phone;
+    value = value.replaceAll('+', '');
+    return value;
+  }
+
   UserModel.fromJson(Map? data) {
     if (data != null) {
       id = data['id'] != null ? data['id'] : 0;

@@ -86,6 +86,7 @@ class SettingsApi {
       "is_send_push": isSendPush,
       // 'password': password,
     });
+    print(formData.fields);
     Dio dio = await BaseApi().dio;
     try {
       Response response = await dio.post('registration/', data: formData);
