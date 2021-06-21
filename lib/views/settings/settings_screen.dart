@@ -34,10 +34,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final nameTextController = TextEditingController();
-  final phoneTextController = TextEditingController();
-  final emailTextController = TextEditingController();
-  final descTextController = TextEditingController();
+  // final nameTextController = TextEditingController();
+  // final phoneTextController = TextEditingController();
+  // final emailTextController = TextEditingController();
+  // final descTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -250,6 +250,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               }
                               provider.phone = textInputMask.getUnmaskedText();
                               provider.updateProfile(onSuccess: () {
+                                FocusScope.of(context).unfocus();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     backgroundColor: Colors.white,
