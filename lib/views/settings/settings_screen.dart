@@ -32,6 +32,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   var textInputMask = MaskTextInputFormatter(
       mask: '+7(###)###-##-##', filter: {"#": RegExp(r'[0-9]')});
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +88,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Consumer<SettingsProvider>(
                 builder: (context, provider, child) {
                   return Form(
-                    autovalidateMode: AutovalidateMode.always,
+                    key: _formKey,
+                    autovalidateMode: AutovalidateMode.disabled,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -117,6 +120,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           decoration: InputDecoration(
                             hintText: 'Имя *',
                           ),
+                          validator: (value) {
+                            if (value == null || value.length == 0) {
+                              return Strings.errorEmpty;
+                            }
+                            return null;
+                          },
                         ),
                         SizedBox(height: 20),
                         TextFormField(
@@ -129,6 +138,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           decoration: InputDecoration(
                             hintText: 'Телефон *',
                           ),
+                          validator: (value) {
+                            if (value == null || value.length == 0) {
+                              return Strings.errorEmpty;
+                            }
+                            return null;
+                          },
                         ),
                         SizedBox(height: 20),
                         TextFormField(
@@ -139,6 +154,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           decoration: InputDecoration(
                             hintText: 'Email *',
                           ),
+                          validator: (value) {
+                            if (value == null || value.length == 0) {
+                              return Strings.errorEmpty;
+                            }
+                            return null;
+                          },
                         ),
                         if (!provider.user.isEmailConfirm) SizedBox(height: 20),
                         if (!provider.user.isEmailConfirm)
@@ -169,6 +190,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           decoration: InputDecoration(
                             hintText: 'Здесь написано обо мне',
                           ),
+                          validator: (value) {
+                            if (value == null || value.length == 0) {
+                              return Strings.errorEmpty;
+                            }
+                            return null;
+                          },
                         ),
                         SizedBox(height: 10),
                         Row(
@@ -203,7 +230,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         ElevatedButton(
                             onPressed: () {
-                              provider.updateProfile(onSuccess: () {});
+                              if (_formKey.currentState != null &&
+                                  !_formKey.currentState!.validate()) {
+                                return;
+                              }
+                              provider.updateProfile(onSuccess: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Colors.white,
+                                    content: Text(
+                                      'Данные успешно обновлены.',
+                                      style: kInterReg16ColorBlack,
+                                    ),
+                                  ),
+                                );
+                              });
                             },
                             child: provider.isLoading
                                 ? CircularLoader()

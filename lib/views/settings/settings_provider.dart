@@ -52,7 +52,9 @@ class SettingsProvider extends AuthProvider {
   }
 
   void updateProfile({required Function onSuccess}) {
-    _safeImage();
+    if (image != null) {
+      _safeImage();
+    }
   }
 
   void _safeImage() {
