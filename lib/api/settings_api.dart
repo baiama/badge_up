@@ -1,10 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:budge_up/base/base_api.dart';
 import 'package:budge_up/models/user_model.dart';
 import 'package:budge_up/utils/strings.dart';
 import 'package:dio/dio.dart';
-import 'package:http_parser/http_parser.dart';
 
 class SettingsApi {
   void getProfile({
@@ -36,10 +36,10 @@ class SettingsApi {
   }) async {
     Dio dio = await BaseApi().dio;
     FormData formData = FormData();
-    MultipartFile multipartFile = MultipartFile.fromFileSync(image.path,
-        filename: image.path, contentType: MediaType("image", "png"));
+    final bytes = image.readAsBytesSync();
+    String img64 = base64Encode(bytes);
     formData = FormData.fromMap({
-      'photo': multipartFile,
+      'photo': img64,
     });
 
     try {

@@ -89,6 +89,7 @@ class SettingsProvider extends AuthProvider {
           setIsLoading = false;
         },
         onFailure: (value) {
+          setError = value;
           setIsLoading = false;
         },
       );
