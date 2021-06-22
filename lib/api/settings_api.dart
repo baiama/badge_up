@@ -43,7 +43,7 @@ class SettingsApi {
     });
 
     try {
-      Response response = await dio.post('profile/photo', data: formData);
+      Response response = await dio.post('profile/photo/', data: formData);
       print(response);
       print(response.data);
       if (response.statusCode == 200 || response.statusCode == 201) {
