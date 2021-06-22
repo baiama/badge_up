@@ -56,6 +56,10 @@ class SettingsProvider extends AuthProvider {
   void updateProfile(
       {required Function onSuccess,
       required Function(String) onFailure}) async {
+    if (code != null) {
+      _confirm();
+    }
+
     if (image != null) {
       var fileSize = await Utils.getFileSize(image!);
       if (fileSize > 2) {
@@ -94,6 +98,23 @@ class SettingsProvider extends AuthProvider {
       setIsLoading = true;
       _api.uploadAvatar(
         image: image!,
+        onSuccess: () {
+          setIsLoading = false;
+        },
+        onFailure: (value) {
+          setError = value;
+          setIsLoading = false;
+        },
+      );
+    }
+  }
+
+  Future<void> _confirm() async {
+    if (!isLoading) {
+      setIsLoading = true;
+      _api.confirmEmail(
+        email: user.email,
+        code: code!,
         onSuccess: () {
           setIsLoading = false;
         },

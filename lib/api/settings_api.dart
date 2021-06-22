@@ -117,6 +117,42 @@ class SettingsApi {
     }
   }
 
+  void confirmEmail(
+      {required String email,
+      required String code,
+      required Function onSuccess,
+      required Function(String) onFailure}) async {
+    FormData formData = FormData.fromMap({'code': code, "email": email});
+    print(formData.fields);
+    Dio dio = await BaseApi().dio;
+    try {
+      Response response = await dio.post('confirm/email/', data: formData);
+      print(response.data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        // UserModel user = UserModel.fromJson(response.data);
+        onSuccess();
+      } else {
+        onFailure(Strings.errorEmpty3);
+      }
+    } on DioError catch (e) {
+      print(e);
+      if (e.response != null && e.response!.statusCode != null) {
+        if (e.response!.statusCode! > 399 && e.response!.statusCode! < 500) {
+          String err = e.response!.data['error'];
+          onFailure(err);
+        } else {
+          onFailure(Strings.errorEmpty3);
+        }
+      } else {
+        onFailure(Strings.errorEmpty3);
+      }
+      print(e.response);
+      print(e.response!.realUri);
+      print(e.response!.statusCode);
+      print(e.response!.data);
+    }
+  }
+
   void saveToken({
     required String token,
   }) async {
