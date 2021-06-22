@@ -83,7 +83,7 @@ class SettingsApi {
       'name': name,
       "email": email,
       "description": aboutMe,
-      "is_send_push": isSendPush,
+      "is_send_push": isSendPush ? 1 : 0,
       // 'password': '123456',
       // 'password_confirmation': '123456',
     });
@@ -131,6 +131,7 @@ class SettingsApi {
     Dio dio = await BaseApi().dio;
     try {
       Response response = await dio.post('profile/device/', data: formData);
+      print(response.data);
     } on DioError catch (e) {
       print(e);
       print(e.response);
