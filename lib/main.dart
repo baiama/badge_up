@@ -6,10 +6,15 @@ import 'package:budge_up/views/garage/garage_provider.dart';
 import 'package:budge_up/views/initial/initial_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(MyApp());
 }
 

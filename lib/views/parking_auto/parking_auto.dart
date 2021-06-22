@@ -1,3 +1,4 @@
+import 'package:budge_up/api/settings_api.dart';
 import 'package:budge_up/models/month_model.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
@@ -10,6 +11,7 @@ import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
 import 'package:budge_up/views/parking_auto/search_result.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -37,6 +39,29 @@ class _ParkingAutoState extends State<ParkingAuto> {
       currentProvider.getItems();
       currentProvider.setPhone =
           Provider.of<SettingsProvider>(context, listen: false).user.phone;
+      _initPushes();
+    });
+  }
+
+  void _initPushes() async {
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    FirebaseMessaging.instance.getToken().then((value) {
+      if (value != null) {
+        SettingsApi().saveToken(token: value);
+      }
+    });
+    FirebaseMessaging.instance.onTokenRefresh.listen((token) {
+      ;
+      SettingsApi().saveToken(token: token);
     });
   }
 

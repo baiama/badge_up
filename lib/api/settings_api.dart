@@ -116,4 +116,27 @@ class SettingsApi {
       print(e.response!.data);
     }
   }
+
+  void saveToken({
+    required String token,
+  }) async {
+    FormData formData = FormData.fromMap({
+      'deviceId': 'id',
+      'deviceToken': 'token',
+      "fcmToken": token,
+      "devicePlatform": Platform.isAndroid ? 'android' : 'ios',
+    });
+
+    print(formData.fields);
+    Dio dio = await BaseApi().dio;
+    try {
+      Response response = await dio.post('profile/device/', data: formData);
+    } on DioError catch (e) {
+      print(e);
+      print(e.response);
+      print(e.response!.realUri);
+      print(e.response!.statusCode);
+      print(e.response!.data);
+    }
+  }
 }
