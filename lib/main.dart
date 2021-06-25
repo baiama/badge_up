@@ -1,6 +1,4 @@
 import 'package:budge_up/presentation/custom_themes.dart';
-import 'package:budge_up/views/auth/register/register_provider.dart';
-import 'package:budge_up/views/auth/reset_password/reset_password_provider.dart';
 import 'package:budge_up/views/garage/garage_provider.dart';
 import 'package:budge_up/views/initial/initial_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
@@ -22,9 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => RegisterProvider()),
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
-        ChangeNotifierProvider(create: (_) => ResetPasswordProvider()),
         ChangeNotifierProvider(create: (_) => ParkingAutoProvider()),
         ChangeNotifierProvider(create: (_) => GarageProvider()),
       ],
