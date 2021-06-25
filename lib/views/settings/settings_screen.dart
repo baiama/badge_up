@@ -35,11 +35,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
-  // final nameTextController = TextEditingController();
-  // final phoneTextController = TextEditingController();
-  // final emailTextController = TextEditingController();
-  // final descTextController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

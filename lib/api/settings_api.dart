@@ -84,8 +84,8 @@ class SettingsApi {
       "email": email,
       "description": aboutMe,
       "is_send_push": isSendPush ? 1 : 0,
-      // 'password': '123456',
-      // 'password_confirmation': '123456',
+      'password': password,
+      'password_confirmation': password,
     });
     print(formData.fields);
     Dio dio = await BaseApi().dio;
