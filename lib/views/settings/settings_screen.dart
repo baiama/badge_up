@@ -192,6 +192,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onChanged: (value) {
                             provider.password = value;
                           },
+                          obscureText: true,
                           decoration: InputDecoration(
                             hintText: 'Пароль *',
                           ),
