@@ -14,7 +14,7 @@ class LoginProvider extends AuthProvider {
       notifyListeners();
       return;
     }
-
+    print(email);
     setError = '';
     if (!isRequestSend) {
       setIsRequestSend = true;

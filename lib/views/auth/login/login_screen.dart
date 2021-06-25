@@ -133,7 +133,7 @@ class _LoginBodyState extends State<LoginBody> {
                           controller: textController,
                           inputFormatters: [textInputMask],
                           onChanged: (value) {
-                            provider.email = value;
+                            provider.setError = '';
                           },
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(
@@ -171,6 +171,12 @@ class _LoginBodyState extends State<LoginBody> {
                 Expanded(child: Container()),
                 ElevatedButton(
                     onPressed: () {
+                      if (hint == 'Email') {
+                        provider.email = textInputMask.getUnmaskedText();
+                      } else {
+                        provider.email = '7' + textInputMask.getUnmaskedText();
+                      }
+
                       provider.login(onSuccess: () {
                         Provider.of<SettingsProvider>(context, listen: false)
                             .getProfile(() {
