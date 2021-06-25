@@ -102,8 +102,10 @@ class _CodeViewState extends State<CodeView> {
                 SizedBox(height: 26),
                 ElevatedButton(
                     onPressed: () {
-                      provider.confirm(() {
+                      provider.confirm(() async {
                         FocusScope.of(context).unfocus();
+                        Navigator.pop(context);
+                        await Future.delayed(Duration(seconds: 1));
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: Colors.white,
@@ -117,10 +119,10 @@ class _CodeViewState extends State<CodeView> {
                     },
                     child:
                         provider.isLoading ? CircularLoader() : Text('Готово')),
-                if (provider.error.length > 0) SizedBox(height: 20),
-                if (provider.error.length > 0)
+                if (provider.error2.length > 0) SizedBox(height: 20),
+                if (provider.error2.length > 0)
                   Text(
-                    provider.error,
+                    provider.error2,
                     style: kInterReg16ColorCC6666,
                     textAlign: TextAlign.center,
                   ),

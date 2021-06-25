@@ -113,10 +113,11 @@ class SettingsProvider extends AuthProvider {
         code: code!,
         onSuccess: () {
           setIsLoading = false;
+          setError2 = '';
           onSuccess();
         },
         onFailure: (value) {
-          setError = value;
+          setError2 = value;
           setIsLoading = false;
         },
       );

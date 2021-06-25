@@ -9,6 +9,7 @@ class AuthProvider extends BaseProvider {
   String? password;
   String? passwordRepeat;
   String _error = '';
+  String _error2 = '';
 
   void setUp() {
     name = null;
@@ -17,12 +18,20 @@ class AuthProvider extends BaseProvider {
     password = null;
     passwordRepeat = null;
     _error = '';
+    _error2 = '';
   }
 
   String get error => _error;
 
   set setError(String value) {
     _error = value;
+    notifyListeners();
+  }
+
+  String get error2 => _error2;
+
+  set setError2(String value) {
+    _error2 = value;
     notifyListeners();
   }
 }
