@@ -183,26 +183,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             showDialog(
                               context: context,
                               builder: (context) {
-                                return CodeView(
-                                  onChange: (value) {
-                                    provider.code = value;
-                                  },
-                                  onTap: () {
-                                    provider.confirm(() {
-                                      FocusScope.of(context).unfocus();
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          backgroundColor: Colors.white,
-                                          content: Text(
-                                            'Ваш email подвержлен.',
-                                            style: kInterReg16ColorBlack,
-                                          ),
-                                        ),
-                                      );
-                                    });
-                                  },
-                                );
+                                return CodeView();
                               },
                             );
                           },

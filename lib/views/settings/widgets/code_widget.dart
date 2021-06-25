@@ -1,6 +1,9 @@
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/text_styles.dart';
+import 'package:budge_up/presentation/widgets.dart';
+import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CodeWidget extends StatelessWidget {
   final Function onCodeTap;
@@ -60,62 +63,85 @@ class CodeWidget extends StatelessWidget {
   }
 }
 
-class CodeView extends StatelessWidget {
-  final Function(String) onChange;
-  final Function onTap;
+class CodeView extends StatefulWidget {
   const CodeView({
     Key? key,
-    required this.onChange,
-    required this.onTap,
   }) : super(key: key);
 
+  @override
+  _CodeViewState createState() => _CodeViewState();
+}
+
+class _CodeViewState extends State<CodeView> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       content: SizedBox(
         width: MediaQuery.of(context).size.width - 24,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Подтвердить email',
-              style: kInterSemiBold18,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 26),
-            TextFormField(
-              keyboardType: TextInputType.text,
-              onChanged: (value) {
-                onChange(value);
-              },
-              decoration: InputDecoration(
-                hintText: 'Код подтверждения',
-              ),
-            ),
-            SizedBox(height: 26),
-            ElevatedButton(
-                onPressed: () {
-                  onTap();
-                  Navigator.pop(context);
-                },
-                child: Text('Готово')),
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 22, vertical: 26),
-                child: Text(
-                  'Отменить',
-                  style: kInterReg16ColorCC6666.copyWith(
-                    color: kColor2980B9,
-                  ),
+        child: Consumer<SettingsProvider>(
+          builder: (BuildContext context, provider, Widget? child) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Подтвердить email',
+                  style: kInterSemiBold18,
                   textAlign: TextAlign.center,
                 ),
-              ),
-            ),
-          ],
+                SizedBox(height: 26),
+                TextFormField(
+                  keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    provider.code = value;
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Код подтверждения',
+                  ),
+                ),
+                SizedBox(height: 26),
+                ElevatedButton(
+                    onPressed: () {
+                      provider.confirm(() {
+                        FocusScope.of(context).unfocus();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.white,
+                            content: Text(
+                              'Ваш email подвержлен.',
+                              style: kInterReg16ColorBlack,
+                            ),
+                          ),
+                        );
+                      });
+                    },
+                    child:
+                        provider.isLoading ? CircularLoader() : Text('Готово')),
+                if (provider.error.length > 0) SizedBox(height: 20),
+                if (provider.error.length > 0)
+                  Text(
+                    provider.error,
+                    style: kInterReg16ColorCC6666,
+                    textAlign: TextAlign.center,
+                  ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 22, vertical: 26),
+                    child: Text(
+                      'Отменить',
+                      style: kInterReg16ColorCC6666.copyWith(
+                        color: kColor2980B9,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
