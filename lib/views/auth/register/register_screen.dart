@@ -14,12 +14,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Provider.of<RegisterProvider>(context, listen: false).setUp();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
