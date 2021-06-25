@@ -104,8 +104,6 @@ class _CodeViewState extends State<CodeView> {
                     onPressed: () {
                       provider.confirm(() async {
                         FocusScope.of(context).unfocus();
-                        Navigator.pop(context);
-                        await Future.delayed(Duration(seconds: 1));
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: Colors.white,
@@ -115,6 +113,7 @@ class _CodeViewState extends State<CodeView> {
                             ),
                           ),
                         );
+                        Navigator.pop(context);
                       });
                     },
                     child:
