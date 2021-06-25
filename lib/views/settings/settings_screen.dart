@@ -6,6 +6,7 @@ import 'package:budge_up/utils/strings.dart';
 import 'package:budge_up/views/components/cutom_allerts.dart';
 import 'package:budge_up/views/initial/initial_screen.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
+import 'package:budge_up/views/settings/widgets/code_widget.dart';
 import 'package:budge_up/views/settings/widgets/profile_image_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -176,17 +177,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             return null;
                           },
                         ),
-                        if (!provider.user.isEmailConfirm) SizedBox(height: 20),
-                        if (!provider.user.isEmailConfirm)
-                          TextFormField(
-                            onChanged: (value) {
-                              provider.code = value;
-                            },
-                            decoration: InputDecoration(
-                              hintText: 'Код подтверждения',
-                              hintStyle: kInterReg16ColorCC6666,
-                            ),
-                          ),
+                        SizedBox(height: 20),
+                        CodeWidget(
+                          onCodeTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CodeView(
+                                  onChange: (value) {
+                                    provider.code = value;
+                                  },
+                                  onTap: () {
+                                    provider.confirm(() {
+                                      FocusScope.of(context).unfocus();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          backgroundColor: Colors.white,
+                                          content: Text(
+                                            'Ваш email подвержлен.',
+                                            style: kInterReg16ColorBlack,
+                                          ),
+                                        ),
+                                      );
+                                    });
+                                  },
+                                );
+                              },
+                            );
+                          },
+                          onResendTap: () {},
+                          confirmed: provider.user.isEmailConfirm,
+                        ),
                         SizedBox(height: 20),
                         TextFormField(
                           onChanged: (value) {
