@@ -108,7 +108,7 @@ class ProfileImageContainer extends StatelessWidget {
                   right: 0,
                   child: IconButton(
                     icon: CustomIcon(
-                      color: Colors.grey,
+                      color: kColor2980B9,
                       customIcon: CustomIcons.addPhoto,
                     ),
                     onPressed: () {

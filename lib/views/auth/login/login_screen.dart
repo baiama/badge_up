@@ -229,34 +229,23 @@ class LoginExp extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          GestureDetector(
-            onTap: () {
+          SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
               onSelected(1);
               Navigator.pop(context);
             },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Text(
-                'Email',
-                style: kInterReg16ColorBlack,
-                textAlign: TextAlign.center,
-              ),
-            ),
+            child: Text('Email'),
           ),
-          GestureDetector(
-            onTap: () {
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
               onSelected(2);
               Navigator.pop(context);
             },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
-              child: Text(
-                'Телефон',
-                style: kInterReg16ColorBlack,
-                textAlign: TextAlign.center,
-              ),
-            ),
+            child: Text('Телефон'),
           ),
+          SizedBox(height: 16),
         ],
       ),
     );
