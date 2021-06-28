@@ -2,7 +2,7 @@
     package="io.bagde.up.budge_up">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="BadgeUp"
+        android:label="BudgeUp"
         android:usesCleartextTraffic="true"
        android:roundIcon="@mipmap/ic_launcher_round"
         android:icon="@mipmap/ic_launcher">

@@ -180,6 +180,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         SizedBox(height: 20),
                         CodeWidget(
                           onCodeTap: () {
+                            provider.setError2 = '';
                             showDialog(
                               context: context,
                               builder: (context) {

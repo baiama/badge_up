@@ -119,7 +119,7 @@ class SettingsApi {
 
   void confirmEmail(
       {required String email,
-      required String code,
+      required String? code,
       required Function onSuccess,
       required Function(String) onFailure}) async {
     FormData formData = FormData.fromMap({'code': code, "email": email});

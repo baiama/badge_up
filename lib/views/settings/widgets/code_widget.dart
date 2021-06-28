@@ -99,6 +99,13 @@ class _CodeViewState extends State<CodeView> {
                     hintText: 'Код подтверждения',
                   ),
                 ),
+                if (provider.error2.length > 0) SizedBox(height: 20),
+                if (provider.error2.length > 0)
+                  Text(
+                    provider.error2,
+                    style: kInterReg16ColorCC6666,
+                    textAlign: TextAlign.center,
+                  ),
                 SizedBox(height: 26),
                 ElevatedButton(
                     onPressed: () {
@@ -118,13 +125,6 @@ class _CodeViewState extends State<CodeView> {
                     },
                     child:
                         provider.isLoading ? CircularLoader() : Text('Готово')),
-                if (provider.error2.length > 0) SizedBox(height: 20),
-                if (provider.error2.length > 0)
-                  Text(
-                    provider.error2,
-                    style: kInterReg16ColorCC6666,
-                    textAlign: TextAlign.center,
-                  ),
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);

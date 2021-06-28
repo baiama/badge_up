@@ -110,7 +110,7 @@ class SettingsProvider extends AuthProvider {
       setIsLoading = true;
       _api.confirmEmail(
         email: user.email,
-        code: code!,
+        code: code,
         onSuccess: () {
           setIsLoading = false;
           setError2 = '';
