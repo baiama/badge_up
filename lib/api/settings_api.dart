@@ -1,6 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
-
+import 'package:http_parser/http_parser.dart';
 import 'package:budge_up/base/base_api.dart';
 import 'package:budge_up/models/user_model.dart';
 import 'package:budge_up/utils/strings.dart';
@@ -35,11 +34,12 @@ class SettingsApi {
     required Function(String) onFailure,
   }) async {
     Dio dio = await BaseApi().dio;
+
     FormData formData = FormData();
-    final bytes = image.readAsBytesSync();
-    String img64 = base64Encode(bytes);
+    MultipartFile multipartFile = MultipartFile.fromFileSync(image.path,
+        filename: image.path, contentType: MediaType("image", "jpeg"));
     formData = FormData.fromMap({
-      'photo': img64,
+      'photo': multipartFile,
     });
 
     try {
@@ -153,6 +153,38 @@ class SettingsApi {
     }
   }
 
+  void resendCode(
+      {required Function onSuccess,
+      required Function(String) onFailure}) async {
+    Dio dio = await BaseApi().dio;
+    try {
+      Response response = await dio.post('profile/code/refresh');
+      print(response.data);
+      print(response.statusCode);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        onSuccess();
+      } else {
+        onFailure(Strings.errorEmpty3);
+      }
+    } on DioError catch (e) {
+      print(e);
+      if (e.response != null && e.response!.statusCode != null) {
+        if (e.response!.statusCode! > 399 && e.response!.statusCode! < 500) {
+          String err = e.response!.data['error'];
+          onFailure(err);
+        } else {
+          onFailure(Strings.errorEmpty3);
+        }
+      } else {
+        onFailure(Strings.errorEmpty3);
+      }
+      print(e.response);
+      print(e.response!.realUri);
+      print(e.response!.statusCode);
+      print(e.response!.data);
+    }
+  }
+
   void saveToken({
     required String token,
   }) async {
@@ -163,11 +195,9 @@ class SettingsApi {
       "devicePlatform": Platform.isAndroid ? 'android' : 'ios',
     });
 
-    print(formData.fields);
     Dio dio = await BaseApi().dio;
     try {
       Response response = await dio.post('profile/device/', data: formData);
-      print(response.data);
     } on DioError catch (e) {
       print(e);
       print(e.response);

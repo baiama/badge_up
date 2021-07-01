@@ -188,7 +188,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               },
                             );
                           },
-                          onResendTap: () {},
+                          onResendTap: () {
+                            provider.resendCode(() {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.white,
+                                  content: Text(
+                                    'Код отправлен на вашу почту.',
+                                    style: kInterReg16ColorBlack,
+                                  ),
+                                ),
+                              );
+                            }, (value) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.white,
+                                  content: Text(
+                                    value,
+                                    style: kInterReg16ColorBlack,
+                                  ),
+                                ),
+                              );
+                            });
+                          },
                           confirmed: provider.user.isEmailConfirm,
                         ),
                         SizedBox(height: 20),
@@ -272,11 +294,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                 );
                               }, onFailure: (value) {
-                                SnackBar(
-                                  backgroundColor: Colors.white,
-                                  content: Text(
-                                    value,
-                                    style: kInterReg16ColorBlack,
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Colors.white,
+                                    content: Text(
+                                      value,
+                                      style: kInterReg16ColorBlack,
+                                    ),
                                   ),
                                 );
                               });

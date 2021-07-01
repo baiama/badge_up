@@ -42,22 +42,21 @@ class CodeWidget extends StatelessWidget {
             ),
           ),
         ),
-        if (confirmed)
-          GestureDetector(
-            onTap: () {
-              onResendTap();
-            },
-            child: Container(
-              padding: EdgeInsets.only(top: 14),
-              alignment: Alignment.center,
-              child: Text(
-                'Выслать повторно',
-                style: kInterReg14.copyWith(
-                  color: kColor2980B9,
-                ),
+        GestureDetector(
+          onTap: () {
+            onResendTap();
+          },
+          child: Container(
+            padding: EdgeInsets.only(top: 14),
+            alignment: Alignment.center,
+            child: Text(
+              'Выслать код повторно',
+              style: kInterReg14.copyWith(
+                color: kColor2980B9,
               ),
             ),
           ),
+        ),
       ],
     );
   }

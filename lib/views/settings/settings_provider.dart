@@ -105,6 +105,17 @@ class SettingsProvider extends AuthProvider {
     }
   }
 
+  void resendCode(Function onSuccess, Function(String) onFailure) {
+    _api.resendCode(
+      onSuccess: () {
+        onSuccess();
+      },
+      onFailure: (value) {
+        onFailure(value);
+      },
+    );
+  }
+
   Future<void> confirm(Function onSuccess) async {
     if (!isLoading) {
       setIsLoading = true;
