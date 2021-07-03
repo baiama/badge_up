@@ -148,7 +148,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           initialValue: textInputMask
                               .maskText(provider.user.unMaskedPhone),
                           onChanged: (value) {
-                            print(value);
                             provider.phone = value;
                           },
                           decoration: InputDecoration(
