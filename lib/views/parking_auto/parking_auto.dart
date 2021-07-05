@@ -187,7 +187,13 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             });
                       },
                     ),
-                    SizedBox(height: 38),
+                    SizedBox(height: 30),
+                    Text(
+                      'Я закрываю авто (опционально):',
+                      textAlign: TextAlign.center,
+                      style: kInterBold16,
+                    ),
+                    SizedBox(height: 20),
                     Row(
                       children: [
                         Expanded(
