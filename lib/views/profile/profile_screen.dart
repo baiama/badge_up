@@ -2,6 +2,7 @@ import 'package:budge_up/models/user_model.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
+import 'package:budge_up/utils/utils.dart';
 import 'package:budge_up/views/components/avatar_item.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             SizedBox(height: 4),
             Text(
-              user.phone,
+              Utils.formatPhoneNumber(user.phone),
               textAlign: TextAlign.center,
               style: kInterReg16ColorBlack,
             ),

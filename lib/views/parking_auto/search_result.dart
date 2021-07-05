@@ -143,7 +143,7 @@ class SearchItem extends StatelessWidget {
           ),
           SizedBox(height: 4),
           Text(
-            parkModel.user.phone,
+            Utils.formatPhoneNumber(parkModel.user.phone),
             textAlign: TextAlign.center,
             style: kInterReg16ColorBlack,
           ),

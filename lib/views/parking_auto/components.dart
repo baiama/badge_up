@@ -3,6 +3,7 @@ import 'package:budge_up/models/month_model.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/utils/strings.dart';
+import 'package:budge_up/utils/utils.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
@@ -89,7 +90,7 @@ class PhoneView extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            phone,
+            Utils.formatPhoneNumber(phone),
             style: kInterReg16ColorBlack,
           ),
           GestureDetector(
