@@ -176,42 +176,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 20),
-                        CodeWidget(
-                          onCodeTap: () {
-                            provider.setError2 = '';
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return CodeView();
-                              },
-                            );
-                          },
-                          onResendTap: () {
-                            provider.resendCode(() {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  backgroundColor: Colors.white,
-                                  content: Text(
-                                    'Код отправлен на вашу почту.',
-                                    style: kInterReg16ColorBlack,
-                                  ),
-                                ),
+                        if (!provider.user.isEmailConfirm) SizedBox(height: 20),
+                        if (!provider.user.isEmailConfirm)
+                          CodeWidget(
+                            onCodeTap: () {
+                              provider.setError2 = '';
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CodeView();
+                                },
                               );
-                            }, (value) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  backgroundColor: Colors.white,
-                                  content: Text(
-                                    value,
-                                    style: kInterReg16ColorBlack,
+                            },
+                            onResendTap: () {
+                              provider.resendCode(() {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Colors.white,
+                                    content: Text(
+                                      'Код отправлен на вашу почту.',
+                                      style: kInterReg16ColorBlack,
+                                    ),
                                   ),
-                                ),
-                              );
-                            });
-                          },
-                          confirmed: provider.user.isEmailConfirm,
-                        ),
+                                );
+                              }, (value) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Colors.white,
+                                    content: Text(
+                                      value,
+                                      style: kInterReg16ColorBlack,
+                                    ),
+                                  ),
+                                );
+                              });
+                            },
+                            confirmed: provider.user.isEmailConfirm,
+                          ),
                         SizedBox(height: 20),
                         TextFormField(
                           onChanged: (value) {
