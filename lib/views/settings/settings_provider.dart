@@ -95,7 +95,7 @@ class SettingsProvider extends AuthProvider {
       _api.uploadAvatar(
         image: image!,
         onSuccess: () {
-          image = null;
+          // image = null;
           setIsLoading = false;
         },
         onFailure: (value) {
