@@ -36,4 +36,14 @@ class Utils {
 
     return maskFormatter.maskText(number);
   }
+
+  static String formatPhoneNumber(String number) {
+    if (!number.startsWith('+')) {
+      number = '+' + number;
+    }
+    var maskFormatter = new MaskTextInputFormatter(
+        mask: '##(###)###-##-##', filter: {"#": RegExp("[а-яА-Я0-9a-zA-Z+]")});
+
+    return maskFormatter.maskText(number);
+  }
 }

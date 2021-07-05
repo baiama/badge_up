@@ -5,6 +5,7 @@ import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
+import 'package:budge_up/utils/utils.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/components/avatar_item.dart';
 import 'package:budge_up/views/components/cutom_allerts.dart';
@@ -127,20 +128,20 @@ class ParkListItem extends StatelessWidget {
               auto: parkModel.closeGarageItem,
               user: parkModel.close.user,
               text: 'Закрыт мной',
-              phone: parkModel.close.phone,
+              phone: Utils.formatPhoneNumber(parkModel.close.phone),
               time: parkModel.close.time,
               date: parkModel.close.date,
             ),
           if (parkModel.close.id == 0 && parkModel.closeNumber.length > 0)
             ParkItemCloseNumber(
-              number: parkModel.closeNumber,
+              number: Utils.formatPhoneNumber(parkModel.closeNumber),
               text: 'Закрыт мной',
             ),
           ParkItemUser(
             onPhoneChanged: onPhoneChanged,
             date: parkModel.date,
             auto: parkModel.garageItem,
-            phone: parkModel.phone,
+            phone: Utils.formatPhoneNumber(parkModel.phone),
             user: parkModel.user,
             time: parkModel.time,
           ),
@@ -149,7 +150,7 @@ class ParkListItem extends StatelessWidget {
               auto: parkModel.closeMe.garageItem,
               user: parkModel.closeMe.user,
               text: 'Закрыл меня',
-              phone: parkModel.closeMe.phone,
+              phone: Utils.formatPhoneNumber(parkModel.closeMe.phone),
               time: parkModel.closeMe.time,
               date: parkModel.closeMe.date,
             ),
