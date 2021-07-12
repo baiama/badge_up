@@ -6,6 +6,7 @@ import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:in_app_notification/in_app_notification.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -18,20 +19,22 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => SettingsProvider()),
-        ChangeNotifierProvider(create: (_) => ParkingAutoProvider()),
-        ChangeNotifierProvider(create: (_) => GarageProvider()),
-      ],
-      child: MaterialApp(
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: kAppBarTheme,
-          inputDecorationTheme: kInputDecorationTheme,
-          elevatedButtonTheme: kElevationButtonTheme,
+    return InAppNotification(
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => SettingsProvider()),
+          ChangeNotifierProvider(create: (_) => ParkingAutoProvider()),
+          ChangeNotifierProvider(create: (_) => GarageProvider()),
+        ],
+        child: MaterialApp(
+          theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
+            appBarTheme: kAppBarTheme,
+            inputDecorationTheme: kInputDecorationTheme,
+            elevatedButtonTheme: kElevationButtonTheme,
+          ),
+          home: InitialScreen(),
         ),
-        home: InitialScreen(),
       ),
     );
   }
