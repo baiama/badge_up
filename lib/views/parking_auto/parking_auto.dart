@@ -7,6 +7,7 @@ import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/utils/strings.dart';
 import 'package:budge_up/views/components/auto_item.dart';
+import 'package:budge_up/views/components/notification_body.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
 import 'package:budge_up/views/parking_auto/search_result.dart';
@@ -15,6 +16,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:in_app_notification/in_app_notification.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
@@ -56,97 +58,52 @@ class _ParkingAutoState extends State<ParkingAuto> {
 
     FirebaseMessaging.instance.getToken().then((value) {
       if (value != null) {
+        print('token');
+        print(value);
         SettingsApi().saveToken(token: value);
       }
     });
     FirebaseMessaging.instance.onTokenRefresh.listen((token) {
+      print('token');
+      print(token);
       SettingsApi().saveToken(token: token);
     });
 
     FirebaseMessaging.instance.getInitialMessage().then((value) {
       print('onMessageOpenedApp');
-      // _navigate(message);
+      _navigate(value);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('onMessageOpenedApp');
       print(message.notification);
-      // print(message.notification.body);
-      // _navigate(message);
+      _navigate(message);
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
-        // _showNotification(message);
+        _showNotification(message);
       }
     });
   }
 
-  // void _navigate(RemoteMessage message) {
-  //   if (message != null && message.data != null) {
-  //     var type = message.data['type'];
-  //     if (type == 'chat') {
-  //       var chatId = message.data['id'];
-  //       int id = 0;
-  //       if (chatId is String) {
-  //         id = int.tryParse(chatId);
-  //       }
-  //       var dataJson = message.data['user'];
-  //       Map value = json.decode(dataJson);
-  //       User user = User.fromJson(value);
-  //       Navigator.of(context, rootNavigator: true)
-  //           .push(
-  //         MyCustomRoute(
-  //             builder: (context) => MessageScreen(
-  //               user: user,
-  //               isFromProfile: false,
-  //               chatId: id,
-  //               isBlocked: false,
-  //             )),
-  //       )
-  //           .then((value) {
-  //         Provider.of<ProfileProvider>(context, listen: false).getCurrentUser();
-  //       });
-  //     } else if (type == 'comment') {
-  //       var dataJson = message.data['post'];
-  //       Map value = json.decode(dataJson);
-  //       PostModel post = PostModel.fromJson(value);
-  //       Navigator.of(context, rootNavigator: true).push(
-  //         MyCustomRoute(
-  //           builder: (context) => CommentsScreen(
-  //             post: post,
-  //           ),
-  //         ),
-  //       );
-  //     } else if (type == 'like' || type == 'accept') {
-  //       var userId = message.data['id'];
-  //       int id = 0;
-  //       if (userId is String) {
-  //         id = int.tryParse(userId);
-  //       }
-  //       Navigator.push(
-  //         context,
-  //         MyCustomRoute(
-  //           builder: (context) => UserScreen(
-  //             userId: id,
-  //           ),
-  //         ),
-  //       );
-  //     }
-  //   }
-  // }
-  //
-  // void _showNotification(RemoteMessage message) {
-  //   InAppNotification.show(
-  //     child: NotificationBody(
-  //       body: message.notification.body,
-  //       title: message.notification.title,
-  //     ),
-  //     context: context,
-  //     duration: Duration(seconds: 4),
-  //     onTap: () => _navigate(message),
-  //   );
-  // }
+  void _navigate(RemoteMessage? message) {
+    widget.onPark();
+  }
+
+  void _showNotification(RemoteMessage message) {
+    if (message.notification != null) {
+      InAppNotification.show(
+        child: NotificationBody(
+          body: message.notification!.body,
+          title: message.notification!.title,
+        ),
+        context: context,
+        duration: Duration(seconds: 4),
+        onTap: () => _navigate(message),
+      );
+    }
+  }
 
   var numMaskFormatter = new MaskTextInputFormatter(
       mask: '# *** ## ***',
