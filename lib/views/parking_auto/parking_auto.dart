@@ -82,6 +82,72 @@ class _ParkingAutoState extends State<ParkingAuto> {
     });
   }
 
+  // void _navigate(RemoteMessage message) {
+  //   if (message != null && message.data != null) {
+  //     var type = message.data['type'];
+  //     if (type == 'chat') {
+  //       var chatId = message.data['id'];
+  //       int id = 0;
+  //       if (chatId is String) {
+  //         id = int.tryParse(chatId);
+  //       }
+  //       var dataJson = message.data['user'];
+  //       Map value = json.decode(dataJson);
+  //       User user = User.fromJson(value);
+  //       Navigator.of(context, rootNavigator: true)
+  //           .push(
+  //         MyCustomRoute(
+  //             builder: (context) => MessageScreen(
+  //               user: user,
+  //               isFromProfile: false,
+  //               chatId: id,
+  //               isBlocked: false,
+  //             )),
+  //       )
+  //           .then((value) {
+  //         Provider.of<ProfileProvider>(context, listen: false).getCurrentUser();
+  //       });
+  //     } else if (type == 'comment') {
+  //       var dataJson = message.data['post'];
+  //       Map value = json.decode(dataJson);
+  //       PostModel post = PostModel.fromJson(value);
+  //       Navigator.of(context, rootNavigator: true).push(
+  //         MyCustomRoute(
+  //           builder: (context) => CommentsScreen(
+  //             post: post,
+  //           ),
+  //         ),
+  //       );
+  //     } else if (type == 'like' || type == 'accept') {
+  //       var userId = message.data['id'];
+  //       int id = 0;
+  //       if (userId is String) {
+  //         id = int.tryParse(userId);
+  //       }
+  //       Navigator.push(
+  //         context,
+  //         MyCustomRoute(
+  //           builder: (context) => UserScreen(
+  //             userId: id,
+  //           ),
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
+  //
+  // void _showNotification(RemoteMessage message) {
+  //   InAppNotification.show(
+  //     child: NotificationBody(
+  //       body: message.notification.body,
+  //       title: message.notification.title,
+  //     ),
+  //     context: context,
+  //     duration: Duration(seconds: 4),
+  //     onTap: () => _navigate(message),
+  //   );
+  // }
+
   var numMaskFormatter = new MaskTextInputFormatter(
       mask: '# *** ## ***',
       filter: {"#": RegExp("[а-яА-Я]"), "*": RegExp("[0-9]")});
