@@ -191,14 +191,13 @@ class SettingsApi {
     FormData formData = FormData.fromMap({
       'deviceId': 'id',
       'deviceToken': 'token',
-      "fcmToken": token,
-      'fcm': token,
+      "fcm_token": token,
       "devicePlatform": Platform.isAndroid ? 'android' : 'ios',
     });
 
     Dio dio = await BaseApi().dio;
     try {
-      Response response = await dio.post('profile/device/', data: formData);
+      await dio.post('profile/device/', data: formData);
     } on DioError catch (e) {
       print(e);
       print(e.response);

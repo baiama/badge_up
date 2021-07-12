@@ -15,6 +15,7 @@ import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:in_app_notification/in_app_notification.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -46,6 +47,8 @@ class _ParkingAutoState extends State<ParkingAuto> {
   }
 
   void _initPushes() async {
+    FlutterAppBadger.removeBadge();
+
     await FirebaseMessaging.instance.requestPermission(
       alert: true,
       announcement: false,
@@ -57,8 +60,8 @@ class _ParkingAutoState extends State<ParkingAuto> {
     );
 
     FirebaseMessaging.instance.getToken().then((value) {
-      if (value != null) {
-        print('token');
+      if (value != null && value.length > 0) {
+        print('value');
         print(value);
         SettingsApi().saveToken(token: value);
       }
@@ -66,18 +69,24 @@ class _ParkingAutoState extends State<ParkingAuto> {
     FirebaseMessaging.instance.onTokenRefresh.listen((token) {
       print('token');
       print(token);
-      SettingsApi().saveToken(token: token);
+      if (token.length > 0) {
+        SettingsApi().saveToken(token: token);
+      }
     });
 
     FirebaseMessaging.instance.getInitialMessage().then((value) {
       print('onMessageOpenedApp');
-      _navigate(value);
+      if (value != null && value.notification != null) {
+        _navigate(value);
+      }
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('onMessageOpenedApp');
       print(message.notification);
-      _navigate(message);
+      if (message.notification != null) {
+        _navigate(message);
+      }
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
