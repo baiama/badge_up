@@ -192,6 +192,7 @@ class SettingsApi {
       'deviceId': 'id',
       'deviceToken': 'token',
       "fcmToken": token,
+      'fcm': token,
       "devicePlatform": Platform.isAndroid ? 'android' : 'ios',
     });
 
