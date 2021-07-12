@@ -60,8 +60,25 @@ class _ParkingAutoState extends State<ParkingAuto> {
       }
     });
     FirebaseMessaging.instance.onTokenRefresh.listen((token) {
-      ;
       SettingsApi().saveToken(token: token);
+    });
+
+    FirebaseMessaging.instance.getInitialMessage().then((value) {
+      print('onMessageOpenedApp');
+      // _navigate(message);
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('onMessageOpenedApp');
+      print(message.notification);
+      // print(message.notification.body);
+      // _navigate(message);
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        // _showNotification(message);
+      }
     });
   }
 
