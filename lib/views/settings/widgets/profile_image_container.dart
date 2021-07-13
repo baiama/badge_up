@@ -52,9 +52,9 @@ class ProfileImageContainer extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: kColor26656565,
-                      spreadRadius: 4,
-                      blurRadius: 20,
-                      offset: Offset(0, 4),
+                      spreadRadius: 3,
+                      blurRadius: 12,
+                      offset: Offset(0, 3),
                     ),
                   ],
                   border: Border.all(
