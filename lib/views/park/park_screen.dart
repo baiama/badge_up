@@ -134,7 +134,7 @@ class ParkListItem extends StatelessWidget {
             ),
           if (parkModel.close.id == 0 && parkModel.closeNumber.length > 0)
             ParkItemCloseNumber(
-              number: Utils.formatPhoneNumber(parkModel.closeNumber),
+              number: Utils.formatAutoNumber(parkModel.closeNumber),
               text: 'Закрыт мной',
             ),
           ParkItemUser(
