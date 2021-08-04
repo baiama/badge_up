@@ -120,7 +120,7 @@ class SettingsApi {
   void confirmEmail(
       {required String email,
       required String? code,
-      required Function onSuccess,
+      required Function(bool) onSuccess,
       required Function(String) onFailure}) async {
     FormData formData = FormData.fromMap({'code': code, "email": email});
     print(formData.fields);
@@ -129,8 +129,8 @@ class SettingsApi {
       Response response = await dio.post('confirm/email/', data: formData);
       print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        // UserModel user = UserModel.fromJson(response.data);
-        onSuccess();
+        bool success = response.data['success'] ?? false;
+        onSuccess(success);
       } else {
         onFailure(Strings.errorEmpty3);
       }

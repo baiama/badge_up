@@ -123,7 +123,8 @@ class SettingsProvider extends AuthProvider {
       _api.confirmEmail(
         email: user.email,
         code: code,
-        onSuccess: () {
+        onSuccess: (value) {
+          user.isEmailConfirm = value;
           setIsLoading = false;
           setError2 = '';
           onSuccess();
