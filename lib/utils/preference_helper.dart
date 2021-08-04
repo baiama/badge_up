@@ -20,6 +20,22 @@ class PreferenceHelper {
   void clear({required Function onSuccess}) async {
     var prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
+    await prefs.remove('fcm_token');
     onSuccess();
+  }
+
+  void setFcmToken({required String token}) async {
+    var prefs = await SharedPreferences.getInstance();
+    await prefs.setString('fcm_token', token);
+  }
+
+  Future<String> get fcmToken async {
+    var prefs = await SharedPreferences.getInstance();
+    String? jwt = prefs.getString('fcm_token');
+    if (jwt != null && jwt.length > 0) {
+      return jwt;
+    } else {
+      return '';
+    }
   }
 }

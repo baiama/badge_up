@@ -5,6 +5,7 @@ import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/custom_themes.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
+import 'package:budge_up/utils/preference_helper.dart';
 import 'package:budge_up/utils/strings.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/components/notification_body.dart';
@@ -61,12 +62,12 @@ class _ParkingAutoState extends State<ParkingAuto> {
 
     FirebaseMessaging.instance.getToken().then((value) {
       if (value != null && value.length > 0) {
-        SettingsApi().saveToken(token: value);
+        safeToken(value);
       }
     });
     FirebaseMessaging.instance.onTokenRefresh.listen((token) {
       if (token.length > 0) {
-        SettingsApi().saveToken(token: token);
+        safeToken(token);
       }
     });
 
@@ -87,6 +88,15 @@ class _ParkingAutoState extends State<ParkingAuto> {
         _showNotification(message);
       }
     });
+  }
+
+  void safeToken(String token) async {
+    var helper = PreferenceHelper();
+    var oldToken = await helper.fcmToken;
+    if (oldToken != token) {
+      SettingsApi().saveToken(token: token);
+      helper.setFcmToken(token: token);
+    }
   }
 
   void _navigate(RemoteMessage? message) {
