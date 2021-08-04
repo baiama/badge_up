@@ -238,9 +238,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             hintText: 'Здесь написано обо мне',
                           ),
                           validator: (value) {
-                            if (value == null || value.length == 0) {
-                              return Strings.errorEmpty;
-                            }
+                            // if (value == null || value.length == 0) {
+                            //   return Strings.errorEmpty;
+                            // }
                             return null;
                           },
                         ),
