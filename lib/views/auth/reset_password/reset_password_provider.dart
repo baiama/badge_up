@@ -8,6 +8,13 @@ class ResetPasswordProvider extends AuthProvider {
       notifyListeners();
       return;
     }
+    if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email!)) {
+      setError = Strings.errorEmpty2 + 'Email';
+      notifyListeners();
+      return;
+    }
 
     setError = '';
     if (!isRequestSend) {

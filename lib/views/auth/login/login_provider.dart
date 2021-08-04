@@ -3,7 +3,7 @@ import 'package:budge_up/utils/strings.dart';
 
 class LoginProvider extends AuthProvider {
   void login({required Function onSuccess}) {
-    if (email == null || email!.length == 0) {
+    if (email == null || email!.length == 0 || email! == '7') {
       setError = Strings.errorEmpty + 'Телефон или Email';
       notifyListeners();
       return;
