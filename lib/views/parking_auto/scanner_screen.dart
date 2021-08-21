@@ -1,4 +1,6 @@
 import 'package:budge_up/components/alerts.dart';
+import 'package:budge_up/presentation/text_styles.dart';
+import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/views/parking_auto/scanner_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,10 +35,37 @@ class ScannerScreen extends StatelessWidget {
                             );
                           });
                     },
-                    child: Text('Выбрать фото'),
+                    child: Text(
+                      'Выбрать фото',
+                      style: kInterReg16ColorBlack,
+                    ),
                   ),
+                  SizedBox(height: 40),
+                  if (provider.plateNum != null)
+                    Text(
+                      'Номер вашей машины',
+                      style: kInterReg16ColorBlack,
+                      textAlign: TextAlign.center,
+                    ),
+                  SizedBox(height: 12),
+                  if (provider.plateNum != null)
+                    Text(
+                      provider.plateNum!,
+                      style: kInterBold18,
+                      textAlign: TextAlign.center,
+                    ),
+                  if (provider.error != null)
+                    Text(
+                      provider.error!,
+                      style: kInterReg16ColorBlack,
+                    ),
                   Spacer(),
-                  ElevatedButton(onPressed: () {}, child: Text('Потвердить'))
+                  ElevatedButton(
+                    onPressed: provider.plateNum != null ? () {} : null,
+                    child: provider.isRequestSend
+                        ? CircularLoader()
+                        : Text('Потвердить'),
+                  )
                 ],
               ),
             );
