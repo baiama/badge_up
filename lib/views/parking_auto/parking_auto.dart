@@ -11,6 +11,7 @@ import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/components/notification_body.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
+import 'package:budge_up/views/parking_auto/scanner_screen.dart';
 import 'package:budge_up/views/parking_auto/search_result.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -286,19 +287,19 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                     ),
                                   ),
                                 ),
-                                // GestureDetector(
-                                //     onTap: () {
-                                //       Navigator.push(
-                                //           context,
-                                //           MaterialPageRoute(
-                                //               builder: (context) =>
-                                //                   ScannerScreen()));
-                                //     },
-                                //     child: Container(
-                                //         padding:
-                                //             EdgeInsets.only(right: 12, left: 8),
-                                //         child: CustomIcon(
-                                //             customIcon: CustomIcons.scanner))),
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ScannerScreen()));
+                                    },
+                                    child: Container(
+                                        padding:
+                                            EdgeInsets.only(right: 12, left: 8),
+                                        child: CustomIcon(
+                                            customIcon: CustomIcons.scanner))),
                               ],
                             ),
                           ),
