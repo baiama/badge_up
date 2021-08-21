@@ -7,7 +7,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 class Utils {
   static Future<File?> getImage(ImageSource source) async {
     final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: source);
+    final pickedFile = await picker.pickImage(source: source);
     if (pickedFile != null) {
       File _image = File(pickedFile.path);
       File? cropped = await ImageCropper.cropImage(
