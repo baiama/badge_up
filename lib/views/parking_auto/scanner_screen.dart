@@ -61,7 +61,11 @@ class ScannerScreen extends StatelessWidget {
                     ),
                   Spacer(),
                   ElevatedButton(
-                    onPressed: provider.plateNum != null ? () {} : null,
+                    onPressed: provider.plateNum != null
+                        ? () {
+                            Navigator.pop(context, provider.plateNum);
+                          }
+                        : null,
                     child: provider.isRequestSend
                         ? CircularLoader()
                         : Text('Потвердить'),
