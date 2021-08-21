@@ -10,13 +10,14 @@ class Utils {
     final pickedFile = await picker.pickImage(source: source);
     if (pickedFile != null) {
       File _image = File(pickedFile.path);
-      File? cropped = await ImageCropper.cropImage(
-          compressQuality: 30,
-          sourcePath: _image.path,
-          aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
-          androidUiSettings: AndroidUiSettings(toolbarTitle: 'Редактор'),
-          iosUiSettings: IOSUiSettings(title: 'Редактор'));
-      return cropped;
+      // File? cropped = await ImageCropper.cropImage(
+      //     compressQuality: 30,
+      //     sourcePath: _image.path,
+      //     aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+      //     androidUiSettings: AndroidUiSettings(toolbarTitle: 'Редактор'),
+      //     iosUiSettings: IOSUiSettings(title: 'Редактор'));
+      // return cropped;
+      return _image;
     } else {
       print('No image selected.');
       return null;

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:budge_up/utils/strings.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
 
@@ -8,6 +9,8 @@ final _scannerUrl = 'https://api.platerecognizer.com/v1/plate-reader/';
 class ScannerApi {
   Future<void> scan({
     required File image,
+    required Function(String) onSuccess,
+    required Function(String) onFailure,
   }) async {
     BaseOptions options = new BaseOptions(
       connectTimeout: 5000,
@@ -32,16 +35,26 @@ class ScannerApi {
       Response response = await dio.post(_scannerUrl, data: formData);
       print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        // onSuccess(success);
+        Iterable? itemsJson = response.data['results'];
+        if (itemsJson != null && itemsJson.length > 0) {
+          Map? data = itemsJson.first;
+          print(data);
+          if (data != null) {
+            String plate = data['plate'];
+            onSuccess(plate);
+          } else {
+            onFailure(Strings.errorEmpty4);
+          }
+        } else {
+          onFailure(Strings.errorEmpty4);
+        }
       } else {
-        // onFailure(Strings.errorEmpty3);
+        onFailure(Strings.errorEmpty4);
       }
     } on DioError catch (e) {
       print(e);
       print(e.response);
-      print(e.response!.realUri);
-      print(e.response!.statusCode);
-      print(e.response!.data);
+      onFailure(Strings.errorEmpty4);
     }
   }
 }

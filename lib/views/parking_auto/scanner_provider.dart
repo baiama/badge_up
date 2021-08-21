@@ -8,7 +8,12 @@ class ScannerProvider extends BaseProvider {
 
   void check(File? image) {
     if (image != null) {
-      _api.scan(image: image);
+      _api.scan(
+          image: image,
+          onSuccess: (value) {
+            print(value);
+          },
+          onFailure: (error) {});
     }
   }
 }
