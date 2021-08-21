@@ -220,7 +220,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                           obscureText: true,
                           decoration: InputDecoration(
-                            hintText: 'Пароль *',
+                            hintText: 'Пароль',
                           ),
                         ),
                         SizedBox(height: 20),
