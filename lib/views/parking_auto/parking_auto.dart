@@ -288,12 +288,18 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                   ),
                                 ),
                                 GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
+                                    onTap: () async {
+                                      String? plate = await Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   ScannerScreen()));
+                                      print(plate);
+                                      if (plate != null) {
+                                        autoNumController.text = plate;
+                                        provider.number = plate;
+                                        provider.updateView();
+                                      }
                                     },
                                     child: Container(
                                         padding:
