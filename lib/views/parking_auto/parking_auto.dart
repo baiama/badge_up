@@ -271,6 +271,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                       provider.number =
                                           numMaskFormatter.getUnmaskedText();
                                       provider.setClosePark2 = null;
+                                      provider.isOk = false;
                                       provider.updateView();
                                     },
                                     decoration: InputDecoration(
