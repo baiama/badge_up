@@ -97,6 +97,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                       provider.email = value;
                       provider.setError = '';
                     },
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       hintText: 'Email *',
                     ),
