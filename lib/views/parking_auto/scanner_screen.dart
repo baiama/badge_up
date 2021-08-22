@@ -1,3 +1,4 @@
+import 'package:budge_up/api/scanner_api.dart';
 import 'package:budge_up/components/alerts.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
@@ -15,6 +16,8 @@ class ScannerScreen extends StatefulWidget {
 }
 
 class _ScannerScreenState extends State<ScannerScreen> {
+  bool _isLoading = false;
+  String? _error;
   @override
   void initState() {
     super.initState();
@@ -25,11 +28,64 @@ class _ScannerScreenState extends State<ScannerScreen> {
 
   void _startImage() async {
     var image = await Utils.getImage(ImageSource.camera);
+    setState(() {
+      _isLoading = true;
+    });
+    if (image != null) {
+      ScannerApi().scan(
+        image: image,
+        onSuccess: (value) {
+          setState(() {
+            _isLoading = false;
+          });
+          Navigator.pop(context, value);
+        },
+        onFailure: (error) {
+          setState(() {
+            _isLoading = false;
+            _error = error;
+          });
+        },
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Сканировать номер'),
+      ),
+      body: Container(
+        padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: 100),
+            if (_isLoading)
+              Container(
+                alignment: Alignment.topCenter,
+                child: CircularLoader(),
+              ),
+            SizedBox(height: 20),
+            if (_error != null)
+              Text(
+                _error!,
+                style: kInterReg16ColorBlack,
+                textAlign: TextAlign.center,
+              ),
+            Spacer(),
+            if (_error != null)
+              ElevatedButton(
+                onPressed: () {
+                  _startImage();
+                },
+                child: Text('Попробовать снова'),
+              )
+          ],
+        ),
+      ),
+    );
   }
 }
 
