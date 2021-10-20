@@ -10,7 +10,6 @@ class ScannerProvider extends BaseProvider {
 
   void check(File? image) async {
     error = null;
-    await Future.delayed(Duration(seconds: 1));
     if (!isRequestSend) {
       setIsRequestSend = true;
       if (image != null) {
