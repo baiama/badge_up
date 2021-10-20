@@ -1,10 +1,8 @@
 import 'dart:io';
+import 'package:budge_up/utils/preference_helper.dart';
 import 'package:budge_up/utils/strings.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
-
-final _scannerToken = 'c5753ae21010ffa5384132a7289f29cf40b22d6d';
-final _scannerUrl = 'https://api.platerecognizer.com/v1/plate-reader/';
 
 class ScannerApi {
   Future<void> scan({
@@ -20,34 +18,27 @@ class ScannerApi {
         "accept": 'application/json',
       },
     );
-    options.headers['Authorization'] = 'Token $_scannerToken';
+
+    var _token = await PreferenceHelper().token;
+
+    if (_token.length > 0) {
+      // print(_token);
+      options.headers['Authorization'] = 'Bearer $_token';
+    }
     Dio dio = Dio(options);
     MultipartFile multipartFile = MultipartFile.fromFileSync(image.path,
         filename: image.path, contentType: MediaType("image", "png"));
 
     FormData formData = FormData.fromMap({
-      "mmc": "true",
-      "upload": multipartFile,
+      "file": multipartFile,
     });
 
     print(formData.fields);
     try {
-      Response response = await dio.post(_scannerUrl, data: formData);
+      Response response = await dio.post('scanner', data: formData);
       print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        Iterable? itemsJson = response.data['results'];
-        if (itemsJson != null && itemsJson.length > 0) {
-          Map? data = itemsJson.first;
-          print(data);
-          if (data != null) {
-            String plate = data['plate'];
-            onSuccess(plate);
-          } else {
-            onFailure(Strings.errorEmpty4);
-          }
-        } else {
-          onFailure(Strings.errorEmpty4);
-        }
+        onSuccess('ds');
       } else {
         onFailure(Strings.errorEmpty4);
       }
