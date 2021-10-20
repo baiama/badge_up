@@ -29,7 +29,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
       _isLoading = true;
     });
     if (image != null) {
-      ScannerApi().scan(
+      ScannerApi().scanLight(
         image: image,
         onSuccess: (value) {
           setState(() {
@@ -38,10 +38,21 @@ class _ScannerScreenState extends State<ScannerScreen> {
           Navigator.pop(context, value);
         },
         onFailure: (error) {
-          setState(() {
-            _isLoading = false;
-            _error = error;
-          });
+          ScannerApi().scan(
+            image: image,
+            onSuccess: (value) {
+              setState(() {
+                _isLoading = false;
+              });
+              Navigator.pop(context, value);
+            },
+            onFailure: (error) {
+              setState(() {
+                _isLoading = false;
+                _error = error;
+              });
+            },
+          );
         },
       );
     }
