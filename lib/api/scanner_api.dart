@@ -3,6 +3,7 @@ import 'package:budge_up/utils/preference_helper.dart';
 import 'package:budge_up/utils/strings.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class ScannerApi {
   Future<void> scan({
@@ -26,11 +27,12 @@ class ScannerApi {
       options.headers['Authorization'] = 'Bearer $_token';
     }
     Dio dio = Dio(options);
+    dio.interceptors.add(PrettyDioLogger());
     MultipartFile multipartFile = MultipartFile.fromFileSync(image.path,
         filename: image.path, contentType: MediaType("image", "png"));
 
     FormData formData = FormData.fromMap({
-      "file": multipartFile,
+      "photo": multipartFile,
     });
 
     print(formData.fields);
