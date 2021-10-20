@@ -1,12 +1,9 @@
 import 'package:budge_up/api/scanner_api.dart';
-import 'package:budge_up/components/alerts.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/utils/utils.dart';
-import 'package:budge_up/views/parking_auto/scanner_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 class ScannerScreen extends StatefulWidget {
   const ScannerScreen({Key? key}) : super(key: key);
