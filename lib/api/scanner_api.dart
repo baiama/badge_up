@@ -12,8 +12,6 @@ class ScannerApi {
     required Function(String) onFailure,
   }) async {
     BaseOptions options = new BaseOptions(
-      connectTimeout: 5000,
-      receiveTimeout: 3000,
       baseUrl: 'https://budgeup.ru/api/v1/',
       headers: {
         "accept": 'application/json',
@@ -40,14 +38,29 @@ class ScannerApi {
       Response response = await dio.post('scanner', data: formData);
       print(response.data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        onSuccess('ds');
+        if (response.data != null) {
+          String number = response.data['number'] ?? "";
+          onSuccess(number);
+        } else {
+          onFailure(Strings.errorEmpty4);
+        }
       } else {
         onFailure(Strings.errorEmpty4);
       }
     } on DioError catch (e) {
       print(e);
       print(e.response);
-      onFailure(Strings.errorEmpty4);
+      if (e.response != null) {
+        String error = e.response!.data['error'] ?? "";
+        if (error.length == 0) {
+          String errorDesc = e.response!.data['error_description'] ?? "";
+          onFailure(errorDesc);
+        } else {
+          onFailure(error);
+        }
+      } else {
+        onFailure(Strings.errorEmpty4);
+      }
     }
   }
 }
