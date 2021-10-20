@@ -10,7 +10,6 @@ class Utils {
     final pickedFile = await picker.pickImage(source: source);
     if (pickedFile != null) {
       File _image = File(pickedFile.path);
-      return _image;
       File? cropped = await ImageCropper.cropImage(
           compressQuality: 30,
           sourcePath: _image.path,
