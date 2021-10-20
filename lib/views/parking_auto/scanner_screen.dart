@@ -24,7 +24,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
   }
 
   void _startImage() async {
-    var image = await Utils.getImage(ImageSource.gallery);
+    var image = await Utils.getImage(ImageSource.camera);
     setState(() {
       _isLoading = true;
     });
