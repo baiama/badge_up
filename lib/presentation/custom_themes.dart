@@ -8,11 +8,10 @@ const kAppBarTheme = AppBarTheme(
   centerTitle: true,
   color: Colors.white,
   elevation: 0.0,
-  brightness: Brightness.light,
+  titleTextStyle: kInterSemiBold24ColorBlack,
   iconTheme: IconThemeData(
     color: kColor2980B9,
   ),
-  textTheme: TextTheme(headline6: kInterSemiBold24ColorBlack),
 );
 
 const kInputDecorationBorder = OutlineInputBorder(
