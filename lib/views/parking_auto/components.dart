@@ -7,8 +7,8 @@ import 'package:budge_up/utils/utils.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
+import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 class DateLabel extends StatelessWidget {
@@ -315,9 +315,10 @@ class PhoneEditView extends StatefulWidget {
 class _PhoneEditViewState extends State<PhoneEditView> {
   String phone = '';
   String error = '';
-  var maskFormatter = new MaskTextInputFormatter(
-      mask: '+7(###)###-##-##', filter: {"#": RegExp(r'[0-9]')});
-  var textController = TextEditingController();
+  // var maskFormatter = new MaskTextInputFormatter(
+  //     mask: '+7(###)###-##-##', filter: {"#": RegExp(r'[0-9]')});
+  var textController = MaskedTextController(
+      mask: '+7(###)###-##-##', translator: {"#": RegExp(r'[0-9]')});
   @override
   void initState() {
     super.initState();
@@ -332,7 +333,7 @@ class _PhoneEditViewState extends State<PhoneEditView> {
       text = text.substring(1, text.length - 1);
       print(text);
     }
-    textController.text = maskFormatter.maskText(widget.phone);
+    textController.text = widget.phone;
   }
 
   @override
@@ -352,7 +353,7 @@ class _PhoneEditViewState extends State<PhoneEditView> {
             SizedBox(height: 26),
             TextFormField(
               controller: textController,
-              inputFormatters: [maskFormatter],
+              // inputFormatters: [maskFormatter],
               keyboardType: TextInputType.phone,
               onChanged: (value) {
                 phone = value;
@@ -380,7 +381,7 @@ class _PhoneEditViewState extends State<PhoneEditView> {
                     });
                     return;
                   }
-                  phone = maskFormatter.getUnmaskedText();
+                  phone = textController.unmasked;
 
                   phone = '+7' + phone;
                   print(phone);
