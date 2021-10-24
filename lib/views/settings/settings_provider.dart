@@ -58,7 +58,7 @@ class SettingsProvider extends AuthProvider {
       required Function(String) onFailure}) async {
     if (image != null) {
       var fileSize = await Utils.getFileSize(image!);
-      if (fileSize > 2) {
+      if (fileSize > 5) {
         onFailure(Strings.errorFileLength);
       } else {
         _safeImage();
