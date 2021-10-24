@@ -14,16 +14,28 @@ class RegisterProvider extends AuthProvider {
       return;
     }
 
-    phone = '7' + phone!;
-    print(phone);
-    if (phone!.length != 11) {
-      setError = Strings.errorEmpty2 + 'Телефон';
+    if (email == null || email!.length == 0) {
+      setError = Strings.errorEmpty + 'Email';
       notifyListeners();
       return;
     }
 
-    if (email == null || email!.length == 0) {
-      setError = Strings.errorEmpty + 'Email';
+    if (password == null || password!.length == 0) {
+      setError = Strings.errorEmpty + 'Пароль';
+      notifyListeners();
+      return;
+    }
+
+    if (passwordRepeat == null || passwordRepeat!.length == 0) {
+      setError = Strings.errorEmpty + 'Повторите пароль';
+      notifyListeners();
+      return;
+    }
+
+    phone = '7' + phone!;
+    print(phone);
+    if (phone!.length != 11) {
+      setError = Strings.errorEmpty2 + 'Телефон';
       notifyListeners();
       return;
     }
@@ -36,20 +48,8 @@ class RegisterProvider extends AuthProvider {
       return;
     }
 
-    if (password == null || password!.length == 0) {
-      setError = Strings.errorEmpty + 'Пароль';
-      notifyListeners();
-      return;
-    }
-
     if (password!.length < 5) {
       setError = 'Пароль должен быть, не менее 5 символов';
-      notifyListeners();
-      return;
-    }
-
-    if (passwordRepeat == null || passwordRepeat!.length == 0) {
-      setError = Strings.errorEmpty + 'Повторите пароль';
       notifyListeners();
       return;
     }
