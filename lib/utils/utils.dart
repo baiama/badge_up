@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -11,13 +10,13 @@ class Utils {
     if (pickedFile != null) {
       File _image = File(pickedFile.path);
       return _image;
-      File? cropped = await ImageCropper.cropImage(
-          compressQuality: 30,
-          sourcePath: _image.path,
-          aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
-          androidUiSettings: AndroidUiSettings(toolbarTitle: 'Редактор'),
-          iosUiSettings: IOSUiSettings(title: 'Редактор'));
-      return cropped;
+      // File? cropped = await ImageCropper.cropImage(
+      //     compressQuality: 30,
+      //     sourcePath: _image.path,
+      //     aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+      //     androidUiSettings: AndroidUiSettings(toolbarTitle: 'Редактор'),
+      //     iosUiSettings: IOSUiSettings(title: 'Редактор'));
+      // return cropped;
     } else {
       print('No image selected.');
       return null;
