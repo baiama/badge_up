@@ -22,6 +22,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:in_app_notification/in_app_notification.dart';
 import 'package:provider/provider.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
+import 'package:translit/translit.dart';
 import 'components.dart';
 
 class ParkingAuto extends StatefulWidget {
@@ -292,13 +293,15 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   ScannerScreen()));
-                                      print(plate);
+
                                       if (plate != null) {
+                                        String text = Translit()
+                                            .unTranslit(source: plate);
                                         setState(() {
-                                          autoNumController.text = plate;
+                                          autoNumController.text = text;
                                         });
 
-                                        provider.number = plate;
+                                        provider.number = text;
                                         provider.updateView();
                                       }
                                     },
