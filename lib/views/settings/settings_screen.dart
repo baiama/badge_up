@@ -8,9 +8,9 @@ import 'package:budge_up/views/initial/initial_screen.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:budge_up/views/settings/widgets/code_widget.dart';
 import 'package:budge_up/views/settings/widgets/profile_image_container.dart';
+import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -25,14 +25,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      Provider.of<SettingsProvider>(context, listen: false).getProfile(() {});
+      Provider.of<SettingsProvider>(context, listen: false).getProfile(() {
+        textController.text =
+            Provider.of<SettingsProvider>(context, listen: false)
+                .user
+                .unMaskedPhone;
+      });
       Provider.of<SettingsProvider>(context, listen: false).setUp();
       Provider.of<SettingsProvider>(context, listen: false).setUpSettings();
     });
   }
 
-  var textInputMask = MaskTextInputFormatter(
-      mask: '+7(###)###-##-##', filter: {"#": RegExp(r'[0-9]')});
+  var textController = MaskedTextController(
+      mask: '+7(###)###-##-##', translator: {"#": RegExp(r'[0-9]')});
 
   final _formKey = GlobalKey<FormState>();
 
@@ -144,9 +149,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         SizedBox(height: 10),
                         TextFormField(
-                          inputFormatters: [textInputMask],
-                          initialValue: textInputMask
-                              .maskText(provider.user.unMaskedPhone),
+                          controller: textController,
                           onChanged: (value) {
                             provider.phone = value;
                           },
@@ -281,7 +284,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   !_formKey.currentState!.validate()) {
                                 return;
                               }
-                              provider.phone = textInputMask.getUnmaskedText();
+                              provider.phone = textController.unmasked;
                               provider.updateProfile(onSuccess: () {
                                 FocusScope.of(context).unfocus();
                                 ScaffoldMessenger.of(context).showSnackBar(
