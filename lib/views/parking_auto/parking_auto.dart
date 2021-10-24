@@ -20,9 +20,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:in_app_notification/in_app_notification.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
-
+import 'package:extended_masked_text/extended_masked_text.dart';
 import 'components.dart';
 
 class ParkingAuto extends StatefulWidget {
@@ -118,13 +117,9 @@ class _ParkingAutoState extends State<ParkingAuto> {
     }
   }
 
-  var numMaskFormatter = new MaskTextInputFormatter(
+  var autoNumController = MaskedTextController(
       mask: '# *** ## ***',
-      filter: {"#": RegExp("[а-яА-Я]"), "*": RegExp("[0-9]")});
-
-  var numMaskFormatter2 = new MaskTextInputFormatter(mask: '# ### ## ###');
-
-  var autoNumController = TextEditingController();
+      translator: {"#": RegExp("[а-яА-Я]"), "*": RegExp("[0-9]")});
 
   void _selectDate() {
     final now = DateTime.now();
@@ -267,11 +262,11 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                   child: TextFormField(
                                     textCapitalization:
                                         TextCapitalization.characters,
-                                    // inputFormatters: [numMaskFormatter],
                                     controller: autoNumController,
                                     onChanged: (value) {
+                                      print(autoNumController.unmasked);
                                       provider.number =
-                                          numMaskFormatter.getUnmaskedText();
+                                          autoNumController.unmasked;
                                       provider.setClosePark2 = null;
                                       provider.isOk = false;
                                       provider.updateView();
@@ -292,21 +287,20 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                 ),
                                 GestureDetector(
                                     onTap: () async {
-                                      // String? plate = await Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             ScannerScreen()));
-                                      // print(plate);
-                                      // if (plate != null) {
-                                      //   setState(() {
-                                      //     autoNumController.text = plate;
-                                      //   });
-                                      //
-                                      //   provider.number = plate;
-                                      //   provider.updateView();
-                                      // }
-                                      autoNumController.text = 'dsadsds';
+                                      String? plate = await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ScannerScreen()));
+                                      print(plate);
+                                      if (plate != null) {
+                                        setState(() {
+                                          autoNumController.text = plate;
+                                        });
+
+                                        provider.number = plate;
+                                        provider.updateView();
+                                      }
                                     },
                                     child: Container(
                                         padding:
