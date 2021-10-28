@@ -22,7 +22,6 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:in_app_notification/in_app_notification.dart';
 import 'package:provider/provider.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
-import 'package:translit/translit.dart';
 import 'components.dart';
 
 class ParkingAuto extends StatefulWidget {
@@ -118,9 +117,12 @@ class _ParkingAutoState extends State<ParkingAuto> {
     }
   }
 
+  // var autoNumController = MaskedTextController(
+  //     mask: '# *** ## ***',
+  //     translator: {"#": RegExp("[а-яА-Я]"), "*": RegExp("[0-9]")});
+  //
   var autoNumController = MaskedTextController(
-      mask: '# *** ## ***',
-      translator: {"#": RegExp("[а-яА-Я]"), "*": RegExp("[0-9]")});
+      mask: '# ### ## ###', translator: {"#": RegExp("[а-яА-Я0-9a-zA-z]")});
 
   void _selectDate() {
     final now = DateTime.now();
@@ -295,13 +297,11 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                                   ScannerScreen()));
 
                                       if (plate != null) {
-                                        String text = Translit()
-                                            .unTranslit(source: plate);
                                         setState(() {
-                                          autoNumController.text = text;
+                                          autoNumController.text = plate;
                                         });
 
-                                        provider.number = text;
+                                        provider.number = plate;
                                         provider.updateView();
                                       }
                                     },
