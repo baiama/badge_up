@@ -34,31 +34,37 @@ class _ScannerScreenState extends State<ScannerScreen> {
     if (image != null) {
       ScannerApi().scanLight(
         image: image,
-        onSuccess: (value) {
-          setState(() {
-            _isLoading = false;
-          });
-          Navigator.pop(context, value);
-        },
+        onSuccess: _onSuccess,
         onFailure: (error) {
           ScannerApi().scan(
             image: image,
-            onSuccess: (value) {
-              setState(() {
-                _isLoading = false;
-              });
-              Navigator.pop(context, value);
-            },
-            onFailure: (error) {
-              setState(() {
-                _isLoading = false;
-                _error = error;
-              });
-            },
+            onSuccess: _onSuccess,
+            onFailure: _onFailure,
           );
         },
       );
     }
+  }
+
+  void _onSuccess(String value) {
+    if (value.toLowerCase() == 'NULL'.toLowerCase()) {
+      setState(() {
+        _isLoading = false;
+        _error = "Номер не определен";
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.pop(context, value);
+    }
+  }
+
+  void _onFailure(String error) {
+    setState(() {
+      _isLoading = false;
+      _error = error;
+    });
   }
 
   @override
