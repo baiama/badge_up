@@ -267,7 +267,6 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                         TextCapitalization.characters,
                                     controller: autoNumController,
                                     onChanged: (value) {
-                                      print(autoNumController.unmasked);
                                       provider.number =
                                           autoNumController.unmasked;
                                       provider.setClosePark2 = null;
