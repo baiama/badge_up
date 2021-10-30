@@ -56,7 +56,59 @@ class _ScannerScreenState extends State<ScannerScreen> {
       setState(() {
         _isLoading = false;
       });
-      Navigator.pop(context, value);
+
+      if (value.length > 0) {
+        String letter = '';
+        for (int i = 0; i < value.length; i++) {
+          String char = value[i];
+          switch (char.toUpperCase()) {
+            case 'A':
+              letter = letter + 'А';
+              break;
+            case 'B':
+              letter = letter + 'В';
+              break;
+            case 'E':
+              letter = letter + 'Е';
+              break;
+            case 'K':
+              letter = letter + 'К';
+              break;
+            case 'M':
+              letter = letter + 'М';
+              break;
+            case 'H':
+              letter = letter + 'Н';
+              break;
+            case 'H':
+              letter = letter + 'Н';
+              break;
+            case 'O':
+              letter = letter + 'О';
+              break;
+            case 'P':
+              letter = letter + 'Р';
+              break;
+            case 'C':
+              letter = letter + 'С';
+              break;
+            case 'T':
+              letter = letter + 'Т';
+              break;
+            case 'Y':
+              letter = letter + 'У';
+              break;
+            case 'X':
+              letter = letter + 'Х';
+              break;
+            default:
+              break;
+          }
+        }
+        Navigator.pop(context, letter);
+      } else {
+        Navigator.pop(context, value);
+      }
     }
   }
 
