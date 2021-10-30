@@ -431,23 +431,6 @@ class ParkItemClose extends StatelessWidget {
                             customIcon: CustomIcons.call,
                           ),
                         ),
-                        IconButton(
-                          onPressed: () async {
-                            final Uri _emailLaunchUri = Uri(
-                              scheme: 'tel',
-                              path: phone,
-                            );
-                            String url = _emailLaunchUri.toString();
-                            if (await canLaunch(url)) {
-                              await launch(url);
-                            } else {
-                              throw 'Could not launch $url';
-                            }
-                          },
-                          icon: CustomIcon(
-                            customIcon: CustomIcons.call,
-                          ),
-                        ),
                         SizedBox(width: 20),
                       ],
                     ),
