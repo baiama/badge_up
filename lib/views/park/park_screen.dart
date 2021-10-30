@@ -293,6 +293,23 @@ class ParkItemUser extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () async {
+                  final Uri _emailLaunchUri = Uri(
+                    scheme: 'tel',
+                    path: phone,
+                  );
+                  String url = _emailLaunchUri.toString();
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
+                icon: CustomIcon(
+                  customIcon: CustomIcons.call,
+                ),
+              ),
+              IconButton(
+                onPressed: () async {
                   showDialog(
                       context: context,
                       builder: (context) {
@@ -395,6 +412,23 @@ class ParkItemClose extends StatelessWidget {
                                 style: kInterReg16ColorBlack,
                               ),
                             ],
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () async {
+                            final Uri _emailLaunchUri = Uri(
+                              scheme: 'tel',
+                              path: phone,
+                            );
+                            String url = _emailLaunchUri.toString();
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          },
+                          icon: CustomIcon(
+                            customIcon: CustomIcons.call,
                           ),
                         ),
                         IconButton(
