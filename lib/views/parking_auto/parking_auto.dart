@@ -294,7 +294,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   ScannerScreen()));
-
+                                      FocusScope.of(context).unfocus();
                                       if (plate != null) {
                                         setState(() {
                                           autoNumController.text = plate;
@@ -320,6 +320,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                   padding: MaterialStateProperty.all(
                                       EdgeInsets.zero)),
                               onPressed: () {
+                                FocusScope.of(context).unfocus();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
