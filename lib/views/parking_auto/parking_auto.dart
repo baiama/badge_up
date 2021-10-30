@@ -122,7 +122,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
   //     translator: {"#": RegExp("[а-яА-Я]"), "*": RegExp("[0-9]")});
   //
   var autoNumController = MaskedTextController(
-      mask: '# ### ## ###', translator: {"#": RegExp("[а-яА-Я0-9a-zA-z]")});
+      mask: '# ### ## ###', translator: {"#": RegExp("[0-9АВЕКМНОРСТУХ]")});
 
   void _selectDate() {
     final now = DateTime.now();
