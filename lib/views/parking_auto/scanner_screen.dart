@@ -102,6 +102,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
               letter = letter + 'Х';
               break;
             default:
+              letter = letter + char;
               break;
           }
         }
