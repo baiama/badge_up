@@ -132,6 +132,7 @@ class _LoginBodyState extends State<LoginBody> {
                         child: TextFormField(
                           controller: textController,
                           inputFormatters: [textInputMask],
+                          keyboardType: TextInputType.phone,
                           onChanged: (value) {
                             provider.setError = '';
                           },
