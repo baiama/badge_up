@@ -150,6 +150,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         SizedBox(height: 10),
                         TextFormField(
                           controller: textController,
+                          keyboardType: TextInputType.phone,
                           onChanged: (value) {
                             provider.phone = value;
                           },
