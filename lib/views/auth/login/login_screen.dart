@@ -44,6 +44,7 @@ class _LoginBodyState extends State<LoginBody> {
       mask: '+7(###)###-##-##', filter: {"#": RegExp(r'[0-9]')});
   var hint = 'Телефон';
   var textController = TextEditingController();
+  TextInputType textInputType = TextInputType.phone;
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +89,8 @@ class _LoginBodyState extends State<LoginBody> {
                                   if (vale == 1) {
                                     setState(() {
                                       hint = 'Email';
+                                      textInputType =
+                                          TextInputType.emailAddress;
                                       textController.value = textInputMask
                                           .updateMask(
                                               mask:
@@ -100,6 +103,7 @@ class _LoginBodyState extends State<LoginBody> {
                                   } else if (vale == 2) {
                                     setState(() {
                                       hint = 'Телефон';
+                                      textInputType = TextInputType.phone;
                                       textController.value = textInputMask
                                           .updateMask(
                                               mask: '+7(###)###-##-##',
@@ -132,7 +136,7 @@ class _LoginBodyState extends State<LoginBody> {
                         child: TextFormField(
                           controller: textController,
                           inputFormatters: [textInputMask],
-                          keyboardType: TextInputType.phone,
+                          keyboardType: textInputType,
                           onChanged: (value) {
                             provider.setError = '';
                           },
