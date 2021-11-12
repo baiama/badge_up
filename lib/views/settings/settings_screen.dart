@@ -37,7 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   var textController = MaskedTextController(
-      mask: '+7(###)###-##-##', translator: {"#": RegExp(r'[0-9]')});
+      mask: '### ###-##-##', translator: {"#": RegExp(r'[0-9]')});
 
   final _formKey = GlobalKey<FormState>();
 
@@ -148,21 +148,64 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                         ),
                         SizedBox(height: 10),
-                        TextFormField(
-                          controller: textController,
-                          keyboardType: TextInputType.phone,
-                          onChanged: (value) {
-                            provider.phone = value;
-                          },
-                          decoration: InputDecoration(
-                            hintText: 'Телефон *',
+                        // TextFormField(
+                        //   controller: textController,
+                        //   keyboardType: TextInputType.phone,
+                        //   onChanged: (value) {
+                        //     provider.phone = value;
+                        //   },
+                        //   decoration: InputDecoration(
+                        //     hintText: 'Телефон *',
+                        //   ),
+                        //   validator: (value) {
+                        //     if (value == null || value.length == 0) {
+                        //       return Strings.errorEmpty;
+                        //     }
+                        //     return null;
+                        //   },
+                        // ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: kColorF6F6F6,
+                              border: Border.all(color: kColorE8E8E8),
+                              borderRadius: BorderRadius.circular(100)),
+                          child: Row(
+                            children: [
+                              SizedBox(width: 12),
+                              Text('+7'),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: textController,
+                                  // inputFormatters: [maskFormatter],
+                                  keyboardType: TextInputType.phone,
+                                  onChanged: (value) {
+                                    provider.phone = value;
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.length == 0) {
+                                      return Strings.errorEmpty;
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.only(
+                                        left: 8,
+                                        top: 14,
+                                        bottom: 14,
+                                        right: 24),
+                                    hintText: 'Телефон',
+                                    filled: false,
+                                    border: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    focusedErrorBorder: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          validator: (value) {
-                            if (value == null || value.length == 0) {
-                              return Strings.errorEmpty;
-                            }
-                            return null;
-                          },
                         ),
                         SizedBox(height: 20),
                         TextFormField(

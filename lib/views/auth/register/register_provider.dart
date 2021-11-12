@@ -34,7 +34,7 @@ class RegisterProvider extends AuthProvider {
     }
 
     if (text.length > 0) {
-      setError = Strings.errorEmpty + text;
+      setError = Strings.errorEmpty1 + text;
       notifyListeners();
       return;
     }

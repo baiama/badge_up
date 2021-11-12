@@ -4,13 +4,13 @@ import 'package:budge_up/utils/strings.dart';
 class LoginProvider extends AuthProvider {
   void login({required Function onSuccess}) {
     if (email == null || email!.length == 0 || email! == '7') {
-      setError = Strings.errorEmpty + 'Телефон или Email';
+      setError = Strings.errorEmpty1 + 'Телефон или Email';
       notifyListeners();
       return;
     }
 
     if (password == null || password!.length == 0) {
-      setError = Strings.errorEmpty + 'Пароль';
+      setError = Strings.errorEmpty1 + 'Пароль';
       notifyListeners();
       return;
     }
