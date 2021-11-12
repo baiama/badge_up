@@ -182,9 +182,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     provider.phone = value;
                                   },
                                   validator: (value) {
-                                    if (value == null || value.length == 0) {
-                                      return Strings.errorEmpty;
-                                    }
+                                    // if (value == null || value.length == 0) {
+                                    //   return Strings.errorEmpty;
+                                    // }
                                     return null;
                                   },
                                   decoration: InputDecoration(
@@ -207,6 +207,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ],
                           ),
                         ),
+                        if (textController.unmasked.isEmpty)
+                          Container(
+                            padding: EdgeInsets.only(top: 5, left: 17),
+                            child: Text(
+                              Strings.errorEmpty,
+                              style: TextStyle(fontSize: 12, color: kColorCC6666),
+                            ),
+                          ),
                         SizedBox(height: 20),
                         TextFormField(
                           initialValue: provider.user.email,
