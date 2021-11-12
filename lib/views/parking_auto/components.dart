@@ -318,7 +318,7 @@ class _PhoneEditViewState extends State<PhoneEditView> {
   // var maskFormatter = new MaskTextInputFormatter(
   //     mask: '+7(###)###-##-##', filter: {"#": RegExp(r'[0-9]')});
   var textController = MaskedTextController(
-      mask: '### ###-##-##', translator: {"#": RegExp(r'[0-9]')});
+      mask: '(###) ###-##-##', translator: {"#": RegExp(r'[0-9]')});
   @override
   void initState() {
     super.initState();
@@ -358,7 +358,10 @@ class _PhoneEditViewState extends State<PhoneEditView> {
               child: Row(
                 children: [
                   SizedBox(width: 12),
-                  Text('+7'),
+                  Text(
+                    '+7',
+                    style: kInterReg16ColorBlack,
+                  ),
                   Expanded(
                     child: TextFormField(
                       controller: textController,

@@ -37,7 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   var textController = MaskedTextController(
-      mask: '### ###-##-##', translator: {"#": RegExp(r'[0-9]')});
+      mask: '(###) ###-##-##', translator: {"#": RegExp(r'[0-9]')});
 
   final _formKey = GlobalKey<FormState>();
 
@@ -172,7 +172,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Row(
                             children: [
                               SizedBox(width: 12),
-                              Text('+7'),
+                              Text(
+                                '+7',
+                                style: kInterReg16ColorBlack,
+                              ),
                               Expanded(
                                 child: TextFormField(
                                   controller: textController,
@@ -189,7 +192,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   },
                                   decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(
-                                        left: 8,
+                                        left: 0,
                                         top: 14,
                                         bottom: 14,
                                         right: 24),
@@ -212,7 +215,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             padding: EdgeInsets.only(top: 5, left: 17),
                             child: Text(
                               Strings.errorEmpty,
-                              style: TextStyle(fontSize: 12, color: kColorCC6666),
+                              style:
+                                  TextStyle(fontSize: 12, color: kColorCC6666),
                             ),
                           ),
                         SizedBox(height: 20),
