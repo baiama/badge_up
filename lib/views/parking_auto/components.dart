@@ -332,6 +332,7 @@ class _PhoneEditViewState extends State<PhoneEditView> {
       text = text.substring(1, text.length);
     }
     textController.text = text;
+    phone = textController.unmasked;
   }
 
   @override
