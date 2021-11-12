@@ -318,22 +318,25 @@ class _PhoneEditViewState extends State<PhoneEditView> {
   // var maskFormatter = new MaskTextInputFormatter(
   //     mask: '+7(###)###-##-##', filter: {"#": RegExp(r'[0-9]')});
   var textController = MaskedTextController(
-      mask: '+7(###)###-##-##', translator: {"#": RegExp(r'[0-9]')});
+      mask: '### ###-##-##', translator: {"#": RegExp(r'[0-9]')});
   @override
   void initState() {
     super.initState();
     phone = '';
     error = '';
     String text = widget.phone;
+    print(text.length);
     if (text.startsWith('+')) {
-      text = text.substring(1, text.length - 1);
+      text = text.substring(0, text.length - 1);
       print(text);
+      print(text.length);
     }
     if (text.startsWith('7')) {
       text = text.substring(1, text.length - 1);
       print(text);
+      print(text.length);
     }
-    textController.text = widget.phone;
+    textController.text = text;
   }
 
   @override
@@ -351,18 +354,41 @@ class _PhoneEditViewState extends State<PhoneEditView> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 26),
-            TextFormField(
-              controller: textController,
-              // inputFormatters: [maskFormatter],
-              keyboardType: TextInputType.phone,
-              onChanged: (value) {
-                phone = value;
-                setState(() {
-                  error = '';
-                });
-              },
-              decoration: InputDecoration(
-                hintText: 'Телефон',
+            Container(
+              decoration: BoxDecoration(
+                  color: kColorF6F6F6,
+                  border: Border.all(color: kColorE8E8E8),
+                  borderRadius: BorderRadius.circular(100)),
+              child: Row(
+                children: [
+                  SizedBox(width: 12),
+                  Text('+7'),
+                  Expanded(
+                    child: TextFormField(
+                      controller: textController,
+                      // inputFormatters: [maskFormatter],
+                      keyboardType: TextInputType.phone,
+                      onChanged: (value) {
+                        phone = value;
+                        setState(() {
+                          error = '';
+                        });
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                            left: 8, top: 14, bottom: 14, right: 24),
+                        hintText: 'Телефон',
+                        filled: false,
+                        border: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        focusedErrorBorder: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             if (error.length > 0) SizedBox(height: 24),
