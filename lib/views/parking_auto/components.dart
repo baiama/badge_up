@@ -325,16 +325,11 @@ class _PhoneEditViewState extends State<PhoneEditView> {
     phone = '';
     error = '';
     String text = widget.phone;
-    print(text.length);
     if (text.startsWith('+')) {
-      text = text.substring(0, text.length - 1);
-      print(text);
-      print(text.length);
+      text = text.substring(1, text.length);
     }
     if (text.startsWith('7')) {
-      text = text.substring(1, text.length - 1);
-      print(text);
-      print(text.length);
+      text = text.substring(1, text.length);
     }
     textController.text = text;
   }
