@@ -2,6 +2,7 @@ import 'package:budge_up/models/park_model.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
+import 'package:budge_up/utils/utils.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/components/avatar_item.dart';
 import 'package:budge_up/views/components/time_date_item.dart';
@@ -46,12 +47,45 @@ class _SearchResultState extends State<SearchResult> {
             );
           }
           if (provider.results.length == 0) {
-            return Container(
-              padding: EdgeInsets.only(top: 50),
-              alignment: Alignment.center,
-              child: EmptyData(
-                  title:
-                      'К сожалению, пользователь\nне оставил данные о парковке'),
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 50),
+                  alignment: Alignment.center,
+                  child: EmptyData(
+                      title:
+                          'К сожалению, пользователь\nне оставил данные о парковке'),
+                ),
+                SizedBox(height: 35),
+                Container(
+                  alignment: Alignment.center,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    decoration: BoxDecoration(
+                        color: kColor4D7EB7DC,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Text(
+                      Utils.formatAutoNumber(provider.number),
+                      style: kInterReg16ColorBlack,
+                    ),
+                  ),
+                ),
+                Expanded(child: Container()),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        provider.isOk = true;
+                        provider.updateView();
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Все равно закрыть этот авто')),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+              ],
             );
           }
 
@@ -109,7 +143,7 @@ class SearchItem extends StatelessWidget {
           ),
           SizedBox(height: 4),
           Text(
-            parkModel.user.phone,
+            Utils.formatPhoneNumber(parkModel.user.phone),
             textAlign: TextAlign.center,
             style: kInterReg16ColorBlack,
           ),
@@ -138,9 +172,6 @@ class SearchItem extends StatelessWidget {
               },
               child: Text('Закрыть этот авто')),
           SizedBox(height: 16),
-          Divider(
-            thickness: 1.5,
-          ),
         ],
       ),
     );

@@ -3,6 +3,8 @@ import 'package:budge_up/models/close_model.dart';
 import 'package:budge_up/models/user_model.dart';
 import 'package:intl/intl.dart';
 
+import 'close_me.dart';
+
 class ParkModel {
   late int id;
   late String phone;
@@ -10,6 +12,7 @@ class ParkModel {
   late String datetime;
   late String closeNumber;
   late CloseModel close;
+  late CloseMe closeMe;
   late AutoModel closeGarageItem;
   late UserModel user;
   late AutoModel garageItem;
@@ -44,6 +47,7 @@ class ParkModel {
     user = UserModel();
     garageItem = AutoModel();
     closeGarageItem = AutoModel();
+    closeMe = CloseMe();
   }
 
   ParkModel.fromJson(Map? data) {
@@ -69,6 +73,9 @@ class ParkModel {
       close = data['close'] != null
           ? CloseModel.fromJson(data['close'])
           : CloseModel();
+      closeMe = data['closeme'] != null
+          ? CloseMe.fromJson(data['closeme'])
+          : CloseMe();
     }
   }
 }

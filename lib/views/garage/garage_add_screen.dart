@@ -4,6 +4,7 @@ import 'package:budge_up/presentation/widgets.dart';
 import 'package:budge_up/views/garage/garage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 class GarageAddScreen extends StatefulWidget {
@@ -29,6 +30,9 @@ class _GarageAddScreenState extends State<GarageAddScreen> {
     }
   }
 
+  var numMaskFormatter = new MaskTextInputFormatter(
+      mask: '# *** ## ***',
+      filter: {"#": RegExp("[АВЕКМНОРСТУХ]"), "*": RegExp("[0-9]")});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,11 +87,11 @@ class _GarageAddScreenState extends State<GarageAddScreen> {
                     initialValue:
                         widget.auto != null ? widget.auto!.number : null,
                     onChanged: (value) {
-                      provider.numberAuto = value;
+                      provider.numberAuto = numMaskFormatter.getUnmaskedText();
                     },
-                    inputFormatters: [new  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9 ]")),],
+                    inputFormatters: [numMaskFormatter],
                     decoration: InputDecoration(
-                      hintText: 'Номер авто *',
+                      hintText: 'А 777 АА 777',
                     ),
                   ),
                   SizedBox(height: 24),

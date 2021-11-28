@@ -3,11 +3,47 @@ import 'package:budge_up/models/month_model.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/utils/strings.dart';
+import 'package:budge_up/utils/utils.dart';
 import 'package:budge_up/views/components/auto_item.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
+import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+class DateLabel extends StatelessWidget {
+  final String title;
+  final Function onTap;
+  const DateLabel({
+    Key? key,
+    required this.onTap,
+    required this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        onTap();
+      },
+      child: Container(
+        padding: EdgeInsets.only(top: 14, bottom: 14),
+        decoration: BoxDecoration(
+          color: kColorF6F6F6,
+          borderRadius: BorderRadius.circular(51),
+          border: Border.all(
+            color: kColorE8E8E8,
+          ),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          title,
+          style: kInterReg16ColorBlack,
+        ),
+      ),
+    );
+  }
+}
 
 class EmptyCar extends StatelessWidget {
   final Function onTap;
@@ -54,7 +90,7 @@ class PhoneView extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            phone,
+            Utils.formatPhoneNumber(phone),
             style: kInterReg16ColorBlack,
           ),
           GestureDetector(
@@ -80,11 +116,9 @@ class PhoneView extends StatelessWidget {
 class AutoListView extends StatefulWidget {
   final Function(AutoModel) onTap;
   final AutoModel selectedAuto;
-  final List<AutoModel> items;
   AutoListView({
     required this.onTap,
     required this.selectedAuto,
-    required this.items,
   });
 
   @override
@@ -106,92 +140,98 @@ class _AutoListViewState extends State<AutoListView> {
       content: SizedBox(
         height: 500,
         width: MediaQuery.of(context).size.width - 48,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Выбрать другой авто',
-                style: kInterSemiBold18,
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 25),
-              ListView.builder(
-                  itemCount: widget.items.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
+        child: Consumer<ParkingAutoProvider>(
+          builder: (BuildContext context, provider, Widget? child) {
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Выбрать другой авто',
+                    style: kInterSemiBold18,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 25),
+                  ListView.builder(
+                      itemCount: provider.items.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              autoModel = provider.items[index];
+                            });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(bottom: 21),
+                            decoration: BoxDecoration(
+                                color: provider.items[index].id == autoModel.id
+                                    ? kColorF8F8F8
+                                    : Colors.white),
+                            child: AutoItem(
+                              onDelete: null,
+                              auto: provider.items[index],
+                              isLoading: false,
+                            ),
+                          ),
+                        );
+                      }),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                      onPressed: () {
+                        widget.onTap(autoModel);
+                        Navigator.pop(context);
+                      },
+                      child: Text('Готово')),
+                  if (provider.items.length < 5)
+                    GestureDetector(
                       onTap: () {
-                        setState(() {
-                          autoModel = widget.items[index];
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GarageAddScreen(
+                                    auto: null,
+                                  )),
+                        ).then((value) {
+                          Provider.of<ParkingAutoProvider>(context,
+                                  listen: false)
+                              .getItems();
+                          // Navigator.pop(context);
                         });
                       },
                       child: Container(
-                        padding: EdgeInsets.only(bottom: 21),
-                        decoration: BoxDecoration(
-                            color: widget.items[index].id == autoModel.id
-                                ? kColorF8F8F8
-                                : Colors.white),
-                        child: AutoItem(
-                          onDelete: null,
-                          auto: widget.items[index],
-                          isLoading: false,
+                        padding: EdgeInsets.only(left: 22, right: 22, top: 26),
+                        child: Text(
+                          'Добавить новый авто',
+                          style: kInterReg16ColorCC6666.copyWith(
+                            color: kColor2980B9,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                    );
-                  }),
-              SizedBox(height: 10),
-              ElevatedButton(
-                  onPressed: () {
-                    widget.onTap(autoModel);
-                    Navigator.pop(context);
-                  },
-                  child: Text('Готово')),
-              if (widget.items.length < 5)
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => GarageAddScreen(
-                                auto: null,
-                              )),
-                    ).then((value) {
-                      Provider.of<ParkingAutoProvider>(context, listen: false)
-                          .getItems();
+                    ),
+                  GestureDetector(
+                    onTap: () {
                       Navigator.pop(context);
-                    });
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(left: 22, right: 22, top: 26),
-                    child: Text(
-                      'Добавить новый авто',
-                      style: kInterReg16ColorCC6666.copyWith(
-                        color: kColor2980B9,
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 22, vertical: 26),
+                      child: Text(
+                        'Отменить',
+                        style: kInterReg16ColorCC6666.copyWith(
+                          color: kColor2980B9,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 22, vertical: 26),
-                  child: Text(
-                    'Отменить',
-                    style: kInterReg16ColorCC6666.copyWith(
-                      color: kColor2980B9,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
@@ -264,7 +304,9 @@ class MonthListView extends StatelessWidget {
 
 class PhoneEditView extends StatefulWidget {
   final Function(String) onTap;
-  const PhoneEditView({Key? key, required this.onTap}) : super(key: key);
+  final String phone;
+  const PhoneEditView({Key? key, required this.onTap, required this.phone})
+      : super(key: key);
 
   @override
   _PhoneEditViewState createState() => _PhoneEditViewState();
@@ -273,11 +315,24 @@ class PhoneEditView extends StatefulWidget {
 class _PhoneEditViewState extends State<PhoneEditView> {
   String phone = '';
   String error = '';
+  // var maskFormatter = new MaskTextInputFormatter(
+  //     mask: '+7(###)###-##-##', filter: {"#": RegExp(r'[0-9]')});
+  var textController = MaskedTextController(
+      mask: '(###) ###-##-##', translator: {"#": RegExp(r'[0-9]')});
   @override
   void initState() {
     super.initState();
     phone = '';
     error = '';
+    String text = widget.phone;
+    if (text.startsWith('+')) {
+      text = text.substring(1, text.length);
+    }
+    if (text.startsWith('7')) {
+      text = text.substring(1, text.length);
+    }
+    textController.text = text;
+    phone = textController.unmasked;
   }
 
   @override
@@ -295,15 +350,44 @@ class _PhoneEditViewState extends State<PhoneEditView> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 26),
-            TextFormField(
-              onChanged: (value) {
-                phone = value;
-                setState(() {
-                  error = '';
-                });
-              },
-              decoration: InputDecoration(
-                hintText: '+79268105001',
+            Container(
+              decoration: BoxDecoration(
+                  color: kColorF6F6F6,
+                  border: Border.all(color: kColorE8E8E8),
+                  borderRadius: BorderRadius.circular(100)),
+              child: Row(
+                children: [
+                  SizedBox(width: 12),
+                  Text(
+                    '+7',
+                    style: kInterReg16ColorBlack,
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      controller: textController,
+                      // inputFormatters: [maskFormatter],
+                      keyboardType: TextInputType.phone,
+                      onChanged: (value) {
+                        phone = value;
+                        setState(() {
+                          error = '';
+                        });
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                            left: 8, top: 14, bottom: 14, right: 24),
+                        hintText: 'Телефон',
+                        filled: false,
+                        border: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        focusedErrorBorder: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             if (error.length > 0) SizedBox(height: 24),
@@ -322,10 +406,11 @@ class _PhoneEditViewState extends State<PhoneEditView> {
                     });
                     return;
                   }
+                  phone = textController.unmasked;
 
-                  if (!phone.startsWith('+')) {
-                    phone = '+' + phone;
-                  }
+                  phone = '+7' + phone;
+                  print(phone);
+                  print(phone.length);
 
                   if (phone.length != 12) {
                     setState(() {

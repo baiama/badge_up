@@ -8,19 +8,21 @@ class ParkProvider extends BaseProvider {
   ParkApi _parkApi = ParkApi();
   int id = 0;
   void getItems() {
+    isViewSetup = false;
     _results = [];
     id = 0;
-    setIsLoading = false;
-    if (!isLoading) {
-      setIsLoading = true;
+    setIsRequestSend = false;
+    if (!isRequestSend) {
+      setIsRequestSend = true;
       _parkApi.getItems(
         onSuccess: (value) {
           _results = value;
-          setIsLoading = false;
+          isViewSetup = true;
+          setIsRequestSend = false;
         },
         onFailure: () {
           isViewSetup = true;
-          setIsLoading = false;
+          setIsRequestSend = false;
         },
       );
     }
@@ -53,7 +55,7 @@ class ParkProvider extends BaseProvider {
           onSuccess: () {
             id = 0;
             setIsLoading = false;
-            parkModel.setPhone(value);
+            parkModel.setPhone(phone);
           },
           onFailure: () {
             id = 0;

@@ -2,30 +2,47 @@ import 'package:budge_up/base/auth_provider.dart';
 import 'package:budge_up/utils/strings.dart';
 
 class RegisterProvider extends AuthProvider {
+  String addText(String text, String addText) {
+    if (text.length == 0) {
+      text = text + addText;
+    } else {
+      text = text + ', ' + addText;
+    }
+    print(text);
+    return text;
+  }
+
   void register({required Function onSuccess}) {
+    String text = "";
     if (name == null || name!.length == 0) {
-      setError = Strings.errorEmpty + 'Имя';
-      notifyListeners();
-      return;
+      text = addText(text, 'Имя');
     }
     if (phone == null || phone!.length == 0) {
-      setError = Strings.errorEmpty + 'Телефон';
-      notifyListeners();
-      return;
-    }
-
-    // if (!phone!.startsWith('+')) {
-    //   phone = '+' + phone!;
-    // }
-    print(phone);
-    if (phone!.length != 11) {
-      setError = Strings.errorEmpty2 + 'Телефон';
-      notifyListeners();
-      return;
+      text = addText(text, 'Телефон');
     }
 
     if (email == null || email!.length == 0) {
-      setError = Strings.errorEmpty + 'Email';
+      text = addText(text, 'Email');
+    }
+
+    if (password == null || password!.length == 0) {
+      text = addText(text, 'Пароль');
+    }
+
+    if (passwordRepeat == null || passwordRepeat!.length == 0) {
+      text = addText(text, 'Повторите пароль');
+    }
+
+    if (text.length > 0) {
+      setError = Strings.errorEmpty1 + text;
+      notifyListeners();
+      return;
+    }
+
+    phone = '7' + phone!;
+    print(phone);
+    if (phone!.length != 11) {
+      setError = Strings.errorEmpty2 + 'Телефон';
       notifyListeners();
       return;
     }
@@ -38,20 +55,8 @@ class RegisterProvider extends AuthProvider {
       return;
     }
 
-    if (password == null || password!.length == 0) {
-      setError = Strings.errorEmpty + 'Пароль';
-      notifyListeners();
-      return;
-    }
-
     if (password!.length < 5) {
       setError = 'Пароль должен быть, не менее 5 символов';
-      notifyListeners();
-      return;
-    }
-
-    if (passwordRepeat == null || passwordRepeat!.length == 0) {
-      setError = Strings.errorEmpty + 'Повторите пароль';
       notifyListeners();
       return;
     }

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1000894322952",
+    "project_id": "budgeup-f8c10",
+    "storage_bucket": "budgeup-f8c10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000894322952:android:cfda65a21c30fafdc1f4bd",
+        "android_client_info": {
+          "package_name": "io.bagde.up.budge_up"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000894322952-dv6gltjcg0bfpv11l39glidt3kr2qent.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.bagde.up.budge_up",
+            "certificate_hash": "4c557362a0a0ebc8f7f50ab0ad447557e9214ce1"
+          }
+        },
+        {
+          "client_id": "1000894322952-snoin8k97tbt8dtu2i3kv1l9q1n0i9et.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjhKMS5AOHeg1JQvxahC1UMISshHk9PW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1000894322952-snoin8k97tbt8dtu2i3kv1l9q1n0i9et.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

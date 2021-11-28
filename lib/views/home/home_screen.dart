@@ -16,21 +16,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _index = 0;
-  final _screens = [
-
-  ];
-
+  final _screens = [];
 
   BottomNavigationBarItem getNavItem(String item, String label) {
     return BottomNavigationBarItem(
         icon: Container(
-          padding: EdgeInsets.only(top: 8, bottom: 3),
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(top: 2, bottom: 4),
           child: CustomIcon(
             customIcon: item,
           ),
         ),
         activeIcon: Container(
-            padding: EdgeInsets.only(top: 8, bottom: 3),
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(top: 2, bottom: 2),
             child: CustomIcon(
               customIcon: item,
               color: kColor666666,
@@ -41,14 +40,24 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _screens.add(ParkingAuto(onPark: (){
-      setState(() {
-        _index = 1;
-      });
-    },),);
-    _screens.add(ParkScreen(),);
-    _screens.add(GarageScreen(),);
-    _screens.add(SettingsScreen(),);
+    _screens.add(
+      ParkingAuto(
+        onPark: () {
+          setState(() {
+            _index = 1;
+          });
+        },
+      ),
+    );
+    _screens.add(
+      ParkScreen(),
+    );
+    _screens.add(
+      GarageScreen(),
+    );
+    _screens.add(
+      SettingsScreen(),
+    );
   }
 
   @override

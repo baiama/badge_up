@@ -1,21 +1,27 @@
+import 'package:budge_up/api/settings_api.dart';
 import 'package:budge_up/models/month_model.dart';
 import 'package:budge_up/presentation/color_scheme.dart';
 import 'package:budge_up/presentation/custom_icons.dart';
 import 'package:budge_up/presentation/custom_themes.dart';
 import 'package:budge_up/presentation/text_styles.dart';
 import 'package:budge_up/presentation/widgets.dart';
+import 'package:budge_up/utils/preference_helper.dart';
 import 'package:budge_up/utils/strings.dart';
 import 'package:budge_up/views/components/auto_item.dart';
+import 'package:budge_up/views/components/notification_body.dart';
 import 'package:budge_up/views/garage/garage_add_screen.dart';
 import 'package:budge_up/views/parking_auto/parking_auto_provider.dart';
 import 'package:budge_up/views/parking_auto/scanner_screen.dart';
 import 'package:budge_up/views/parking_auto/search_result.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:in_app_notification/in_app_notification.dart';
 import 'package:provider/provider.dart';
-
+import 'package:extended_masked_text/extended_masked_text.dart';
 import 'components.dart';
 
 class ParkingAuto extends StatefulWidget {
@@ -27,33 +33,124 @@ class ParkingAuto extends StatefulWidget {
 }
 
 class _ParkingAutoState extends State<ParkingAuto> {
+  late ParkingAutoProvider currentProvider;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      Provider.of<ParkingAutoProvider>(context, listen: false).getItems();
-      Provider.of<ParkingAutoProvider>(context, listen: false).setPhone =
+      currentProvider =
+          Provider.of<ParkingAutoProvider>(context, listen: false);
+      currentProvider.getItems();
+      currentProvider.setPhone =
           Provider.of<SettingsProvider>(context, listen: false).user.phone;
+      _initPushes();
     });
   }
 
-  final datePadding = EdgeInsets.symmetric(horizontal: 12);
-  var dayMaskFormatter =
-      new MaskTextInputFormatter(mask: '##', filter: {"#": RegExp(r'[0-9]')});
-  var yearMaskFormatter =
-      new MaskTextInputFormatter(mask: '####', filter: {"#": RegExp(r'[0-9]')});
-  var timeMaskFormatter = new MaskTextInputFormatter(
-      mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
+  void _initPushes() async {
+    FlutterAppBadger.removeBadge();
 
-  var numberMaskFormatter = new MaskTextInputFormatter(
-      mask: '# *** ## ***', filter: {"#": RegExp(r'[АВЕКМНОРСТУХ]'), "*": RegExp(r'[0-9]')});
-  // А, В, Е, К, М, Н, О, Р, С, Т, У и Х
-  // А 888 АА 777
-  var autoNumController = TextEditingController();
-  var dayController = TextEditingController();
-  var yearController = TextEditingController();
-  var timeController = TextEditingController();
-  var textStyle = kInterReg16ColorBDBDBD;
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    FirebaseMessaging.instance.getToken().then((value) {
+      if (value != null && value.length > 0) {
+        safeToken(value);
+      }
+    });
+    FirebaseMessaging.instance.onTokenRefresh.listen((token) {
+      if (token.length > 0) {
+        safeToken(token);
+      }
+    });
+
+    FirebaseMessaging.instance.getInitialMessage().then((value) {
+      if (value != null && value.notification != null) {
+        _navigate(value);
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        _navigate(message);
+      }
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        _showNotification(message);
+      }
+    });
+  }
+
+  void safeToken(String token) async {
+    var helper = PreferenceHelper();
+    var oldToken = await helper.fcmToken;
+    if (oldToken != token) {
+      SettingsApi().saveToken(token: token);
+      helper.setFcmToken(token: token);
+    }
+  }
+
+  void _navigate(RemoteMessage? message) {
+    widget.onPark();
+  }
+
+  void _showNotification(RemoteMessage message) {
+    if (message.notification != null) {
+      InAppNotification.show(
+        child: NotificationBody(
+          body: message.notification!.body,
+          title: message.notification!.title,
+        ),
+        context: context,
+        duration: Duration(seconds: 4),
+        onTap: () => _navigate(message),
+      );
+    }
+  }
+
+  // var autoNumController = MaskedTextController(
+  //     mask: '# *** ## ***',
+  //     translator: {"#": RegExp("[а-яА-Я]"), "*": RegExp("[0-9]")});
+  //
+  var autoNumController = MaskedTextController(
+      mask: '# ### ## ###', translator: {"#": RegExp("[0-9АВЕКМНОРСТУХ]")});
+
+  void _selectDate() {
+    final now = DateTime.now();
+    DatePicker.showDatePicker(context,
+        showTitleActions: true,
+        minTime: now,
+        theme: DatePickerTheme(
+          backgroundColor: Colors.white,
+        ),
+        maxTime: DateTime(2050, 6, 7), onChanged: (date) {
+      print('change $date');
+    }, onConfirm: (date) {
+      currentProvider.setDate(date);
+    },
+        currentTime: DateTime.utc(
+            currentProvider.year, currentProvider.month, currentProvider.day),
+        locale: LocaleType.ru);
+  }
+
+  void _selectTime() {
+    DatePicker.showTimePicker(context, showSecondsColumn: false,
+        onConfirm: (date) {
+      currentProvider.setTime(date);
+    },
+        currentTime: DateTime.utc(currentProvider.year, currentProvider.month,
+            currentProvider.day, currentProvider.hour, currentProvider.min),
+        locale: LocaleType.ru);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +195,6 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                     provider.setSelectedAuto = value;
                                   },
                                   selectedAuto: provider.selectedAuto,
-                                  items: provider.items,
                                 );
                               });
                         },
@@ -136,6 +232,7 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             context: context,
                             builder: (context) {
                               return PhoneEditView(
+                                phone: provider.phone,
                                 onTap: (value) {
                                   provider.setPhone = value;
                                 },
@@ -143,7 +240,13 @@ class _ParkingAutoState extends State<ParkingAuto> {
                             });
                       },
                     ),
-                    SizedBox(height: 38),
+                    SizedBox(height: 30),
+                    Text(
+                      'Я закрываю авто (опционально):',
+                      textAlign: TextAlign.center,
+                      style: kInterBold16,
+                    ),
+                    SizedBox(height: 20),
                     Row(
                       children: [
                         Expanded(
@@ -160,12 +263,14 @@ class _ParkingAutoState extends State<ParkingAuto> {
                               children: [
                                 Expanded(
                                   child: TextFormField(
-                                    textCapitalization: TextCapitalization.characters,
-                                    inputFormatters: [numberMaskFormatter],
+                                    textCapitalization:
+                                        TextCapitalization.characters,
                                     controller: autoNumController,
                                     onChanged: (value) {
-                                      provider.number = value;
+                                      provider.number =
+                                          autoNumController.unmasked;
                                       provider.setClosePark2 = null;
+                                      provider.isOk = false;
                                       provider.updateView();
                                     },
                                     decoration: InputDecoration(
@@ -178,17 +283,26 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                           kInputDecorationBorder2,
                                       disabledBorder: kInputDecorationBorder2,
                                       enabledBorder: kInputDecorationBorder2,
-                                      hintText: 'Номер закрываемого авто',
+                                      hintText: 'А 777 АА 777',
                                     ),
                                   ),
                                 ),
                                 GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
+                                    onTap: () async {
+                                      String? plate = await Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   ScannerScreen()));
+                                      FocusScope.of(context).unfocus();
+                                      if (plate != null) {
+                                        setState(() {
+                                          autoNumController.text = plate;
+                                        });
+
+                                        provider.number = plate;
+                                        provider.updateView();
+                                      }
                                     },
                                     child: Container(
                                         padding:
@@ -206,11 +320,12 @@ class _ParkingAutoState extends State<ParkingAuto> {
                                   padding: MaterialStateProperty.all(
                                       EdgeInsets.zero)),
                               onPressed: () {
+                                FocusScope.of(context).unfocus();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        SearchResult(query: numberMaskFormatter.getUnmaskedText()),
+                                        SearchResult(query: provider.number),
                                   ),
                                 ).then((value) {
                                   if (value != null && value == 'selected') {
@@ -222,7 +337,26 @@ class _ParkingAutoState extends State<ParkingAuto> {
                               child: Text('Найти')),
                       ],
                     ),
-                    SizedBox(height: 50),
+                    SizedBox(height: 20),
+                    if (provider.closePark.id > 0 || provider.isOk)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Выбран авто: ${provider.getCurrentNumber}',
+                            style: kInterReg16ColorBlack,
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              provider.removeSelectedAuto();
+                            },
+                            icon: CustomIcon(
+                              customIcon: CustomIcons.remove,
+                            ),
+                          ),
+                        ],
+                      ),
+                    SizedBox(height: 30),
                     Text(
                       'Когда вы планируете уехать?',
                       style: kInterBold16,
@@ -233,85 +367,51 @@ class _ParkingAutoState extends State<ParkingAuto> {
                       children: [
                         Expanded(
                           flex: 4,
-                          child: TextField(
-                            controller: dayController,
-                            onChanged: (value) {
-                              provider.day = value;
-                              provider.updateView();
+                          child: DateLabel(
+                            onTap: () {
+                              _selectDate();
                             },
-                            inputFormatters: [dayMaskFormatter],
-                            decoration: InputDecoration(
-                              hintText: '24',
-                              contentPadding: datePadding,
-                            ),
+                            title: provider.day.toString(),
                           ),
                         ),
                         SizedBox(width: 8),
                         Expanded(
                           flex: 4,
-                          child: GestureDetector(
+                          child: DateLabel(
+                            title: MonthModel.monthShort[provider.month - 1],
                             onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return MonthListView(
-                                      onSelected: (value) {
-                                        provider.month = value;
-                                        provider.updateView();
-                                        setState(() {
-                                          textStyle = kInterReg16ColorBlack;
-                                        });
-                                      },
-                                    );
-                                  });
+                              _selectDate();
+                              // showDialog(
+                              //     context: context,
+                              //     builder: (context) {
+                              //       return MonthListView(
+                              //         onSelected: (value) {
+                              //           provider.month = value;
+                              //           provider.updateView();
+                              //         },
+                              //       );
+                              //     });
                             },
-                            child: Container(
-                              padding: EdgeInsets.only(top: 14, bottom: 14),
-                              decoration: BoxDecoration(
-                                color: kColorF6F6F6,
-                                borderRadius: BorderRadius.circular(51),
-                                border: Border.all(
-                                  color: kColorE8E8E8,
-                                ),
-                              ),
-                              alignment: Alignment.center,
-                              child: Text(
-                                MonthModel.monthShort[provider.month],
-                                style: textStyle,
-                              ),
-                            ),
                           ),
                         ),
                         SizedBox(width: 8),
                         Expanded(
                           flex: 5,
-                          child: TextField(
-                            controller: yearController,
-                            onChanged: (value) {
-                              provider.year = value;
-                              provider.updateView();
+                          child: DateLabel(
+                            onTap: () {
+                              _selectDate();
                             },
-                            inputFormatters: [yearMaskFormatter],
-                            decoration: InputDecoration(
-                              hintText: '2021',
-                              contentPadding: datePadding,
-                            ),
+                            title: provider.year.toString(),
                           ),
                         ),
                         SizedBox(width: 8),
                         Expanded(
                             flex: 5,
-                            child: TextField(
-                              controller: timeController,
-                              onChanged: (value) {
-                                provider.time = value;
-                                provider.updateView();
+                            child: DateLabel(
+                              onTap: () {
+                                _selectTime();
                               },
-                              inputFormatters: [timeMaskFormatter],
-                              decoration: InputDecoration(
-                                hintText: '18:00',
-                                contentPadding: datePadding,
-                              ),
+                              title: provider.time,
                             )),
                       ],
                     ),
@@ -338,13 +438,6 @@ class _ParkingAutoState extends State<ParkingAuto> {
                         onPressed: provider.buttonIsEnabled
                             ? () {
                                 provider.create(onSuccess: () {
-                                  autoNumController.clear();
-                                  dayController.clear();
-                                  yearController.clear();
-                                  timeController.clear();
-                                  setState(() {
-                                    textStyle = kInterReg16ColorBDBDBD;
-                                  });
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       backgroundColor: Colors.white,

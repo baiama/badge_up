@@ -16,20 +16,54 @@ class ParkingAutoProvider extends BaseProvider {
 
   String _phone = '';
   String number = '';
-  String day = '';
+  int day = 0;
   int month = 8;
-  String year = '';
+  int year = 0;
+  int hour = 0;
+  int min = 0;
   String time = '';
 
+  bool isOk = false;
+
   void _setUp() {
-    _phone = '';
+    isOk = false;
+    DateTime now = DateTime.now();
+    DateTime date =
+        DateTime.utc(now.year, now.month, now.day, now.hour + 1, now.minute);
     number = '';
-    day = '';
-    month = 8;
-    year = '';
-    time = '';
+    day = date.day;
+    month = date.month;
+    year = date.year;
+    min = date.minute;
+    hour = date.hour;
     _closePark = null;
+    _setTime();
     setIsRequestSend = false;
+  }
+
+  void _setTime() {
+    time =
+        '${hour < 10 ? '0$hour' : hour.toString()}:${min < 10 ? '0$min' : min.toString()}';
+    notifyListeners();
+  }
+
+  void removeSelectedAuto() {
+    setClosePark2 = null;
+    isOk = false;
+    notifyListeners();
+  }
+
+  void setDate(DateTime dateTime) {
+    day = dateTime.day;
+    year = dateTime.year;
+    month = dateTime.month;
+    notifyListeners();
+  }
+
+  void setTime(DateTime dateTime) {
+    hour = dateTime.hour;
+    min = dateTime.minute;
+    _setTime();
   }
 
   void getItems() {
@@ -60,6 +94,8 @@ class ParkingAutoProvider extends BaseProvider {
     _results = [];
     _closePark = null;
     setIsLoading = false;
+    query = query.replaceAll(' ', '');
+    print(query);
     if (!isLoading) {
       setIsLoading = true;
       _parkApi.findAuto(
@@ -80,6 +116,15 @@ class ParkingAutoProvider extends BaseProvider {
       _selectedAuto != null ? _selectedAuto! : AutoModel();
 
   ParkModel get closePark => _closePark != null ? _closePark! : ParkModel();
+
+  String get getCurrentNumber {
+    if (closePark.id > 0) {
+      return closePark.garageItem.number;
+    } else if (isOk) {
+      return number;
+    }
+    return '';
+  }
 
   set setClosePark(ParkModel value) {
     _closePark = value;
@@ -110,8 +155,8 @@ class ParkingAutoProvider extends BaseProvider {
   bool get buttonIsEnabled {
     return phone.length > 0 &&
         selectedAuto.id > 0 &&
-        day.length > 0 &&
-        year.length == 4 &&
+        day > 0 &&
+        year > 4 &&
         time.length == 5;
   }
 
@@ -121,11 +166,17 @@ class ParkingAutoProvider extends BaseProvider {
     int? closeId,
     int? closeGarageId,
   }) {
-    int currentMonth = month + 1;
+    int currentMonth = month;
     String date =
-        '$year-${currentMonth < 10 ? '0$currentMonth' : currentMonth.toString()}-${day.length < 2 ? '0$day' : day.toString()} $time:00';
+        '$year-${currentMonth < 10 ? '0$currentMonth' : currentMonth.toString()}-${day < 10 ? '0$day' : day.toString()} $time:00';
     print(date);
     // '2021-06-16 21:30:00'
+    String closeNumber = '';
+    if (_closePark != null) {
+      closeNumber = _closePark!.garageItem.number;
+    } else if (isOk) {
+      closeNumber = number;
+    }
     if (!isCreating) {
       setIsCreating = true;
       _parkApi.create(
@@ -134,9 +185,10 @@ class ParkingAutoProvider extends BaseProvider {
         phone: phone,
         closeId: _closePark != null ? _closePark!.id : null,
         closeGarageId: _closePark != null ? _closePark!.garageItem.id : null,
-        closeNumber: _closePark != null ? _closePark!.garageItem.number : null,
+        closeNumber: closeNumber.length > 0 ? closeNumber : null,
         onSuccess: () {
           _setUp();
+          _phone = '';
           onSuccess();
           setIsCreating = false;
         },
