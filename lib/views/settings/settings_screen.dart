@@ -8,9 +8,9 @@ import 'package:budge_up/views/initial/initial_screen.dart';
 import 'package:budge_up/views/settings/settings_provider.dart';
 import 'package:budge_up/views/settings/widgets/code_widget.dart';
 import 'package:budge_up/views/settings/widgets/profile_image_container.dart';
-import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -26,18 +26,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       Provider.of<SettingsProvider>(context, listen: false).getProfile(() {
-        textController.text =
-            Provider.of<SettingsProvider>(context, listen: false)
-                .user
-                .unMaskedPhone;
+        textController = TextEditingController(
+            text: maskFormatter.maskText(
+                Provider.of<SettingsProvider>(context, listen: false)
+                    .user
+                    .unMaskedPhone));
       });
       Provider.of<SettingsProvider>(context, listen: false).setUp();
       Provider.of<SettingsProvider>(context, listen: false).setUpSettings();
     });
   }
 
-  var textController = MaskedTextController(
-      mask: '(###) ###-##-##', translator: {"#": RegExp(r'[0-9]')});
+  var textController = TextEditingController();
+  final maskFormatter = MaskTextInputFormatter(
+      mask: '+7(###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
 
   final _formKey = GlobalKey<FormState>();
 
@@ -148,77 +150,78 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                         ),
                         SizedBox(height: 10),
-                        // TextFormField(
-                        //   controller: textController,
-                        //   keyboardType: TextInputType.phone,
-                        //   onChanged: (value) {
-                        //     provider.phone = value;
-                        //   },
-                        //   decoration: InputDecoration(
-                        //     hintText: 'Телефон *',
-                        //   ),
-                        //   validator: (value) {
-                        //     if (value == null || value.length == 0) {
-                        //       return Strings.errorEmpty;
-                        //     }
-                        //     return null;
-                        //   },
-                        // ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: kColorF6F6F6,
-                              border: Border.all(color: kColorE8E8E8),
-                              borderRadius: BorderRadius.circular(100)),
-                          child: Row(
-                            children: [
-                              SizedBox(width: 12),
-                              Text(
-                                '+7',
-                                style: kInterReg16ColorBlack,
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: textController,
-                                  // inputFormatters: [maskFormatter],
-                                  keyboardType: TextInputType.phone,
-                                  onChanged: (value) {
-                                    provider.phone = value;
-                                  },
-                                  validator: (value) {
-                                    // if (value == null || value.length == 0) {
-                                    //   return Strings.errorEmpty;
-                                    // }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.only(
-                                        left: 0,
-                                        top: 14,
-                                        bottom: 14,
-                                        right: 24),
-                                    hintText: 'Телефон',
-                                    filled: false,
-                                    border: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    focusedErrorBorder: InputBorder.none,
-                                  ),
-                                ),
-                              ),
-                            ],
+                        TextFormField(
+                          controller: textController,
+                          keyboardType: TextInputType.phone,
+                          inputFormatters: [maskFormatter],
+                          onChanged: (value) {
+                            provider.phone = value;
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Телефон *',
                           ),
+                          validator: (value) {
+                            if (value == null || value.length == 0) {
+                              return Strings.errorEmpty;
+                            }
+                            return null;
+                          },
                         ),
-                        if (textController.unmasked.isEmpty)
-                          Container(
-                            padding: EdgeInsets.only(top: 5, left: 17),
-                            child: Text(
-                              Strings.errorEmpty,
-                              style:
-                                  TextStyle(fontSize: 12, color: kColorCC6666),
-                            ),
-                          ),
+                        // Container(
+                        //   decoration: BoxDecoration(
+                        //       color: kColorF6F6F6,
+                        //       border: Border.all(color: kColorE8E8E8),
+                        //       borderRadius: BorderRadius.circular(100)),
+                        //   child: Row(
+                        //     children: [
+                        //       SizedBox(width: 12),
+                        //       Text(
+                        //         '+7',
+                        //         style: kInterReg16ColorBlack,
+                        //       ),
+                        //       Expanded(
+                        //         child: TextFormField(
+                        //           controller: textController,
+                        //           // inputFormatters: [maskFormatter],
+                        //           keyboardType: TextInputType.phone,
+                        //           onChanged: (value) {
+                        //             provider.phone = value;
+                        //           },
+                        //           validator: (value) {
+                        //             // if (value == null || value.length == 0) {
+                        //             //   return Strings.errorEmpty;
+                        //             // }
+                        //             return null;
+                        //           },
+                        //           decoration: InputDecoration(
+                        //             contentPadding: EdgeInsets.only(
+                        //                 left: 0,
+                        //                 top: 14,
+                        //                 bottom: 14,
+                        //                 right: 24),
+                        //             hintText: 'Телефон',
+                        //             filled: false,
+                        //             border: InputBorder.none,
+                        //             disabledBorder: InputBorder.none,
+                        //             enabledBorder: InputBorder.none,
+                        //             errorBorder: InputBorder.none,
+                        //             focusedBorder: InputBorder.none,
+                        //             focusedErrorBorder: InputBorder.none,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                        // if (textController.unmasked.isEmpty)
+                        //   Container(
+                        //     padding: EdgeInsets.only(top: 5, left: 17),
+                        //     child: Text(
+                        //       Strings.errorEmpty,
+                        //       style:
+                        //           TextStyle(fontSize: 12, color: kColorCC6666),
+                        //     ),
+                        //   ),
                         SizedBox(height: 20),
                         TextFormField(
                           initialValue: provider.user.email,
@@ -340,7 +343,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   !_formKey.currentState!.validate()) {
                                 return;
                               }
-                              provider.phone = textController.unmasked;
+                              provider.phone = maskFormatter.getUnmaskedText();
                               provider.updateProfile(onSuccess: () {
                                 FocusScope.of(context).unfocus();
                                 ScaffoldMessenger.of(context).showSnackBar(
